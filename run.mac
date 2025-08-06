@@ -1,0 +1,18 @@
+/gen/energy 5 MeV
+/gen/distance 1 cm
+
+/geo/world/radius 1 m
+/geo/foil/radius 1 cm
+/geo/foil/thickness 1 um
+
+/analysis/energy/bins 1000
+/analysis/energy/min 4.0 MeV
+/analysis/energy/max 5.0 MeV
+
+/analysis/theta/bins 100
+/analysis/theta/min 0.0 deg
+/analysis/theta/max 10.0 deg
+
+/run/verbose 1
+/run/initialize
+/run/beamOn 100000
