@@ -1,4 +1,0 @@
-/home/ndk/projects/rutherford-scattering/build/CMakeFiles/rutherford-scattering.dir
-/home/ndk/projects/rutherford-scattering/build/CMakeFiles/Rutherford.dir
-/home/ndk/projects/rutherford-scattering/build/CMakeFiles/edit_cache.dir
-/home/ndk/projects/rutherford-scattering/build/CMakeFiles/rebuild_cache.dir
