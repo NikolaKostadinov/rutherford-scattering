@@ -1,8 +1,14 @@
 #include "../include/RutherfordDetectorConstruction.hh"
 #include <G4LogicalVolume.hh>
+#include "../include/RutherfordDefaults.h"
 
 RutherfordDetectorConstruction::RutherfordDetectorConstruction() : G4VUserDetectorConstruction()
 {
+	// Initialize with default values
+	fWorldRadius = DEFAULT_WORLD_RADIUS;
+	fFoilRadius = DEFAULT_FOIL_RADIUS;
+	fFoilThickness = DEFAULT_FOIL_THICKNESS;
+	
 	fMessenger = new RutherfordGeometryMessenger(this);
 }
 

@@ -9,6 +9,8 @@
 #include "include/RutherfordDetectorConstruction.hh"
 #include "include/RutherfordActionInitialization.hh"
 
+#include "src/RutherfordArgumentParser.cc"
+
 int main(int argc, char** argv)
 {
 	CLHEP::HepRandom::setTheSeed(time(NULL));
@@ -20,9 +22,7 @@ int main(int argc, char** argv)
 	runManager->SetUserInitialization(new RutherfordActionInitialization());
 	
 	G4UImanager* uiManager = G4UImanager::GetUIpointer();
-	//
-	uiManager->ApplyCommand("/control/execute run.mac");
-	//
+	RutherfordArgumentParser(uiManager, argc, argv);
 
 	delete runManager;
 	delete uiManager;
