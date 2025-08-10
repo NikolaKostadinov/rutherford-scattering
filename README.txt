@@ -6,5 +6,5 @@ The simulation is based on `GEANT4` written in `C++` and the analysis: `ROOT` wr
 MAKE:
 $ make -C build/
 
-RUN:
-$ ./build/rutherford-scattering
+RUN (MACRO FILE):
+$ rutherford-scattering --macro run.mac

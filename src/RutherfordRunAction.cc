@@ -2,6 +2,7 @@
 
 RutherfordRunAction::RutherfordRunAction() :
 	G4UserRunAction(),
+	fFileOut(DEFAULT_FILE_OUT),
 	fETitle(DEFAULT_ENERGY_TITLE),
 	fEBins(DEFAULT_ENERGY_BINS),
 	fEMin(DEFAULT_ENERGY_MIN),
@@ -17,6 +18,11 @@ RutherfordRunAction::RutherfordRunAction() :
 RutherfordRunAction::~RutherfordRunAction()
 {
 	delete fMessenger;
+}
+
+void RutherfordRunAction::SetFileOut(G4String file)
+{
+	fFileOut = file;
 }
 
 void RutherfordRunAction::SetETitle(G4String title)
@@ -65,7 +71,7 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 	
 	if (analysisManager)
 	{
-		analysisManager->OpenFile(OUTPUT_FILE);
+		analysisManager->OpenFile(fFileOut);
 		analysisManager->CreateH1("histoEnergy", fETitle,     fEBins,     fEMin / MeV,     fEMax / MeV    );
 		analysisManager->CreateH1("histoTheta",  fThetaTitle, fThetaBins, fThetaMin / deg, fThetaMax / deg);
 	}

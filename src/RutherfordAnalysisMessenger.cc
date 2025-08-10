@@ -6,6 +6,10 @@ RutherfordAnalysisMessenger::RutherfordAnalysisMessenger(RutherfordRunAction* ru
 	fDirectory = new G4UIdirectory("/analysis/");
 	fDirectory->SetGuidance("Commands for simulation analysis. This includes (only) ROOT histogram setup.");
 
+	fFileOutCmd = new G4UIcmdWithAString("/analysis/file", this);
+	fFileOutCmd->SetGuidance("Path to analysis file.");
+	fFileOutCmd->SetDefaultValue(DEFAULT_FILE_OUT);
+	
 	fETitleCmd = new G4UIcmdWithAString("/analysis/energy/title", this);
 	fETitleCmd->SetGuidance("Title of energy spectrum histogram.");
 	fETitleCmd->SetDefaultValue(DEFAULT_ENERGY_TITLE);
@@ -50,6 +54,7 @@ RutherfordAnalysisMessenger::RutherfordAnalysisMessenger(RutherfordRunAction* ru
 RutherfordAnalysisMessenger::~RutherfordAnalysisMessenger()
 {
 	delete fDirectory;
+	delete fFileOutCmd;
 	delete fETitleCmd;
 	delete fEBinsCmd;
 	delete fEMinCmd;
@@ -62,7 +67,11 @@ RutherfordAnalysisMessenger::~RutherfordAnalysisMessenger()
 
 void RutherfordAnalysisMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 {
-	if (cmd == fETitleCmd)
+	if (cmd == fFileOutCmd)
+	{
+		fRunAction->SetFileOut(value);
+	}
+	else if (cmd == fETitleCmd)
 	{
 		fRunAction->SetETitle(value);
 	}

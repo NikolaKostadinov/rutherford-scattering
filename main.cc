@@ -5,11 +5,10 @@
 #include <G4UImanager.hh>
 #include <Randomize.hh>
 
+#include "include/RutherfordArgumentParser.hh"
 #include "include/RutherfordPhysicsList.hh"
 #include "include/RutherfordDetectorConstruction.hh"
 #include "include/RutherfordActionInitialization.hh"
-
-#include "src/RutherfordArgumentParser.cc"
 
 int main(int argc, char** argv)
 {

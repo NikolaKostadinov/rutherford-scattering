@@ -8,8 +8,6 @@
 #include "RutherfordDefaults.h"
 #include "RutherfordAnalysisMessenger.hh"
 
-#define OUTPUT_FILE "output.root"
-
 class RutherfordRunAction : public G4UserRunAction
 {
 	public:
@@ -17,6 +15,8 @@ class RutherfordRunAction : public G4UserRunAction
 		RutherfordRunAction();
 		~RutherfordRunAction();
 
+		void SetFileOut(G4String);
+		
 		void SetETitle(G4String);
 		void SetEBins(G4int);
 		void SetEMin(G4double);
@@ -32,6 +32,8 @@ class RutherfordRunAction : public G4UserRunAction
 
 	private:
 		
+		G4String			fFileOut;
+
 		G4String			fETitle;
 		G4int				fEBins;
 		G4double			fEMin;

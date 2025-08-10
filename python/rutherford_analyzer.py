@@ -35,6 +35,7 @@ def main():
     
     # Final Data Setup
     energies_out = [ ]
+    deltas       = [ ]
     sigmas       = [ ]
     chi2ndfs     = [ ]
 
@@ -64,11 +65,13 @@ def main():
                 chi2ndf   = chi2/ndf if ndf != 0 else float("inf")
                 
                 energies_out.append(mean)
+                deltas.append(energy_in - mean)
                 sigmas.append(sigma)
                 chi2ndfs.append(chi2ndf)
     
     print(energies_in)
     print(energies_out)
+    print(deltas)
     print(sigmas)
     print(chi2ndfs)
 

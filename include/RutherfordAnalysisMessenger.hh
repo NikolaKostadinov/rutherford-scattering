@@ -24,6 +24,8 @@ class RutherfordAnalysisMessenger : public G4UImessenger
 	private:
 		
 		G4UIdirectory*			fDirectory;
+		
+		G4UIcmdWithAString*		fFileOutCmd;
 
 		// Energy Spectrum dσ/dE
 		G4UIcmdWithAString*		fETitleCmd;
