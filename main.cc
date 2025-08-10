@@ -25,6 +25,5 @@ int main(int argc, char** argv)
 	RutherfordArgumentParser(uiManager, argc, argv);
 
 	delete runManager;
-	delete uiManager;
         return 0;
 }

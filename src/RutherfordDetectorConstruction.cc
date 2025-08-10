@@ -14,7 +14,7 @@ RutherfordDetectorConstruction::RutherfordDetectorConstruction() : G4VUserDetect
 
 RutherfordDetectorConstruction::~RutherfordDetectorConstruction()
 {
-
+	delete fMessenger;
 }
 
 void RutherfordDetectorConstruction::SetFoilThickness(G4double thickness)

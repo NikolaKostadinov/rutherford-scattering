@@ -27,6 +27,7 @@ RutherfordGeometryMessenger::RutherfordGeometryMessenger(RutherfordDetectorConst
 
 RutherfordGeometryMessenger::~RutherfordGeometryMessenger()
 {
+	delete fDirectory;
 	delete fWorldRadiusCmd;
 	delete fFoilRadiusCmd;
 	delete fFoilThicknessCmd;
