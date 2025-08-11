@@ -1,4 +1,5 @@
 #include "../include/RutherfordGeneratorAction.hh"
+
 #include <G4Alpha.hh>
 #include <G4SystemOfUnits.hh>
 
@@ -34,6 +35,11 @@ void RutherfordGeneratorAction::SetEnergy(G4double energy)
 void RutherfordGeneratorAction::SetDistance(G4double distance)
 {
 	fDistance = distance;
+}
+
+G4double RutherfordGeneratorAction::GetEnergy() const
+{
+	return fEnergy;
 }
 
 void RutherfordGeneratorAction::GeneratePrimaries(G4Event* event)

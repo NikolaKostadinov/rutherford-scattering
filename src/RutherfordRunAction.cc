@@ -1,8 +1,18 @@
 #include "../include/RutherfordRunAction.hh"
 
+#include <G4RunManager.hh>
+#include <G4AnalysisManager.hh>
+#include <G4SystemOfUnits.hh>
+
+#include <TFile.h>
+#include <TParameter.h>
+
+#include "../include/RutherfordGeneratorAction.hh"
+
 RutherfordRunAction::RutherfordRunAction() :
-	G4UserRunAction(),
+
 	fFileOut(DEFAULT_FILE_OUT),
+	fEnergy(DEFAULT_ENERGY),
 	fETitle(DEFAULT_ENERGY_TITLE),
 	fEBins(DEFAULT_ENERGY_BINS),
 	fEMin(DEFAULT_ENERGY_MIN),
@@ -18,6 +28,13 @@ RutherfordRunAction::RutherfordRunAction() :
 RutherfordRunAction::~RutherfordRunAction()
 {
 	delete fMessenger;
+
+	delete G4AnalysisManager::Instance();
+}
+
+void RutherfordRunAction::SetEnergy(G4double energy)
+{
+	fEnergy = energy;
 }
 
 void RutherfordRunAction::SetFileOut(G4String file)
@@ -68,10 +85,11 @@ void RutherfordRunAction::SetThetaMax(G4double max)
 void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 {
 	auto analysisManager = G4AnalysisManager::Instance();
-	
+
 	if (analysisManager)
 	{
 		analysisManager->OpenFile(fFileOut);
+		
 		analysisManager->CreateH1("histoEnergy", fETitle,     fEBins,     fEMin / MeV,     fEMax / MeV    );
 		analysisManager->CreateH1("histoTheta",  fThetaTitle, fThetaBins, fThetaMin / deg, fThetaMax / deg);
 	}
@@ -81,9 +99,24 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 {
 	auto analysisManager = G4AnalysisManager::Instance();
 	
+	auto generator = dynamic_cast<RutherfordGeneratorAction*>(
+		const_cast<G4VUserPrimaryGeneratorAction*>(
+			G4RunManager::GetRunManager()->GetUserPrimaryGeneratorAction()
+		)
+	);
+	
+	G4double	energy;
+	if (generator)	energy = generator->GetEnergy();
+	else		energy = DEFAULT_ENERGY;
+
 	if (analysisManager)
 	{
 		analysisManager->Write();
 		analysisManager->CloseFile();
+
+		TFile file(analysisManager->GetFileName().c_str(), "UPDATE");
+		TParameter<double> param("Energy", energy / MeV);
+		param.Write();
+		file.Close();
 	}
 }

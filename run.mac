@@ -4,22 +4,22 @@
 /geo/foil/thickness 1 um
 
 # PARTICLE GENERATION
-/gen/energy 5 MeV
+/gen/energy 5.0 MeV
 /gen/distance 1 cm
 
-/analysis/file .data/output.root
+/analysis/file .data/test/output0.root
 
 # ENERGY SPECTRUM HISTOGRAM
-/analysis/energy/bins 10000
+/analysis/energy/bins 1000
 /analysis/energy/min 4.0 MeV
 /analysis/energy/max 5.0 MeV
 
 # DIFFERENTIAL CROSS SECTION HISTOGRAM
-/analysis/theta/bins 1000
+/analysis/theta/bins 100
 /analysis/theta/min 0.0 deg
 /analysis/theta/max 10.0 deg
 
 # RUN
 /run/verbose 1
 /run/initialize
-/run/beamOn 1000
+/run/beamOn 10000

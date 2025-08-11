@@ -1,6 +1,8 @@
 #ifndef DEFAULTS_H
 #define DEFAULTS_H
 
+#include <G4SystemOfUnits.hh>
+
 #define RUTHERFORD_VERSION	"0.0.0"
 
 // DEFAULT GEOMETRY
