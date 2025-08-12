@@ -16,9 +16,13 @@ void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 	G4Track* track = step->GetTrack();
 	
 	G4int eventID = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID() + 1;
+	
+	const G4StepPoint* postStepPoint = step->GetPostStepPoint();
+	const G4VPhysicalVolume* postVolume = postStepPoint->GetPhysicalVolume();
 
-	if (track->GetDefinition()->GetParticleName() == "alpha")
-		if (track->GetTrackStatus() == fStopAndKill)
+	if (track->GetDefinition()->GetParticleName() == PARTICLE_NAME)
+		//if (track->GetTrackStatus() == fStopAndKill)
+		if (postVolume && postVolume->GetName() == WORLD_NAME)
 		{
 			auto direction = step->GetPostStepPoint()->GetMomentumDirection();
 			auto theta = direction.theta();

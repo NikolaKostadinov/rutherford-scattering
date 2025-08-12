@@ -6,12 +6,14 @@
 #define RUTHERFORD_VERSION	"0.0.0"
 
 // DEFAULT GEOMETRY
+#define WORLD_NAME		"Manchester"
+#define FOIL_NAME		"Rutherfoil"
 #define DEFAULT_WORLD_RADIUS	1.0 * m
 #define DEFAULT_FOIL_RADIUS	1.0 * cm
 #define DEFAULT_FOIL_THICKNESS	1.0 * um
 
 // DEFAULT GENERATED PARTICLE
-#define ALPHA_PARICLE		"alpha"
+#define PARTICLE_NAME		"alpha"
 #define DEFAULT_ENERGY		5.0 * MeV
 #define DEFAULT_DISTANCE	1.0 * cm
 

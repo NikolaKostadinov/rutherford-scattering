@@ -2,3 +2,4 @@
 __*__/
 build/
 *.root
+*env/

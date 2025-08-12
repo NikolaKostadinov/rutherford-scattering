@@ -9,9 +9,7 @@
 #include <G4SystemOfUnits.hh>
 
 #include "RutherfordGeometryMessenger.hh"
-
-#define WORLD_NAME "Manchester"
-#define FOIL_NAME  "Rutherfoil"
+#include "RutherfordDefaults.h"
 
 class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 {

@@ -10,6 +10,8 @@
 #include <G4ParticleDefinition.hh>
 #include <G4SystemOfUnits.hh>
 
+#include "RutherfordDefaults.h"
+
 class RutherfordSteppingAction : public G4UserSteppingAction 
 {
 	public:

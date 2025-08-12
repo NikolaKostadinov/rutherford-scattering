@@ -46,32 +46,32 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 		{
 			nEvents = argv[++i];
 		}
-		else if ((arg == "--energy-min") && i+1 < argc)
+		else if ((arg == "-i" || arg == "--energy-min") && i+1 < argc)
 		{
 			eMin = argv[++i];
 		}
-		else if ((arg == "--energy-max") && i+1 < argc)
+		else if ((arg == "-u" || arg == "--energy-max") && i+1 < argc)
 		{
 			eMax = argv[++i];
 		}
-		else if ((arg == "--energy-bins") && i+1 < argc)
+		else if ((arg == "-b" || arg == "--energy-bins") && i+1 < argc)
 		{
 			nEnergies = argv[++i];
 		}
 		else if (arg == "-h" || arg == "--help")
 		{
 			std::cout <<
-				"Usage: rutherford-scattering [options]\n"
-				"  -v / --version                  version\n"
-				"  -m / --macro <file>             macro file path (all other args are ignored if not false)\n"
-				"  -o / --output <file>            output analysis file path\n"
-				"  -z / --thickness <value in um>  foil thickness\n"
-				"  -e / --energy <value in MeV>    initial energy\n"
-				"  -d / --distance <value in cm>   initial distance\n"
-				"  -n / --n-events <value>         number of events\n"
-				"  --energy-min <value in MeV>     minimal final energy\n"
-				"  --energy-max <value in MeV>     maximum final energy\n"
-				"  --energy-bins <value>           number of final energy bins\n"
+				"Usage: rutherford-scattering [options]\n\n"
+				"  -v / --version                    version\n"
+				"  -m / --macro [file]               macro file path (all other args are ignored if not false)\n"
+				"  -o / --output [file]              output analysis file path\n"
+				"  -z / --thickness [value in um]    foil thickness\n"
+				"  -e / --energy [value in MeV]      initial energy\n"
+				"  -d / --distance [value in cm]     initial distance\n"
+				"  -n / --n-events [value]           number of events\n"
+				"  -i / --energy-min [value in MeV]  minimal final energy\n"
+				"  -u / --energy-max [value in MeV]  maximum final energy\n"
+				"  -b / --energy-bins [value]        number of final energy bins\n"
 				<< std::endl;
 			exit(0);
 		}
