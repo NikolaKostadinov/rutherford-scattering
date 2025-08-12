@@ -76,7 +76,7 @@ def main():
             # trunc_gauss_func.SetParameters(1, 0, 1)
             
             # Fit Specra
-            fit = hist.Fit("gaus", "QS")
+            fit = hist.Fit("gaus", "QSN")
 
             # Fit Parameters
             mean      = fit.Parameter(1)
@@ -140,7 +140,7 @@ def main():
     in_fwhm_graph.SetLineStyle(0)
 
     in_out_func = ROOT.TF1("funcEinEout", "pol1", min(energies_in), max(energies_in))
-    in_out_graph.Fit(in_out_func, "Q")
+    in_out_graph.Fit(in_out_func, "QN")
 
     a     = in_out_func.GetParameter(1)
     a_err = in_out_func.GetParError(1)

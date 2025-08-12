@@ -28,9 +28,9 @@
 //
 // DIFFERENTIAL CROSS SECTION
 #define DEFAULT_THETA_TITLE	"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
-#define DEFAULT_THETA_BINS	100
+#define DEFAULT_THETA_BINS	1000
 #define DEFAULT_THETA_MIN	0.0 * deg
-#define DEFAULT_THETA_MAX	10.0 * deg
+#define DEFAULT_THETA_MAX	180.0 * deg
 
 // RUN
 #define DEFAULT_N_EVENTS	1
