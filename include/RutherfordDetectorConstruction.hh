@@ -18,11 +18,13 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		RutherfordDetectorConstruction();
 		~RutherfordDetectorConstruction();
 		
-		void	SetFoilThickness(G4double);
-		void	SetFoilRadius(G4double);
-		void	SetWorldRadius(G4double);
+		void SetWorldRadius(G4double);
+		void SetFoilRadius(G4double);
+		void SetFoilThickness(G4double);
+		
+		G4double GetFoilThickness() const;
 
-		virtual	G4VPhysicalVolume* Construct() override;		
+		virtual G4VPhysicalVolume* Construct() override;		
 	
 	private:
 		

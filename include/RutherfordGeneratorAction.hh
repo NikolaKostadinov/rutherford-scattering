@@ -18,6 +18,7 @@ class RutherfordGeneratorAction : public G4VUserPrimaryGeneratorAction
 		void SetDistance(G4double);
 
 		G4double GetEnergy() const;
+		G4double GetDistance() const;
 
 		virtual void GeneratePrimaries(G4Event*) override;
 

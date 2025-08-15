@@ -8,11 +8,11 @@
 #include <TParameter.h>
 
 #include "../include/RutherfordGeneratorAction.hh"
+#include "../include/RutherfordDetectorConstruction.hh"
 
 RutherfordRunAction::RutherfordRunAction() :
 
 	fFileOut(DEFAULT_FILE_OUT),
-	fEnergy(DEFAULT_ENERGY),
 	fETitle(DEFAULT_ENERGY_TITLE),
 	fEBins(DEFAULT_ENERGY_BINS),
 	fEMin(DEFAULT_ENERGY_MIN),
@@ -30,11 +30,6 @@ RutherfordRunAction::~RutherfordRunAction()
 	delete fMessenger;
 
 	delete G4AnalysisManager::Instance();
-}
-
-void RutherfordRunAction::SetEnergy(G4double energy)
-{
-	fEnergy = energy;
 }
 
 void RutherfordRunAction::SetFileOut(G4String file)
@@ -99,15 +94,28 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 {
 	auto analysisManager = G4AnalysisManager::Instance();
 	
+	auto construction = dynamic_cast<RutherfordDetectorConstruction*>(
+		const_cast<G4VUserDetectorConstruction*>(
+			G4RunManager::GetRunManager()->GetUserDetectorConstruction()
+		)
+	);
 	auto generator = dynamic_cast<RutherfordGeneratorAction*>(
 		const_cast<G4VUserPrimaryGeneratorAction*>(
 			G4RunManager::GetRunManager()->GetUserPrimaryGeneratorAction()
 		)
 	);
 	
+	G4double	thickness;
+	if (generator)	thickness = construction->GetFoilThickness();
+	else		thickness = DEFAULT_FOIL_THICKNESS;
+	
 	G4double	energy;
 	if (generator)	energy = generator->GetEnergy();
 	else		energy = DEFAULT_ENERGY;
+
+	G4double	distance;
+	if (generator)	distance = generator->GetDistance();
+	else		distance = DEFAULT_DISTANCE;
 
 	if (analysisManager)
 	{
@@ -115,8 +123,16 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 		analysisManager->CloseFile();
 
 		TFile file(analysisManager->GetFileName().c_str(), "UPDATE");
-		TParameter<double> param("Energy", energy / MeV);
-		param.Write();
+		
+		TParameter<double> thicknessParameter("Thickness", thickness / um);
+		thicknessParameter.Write();
+		
+		TParameter<double> energyParameter("Energy", energy / MeV);
+		energyParameter.Write();
+		
+		TParameter<double> distanceParameter("Distance", distance / cm);
+		distanceParameter.Write();
+		
 		file.Close();
 	}
 }

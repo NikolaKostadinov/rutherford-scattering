@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import argparse
 
@@ -13,40 +14,54 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("dir", type=str, default="./.data", help="directory of simulation output")
     parser.add_argument("-s", "--simulation",  type=str,   default="./build/rutherford-scattering", help="path to simulation")
-    parser.add_argument("-n", "--n-events",    type=int,   default=1, help="number of events per run")
-    parser.add_argument("-i", "--energy-min",  type=float, default=4, help="minimum INITIAL energy (in MeV)")
-    parser.add_argument("-u", "--energy-max",  type=float, default=5, help="maximum INITIAL energy (in MeV)")
-    parser.add_argument("-e", "--energies",    type=int,   default=1, help="number of INITIAL energies")
-    parser.add_argument("-b", "--energy-bins", type=int,   default=1, help="number of FINAL energy bins")
+    parser.add_argument("-n", "--n-events",      type=int,   default=1,   help="number of events per run")
+    parser.add_argument("-t", "--thickness-min", type=float, default=1.0, help="minimum foil thickness (in um)")
+    parser.add_argument("-T", "--thickness-max", type=float, default=2.0, help="maximum foil thickness (in um)")
+    parser.add_argument("-z", "--thicknesses",   type=int,   default=1,  help="number of foil thicknesses")
+    parser.add_argument("-i", "--energy-min",    type=float, default=4.0, help="minimum INITIAL energy (in MeV)")
+    parser.add_argument("-u", "--energy-max",    type=float, default=5.0, help="maximum INITIAL energy (in MeV)")
+    parser.add_argument("-e", "--energies",      type=int,   default=1,   help="number of INITIAL energies")
+    parser.add_argument("-b", "--energy-bins",   type=int,   default=1,   help="number of FINAL energy bins")
     args = parser.parse_args()
+
+    thickness_min  = args.thickness_min * um
+    thickness_max  = args.thickness_max * um
+    n_thicknesses  = args.thicknesses
 
     energy_min  = args.energy_min * MeV
     energy_max  = args.energy_max * MeV
     n_energies  = args.energies
+
     energy_bins = args.energy_bins
+    
     n_events    = args.n_events
 
-    n_runs = n_energies # * n_distances * n_thicknesses
+    n_runs = n_thicknesses * n_energies
     
-    energies = [ energy_min + n*(energy_max - energy_min)/n_energies for n in range(n_energies) ]
+    thicknesses = [ thickness_min + n*(thickness_max - thickness_min)/n_thicknesses for n in range(n_thicknesses) ]
+    energies    = [ energy_min    + n*(energy_max    - energy_min   )/n_energies    for n in range(n_energies)    ]
 
-    E_BACK_WINDOW = energy_min/2
-
+    E_BACK_WINDOW  = energy_min/2
     new_energy_min = max(energy_min - E_BACK_WINDOW, 0.0)
     new_energy_max = max(energy_max - E_BACK_WINDOW, 0.0)
 
-    with alive_bar(n_runs) as bar:
+    with alive_bar(n_runs, title="simulating", bar="smooth", spinner="arrows_in", unit="runs") as bar:
         for energy in energies:
-            subprocess.run([
-                args.simulation,
-                "--energy" , str(energy / MeV),
-                "--energy-min", str(new_energy_min / MeV),
-                "--energy-max", str(new_energy_max / MeV),
-                "--energy-bins", str(energy_bins),
-                "--output" , f"{args.dir}/output-{(energy/MeV):.2f}MeV.root",
-                "--n-events", str(n_events)
-            ], stdout=subprocess.DEVNULL)
-            bar()
+            for thickness in thicknesses:
+                subprocess.run([
+                    args.simulation,
+                    "--thickness",  str(thickness / um),
+                    "--energy" ,    str(energy / MeV),
+                    "--energy-min", str(new_energy_min / MeV),
+                    "--energy-max", str(new_energy_max / MeV),
+                    "--energy-bins", str(energy_bins),
+                    "--output" , f"{args.dir}/output-{(thickness/um):.1f}um-{(energy/MeV):.3f}MeV-1.0cm.root",
+                    "--n-events", str(n_events)
+                ], stdout=subprocess.DEVNULL)
+                bar()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)

@@ -10,7 +10,6 @@ RutherfordSteppingAction::~RutherfordSteppingAction()
 
 }
 
-
 void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 {
 	G4Track* track = step->GetTrack();
@@ -21,7 +20,6 @@ void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 	const G4VPhysicalVolume* postVolume = postStepPoint->GetPhysicalVolume();
 
 	if (track->GetDefinition()->GetParticleName() == PARTICLE_NAME)
-		//if (track->GetTrackStatus() == fStopAndKill)
 		if (postVolume && postVolume->GetName() == WORLD_NAME)
 		{
 			auto direction = step->GetPostStepPoint()->GetMomentumDirection();
@@ -35,6 +33,5 @@ void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 			analysisManager->FillH1(1, theta / deg);
 
 			G4cout << "event [" << eventID << "] final energy: " << energy / MeV << " MeV" << G4endl;
-
 		}
 }

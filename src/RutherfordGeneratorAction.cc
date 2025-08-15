@@ -42,6 +42,10 @@ G4double RutherfordGeneratorAction::GetEnergy() const
 	return fEnergy;
 }
 
+G4double RutherfordGeneratorAction::GetDistance() const
+{
+	return fDistance;
+}
 void RutherfordGeneratorAction::GeneratePrimaries(G4Event* event)
 {
 	fParticleGun->SetParticleEnergy(fEnergy);

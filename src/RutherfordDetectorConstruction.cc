@@ -17,9 +17,9 @@ RutherfordDetectorConstruction::~RutherfordDetectorConstruction()
 	delete fMessenger;
 }
 
-void RutherfordDetectorConstruction::SetFoilThickness(G4double thickness)
+void RutherfordDetectorConstruction::SetWorldRadius(G4double radius)
 {
-	fFoilThickness = thickness;
+	fWorldRadius = radius;
 }
 
 void RutherfordDetectorConstruction::SetFoilRadius(G4double radius)
@@ -27,9 +27,14 @@ void RutherfordDetectorConstruction::SetFoilRadius(G4double radius)
 	fFoilRadius = radius;
 }
 
-void RutherfordDetectorConstruction::SetWorldRadius(G4double radius)
+void RutherfordDetectorConstruction::SetFoilThickness(G4double thickness)
 {
-	fWorldRadius = radius;
+	fFoilThickness = thickness;
+}
+
+G4double RutherfordDetectorConstruction::GetFoilThickness() const
+{
+	return fFoilThickness;
 }
 
 G4VPhysicalVolume* RutherfordDetectorConstruction::Construct() 

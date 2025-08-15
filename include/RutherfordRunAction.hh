@@ -13,8 +13,6 @@ class RutherfordRunAction : public G4UserRunAction
 		RutherfordRunAction();
 		~RutherfordRunAction();
 
-		void SetEnergy(G4double);
-
 		void SetFileOut(G4String);
 		
 		void SetETitle(G4String);
@@ -32,8 +30,6 @@ class RutherfordRunAction : public G4UserRunAction
 
 	private:
 		
-		G4double			fEnergy;
-
 		G4String			fFileOut;
 
 		G4String			fETitle;
