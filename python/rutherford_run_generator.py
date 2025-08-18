@@ -12,16 +12,16 @@ def main():
     # Argument Parser
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("dir", type=str, default="./.data", help="directory of simulation output")
-    parser.add_argument("-s", "--simulation",  type=str,   default="./build/rutherford-scattering", help="path to simulation")
-    parser.add_argument("-n", "--n-events",      type=int,   default=1,   help="number of events per run")
-    parser.add_argument("-t", "--thickness-min", type=float, default=1.0, help="minimum foil thickness (in um)")
-    parser.add_argument("-T", "--thickness-max", type=float, default=2.0, help="maximum foil thickness (in um)")
-    parser.add_argument("-z", "--thicknesses",   type=int,   default=1,  help="number of foil thicknesses")
-    parser.add_argument("-i", "--energy-min",    type=float, default=4.0, help="minimum INITIAL energy (in MeV)")
-    parser.add_argument("-u", "--energy-max",    type=float, default=5.0, help="maximum INITIAL energy (in MeV)")
-    parser.add_argument("-e", "--energies",      type=int,   default=1,   help="number of INITIAL energies")
-    parser.add_argument("-b", "--energy-bins",   type=int,   default=1,   help="number of FINAL energy bins")
+    parser.add_argument("output_dir",            type=str,   default="./.data",                       help="directory of simulation output")
+    parser.add_argument("-s", "--simulation",    type=str,   default="./build/rutherford-scattering", help="path to simulation")
+    parser.add_argument("-n", "--n-events",      type=int,   default=1,                               help="number of events per run")
+    parser.add_argument("-t", "--thickness-min", type=float, default=1.0,                             help="minimum foil thickness (in um)")
+    parser.add_argument("-T", "--thickness-max", type=float, default=2.0,                             help="maximum foil thickness (in um)")
+    parser.add_argument("-z", "--thicknesses",   type=int,   default=1,                               help="number of foil thicknesses")
+    parser.add_argument("-i", "--energy-min",    type=float, default=4.0,                             help="minimum INITIAL energy (in MeV)")
+    parser.add_argument("-u", "--energy-max",    type=float, default=5.0,                             help="maximum INITIAL energy (in MeV)")
+    parser.add_argument("-e", "--energies",      type=int,   default=1,                               help="number of INITIAL energies")
+    parser.add_argument("-b", "--energy-bins",   type=int,   default=1,                               help="number of FINAL energy bins")
     args = parser.parse_args()
 
     thickness_min  = args.thickness_min * um
@@ -50,13 +50,13 @@ def main():
             for thickness in thicknesses:
                 subprocess.run([
                     args.simulation,
-                    "--thickness",  str(thickness / um),
-                    "--energy" ,    str(energy / MeV),
-                    "--energy-min", str(new_energy_min / MeV),
-                    "--energy-max", str(new_energy_max / MeV),
+                    "--thickness",   str(thickness / um),
+                    "--energy" ,     str(energy / MeV),
+                    "--energy-min",  str(new_energy_min / MeV),
+                    "--energy-max",  str(new_energy_max / MeV),
                     "--energy-bins", str(energy_bins),
-                    "--output" , f"{args.dir}/output-{(thickness/um):.1f}um-{(energy/MeV):.3f}MeV-1.0cm.root",
-                    "--n-events", str(n_events)
+                    "--output" ,     f"{args.dir}/output-{(thickness/um):.1f}um-{(energy/MeV):.3f}MeV-1.0cm.root",
+                    "--n-events",    str(n_events)
                 ], stdout=subprocess.DEVNULL)
                 bar()
 

@@ -159,72 +159,78 @@ def main():
     n_energies_in = len(unique_energies_in)
     n_runs_fitted = len(configs)
 
-    # Local Graphs
-    Ein_Eout_graphs = [ ROOT.TGraphErrors(n_runs_fitted) for _ in unique_thicknesses ]
-    Ein_FWHM_graphs = [ ROOT.TGraphErrors(n_runs_fitted) for _ in unique_thicknesses ]
-    dz_dE_graphs    = [ ROOT.TGraphErrors(n_runs_fitted) for _ in unique_energies_in ]
+    in_out_graphs  = [ ]
+    in_fwhm_graphs = [ ]
+    for thickness in unique_thicknesses:
 
-    # Global Graphs
-    Ein_dEdz_graph = ROOT.TGraphErrors(n_runs_fitted)
+        in_out_graph  = ROOT.TGraphErrors(n_runs_fitted)
+        in_fwhm_graph = ROOT.TGraphErrors(n_runs_fitted)
+        
+        in_out_graphs.append(in_out_graph)
+        in_fwhm_graphs.append(in_fwhm_graph)
+    
+    dE_dz_graph = ROOT.TGraphErrors(n_runs_fitted)
 
     n = 0
     with alive_bar(n_runs_fitted, title="filling data   ", bar="smooth", spinner="squares", unit="runs") as bar:
         for config in configs:
-            
-            # Find Corresponding Graph
-            dz_index = unique_thicknesses.index(config.dz)
-            Ein_Eout_graph = Ein_Eout_graphs[dz_index]
-            Ein_FWHM_graph = Ein_FWHM_graphs[dz_index]
-            #
-            Ein_index = unique_energies_in.index(config.Ein)
-            dz_dE_graph = dz_dE_graphs[Ein_index]
-
-            Ein_Eout_graph.SetPoint(n,      config.Ein     / MeV, config.Eout     / MeV)
-            Ein_Eout_graph.SetPointError(n, config.Ein_err / MeV, config.Eout_err / MeV)
         
-            Ein_FWHM_graph.SetPoint(n,      config.Ein     / MeV, config.FWHM()     / MeV)
-            Ein_FWHM_graph.SetPointError(n, config.Ein_err / MeV, config.FWHM_err() / MeV)
+            index = unique_thicknesses.index(config.dz)
+            in_out_graph  = in_out_graphs[index]
+            in_fwhm_graph = in_fwhm_graphs[index]
+
+            in_out_graph.SetPoint(n,      config.Ein     / MeV, config.Eout     / MeV)
+            in_out_graph.SetPointError(n, config.Ein_err / MeV, config.Eout_err / MeV)
+        
+            in_fwhm_graph.SetPoint(n,      config.Ein     / MeV, config.FWHM()     / MeV)
+            in_fwhm_graph.SetPointError(n, config.Ein_err / MeV, config.FWHM_err() / MeV)
             
-            dz_dE_graph.SetPoint(n,      config.dz     / um, config.dE()     / MeV)
-            dz_dE_graph.SetPointError(n, config.dz_err / um, config.dE_err() / MeV)
+            print(f"{((config.dE()/config.dz)/(MeV/um)):.4f MeV/um")
+            dE_dz_graph.SetPoint(n, config.Ein     / MeV, config.dE()    /config.dz / (MeV/um))
+            dE_dz_graph.SetPoint(n, config.Ein_err / MeV, config.dE_err()/config.dz / (MeV/um))
 
             n += 1
             bar()
 
     file = ROOT.TFile.Open(args.output_file, "RECREATE")
     
-    n = 0
-    for Ein, dz_dE_graph in zip(unique_energies_in, dz_dE_graphs):
-        dz_dE_func = ROOT.TF1("funcEinEout", "pol1", energy_in_min / MeV, energy_in_max / MeV)
-        dz_dE_fit = dz_dE_graph.Fit(dz_dE_func, "QES")
-        dEdz     = dz_dE_func.GetParameter(1) * MeV
-        dEdz_err = dz_dE_func.GetParError(1) * MeV
+    #n = 0
+    for thickness, in_out_graph, in_fwhm_graph in zip(unique_thicknesses, in_out_graphs, in_fwhm_graphs):
+    #    in_out_func = ROOT.TF1("funcEinEout", "pol1", energy_in_min / MeV, energy_in_max / MeV)
+    #    in_out_graph.Fit(in_out_func, "QE")
+    #    scale     = in_out_func.GetParameter(1)
+    #    scale_err = in_out_func.GetParError(1)
+    #    dE        = in_out_func.GetParameter(0) * MeV
+    #    dE_err    = in_out_func.GetParError(0) * MeV
+    #    
+    #    dE_dz_graph.SetPoint(n,      thickness / um, -dE     / MeV)
+    #    dE_dz_graph.SetPointError(n, 0.0,             dE_err / MeV)
+
+        in_out_graph.GetXaxis().SetTitle("E_in  [MeV]")
+        in_out_graph.GetYaxis().SetTitle("E_out [MeV]")
+        in_out_graph.SetLineStyle(0)
+        in_out_graph.Write("graphEinEout")
+
+        in_fwhm_graph.GetXaxis().SetTitle("E_in [MeV]")
+        in_fwhm_graph.GetYaxis().SetTitle("FWHM [MeV]")
+        in_fwhm_graph.SetLineStyle(0)
+        in_fwhm_graph.Write("graphEinFWHM")
         
-        Ein_dEdz_graph.SetPoint(n,      Ein / MeV, dEdz     / (MeV/um))
-        Ein_dEdz_graph.SetPointError(n, 0.0,       dEdz_err / (MeV/um))
+    #    n += 1
 
-        dz_dE_graph.GetXaxis().SetTitle("dz [um]")
-        dz_dE_graph.GetYaxis().SetTitle("dE [MeV]")
-        dz_dE_graph.SetLineStyle(0)
-        dz_dE_graph.Write(f"graphDzdE")
+    #dE_dz_func = ROOT.TF1("funcDEDZ", "pol1", energy_in_min / MeV, energy_in_max / MeV)
+    #dE_dz_graph.Fit(dE_dz_func, "QE")
+    #dE_dz     = dE_dz_func.GetParameter(1) * MeV / um
+    #dE_dz_err = dE_dz_func.GetParError(1) * MeV / um
+    #dE0       = dE_dz_func.GetParameter(0) * MeV
+    #dE0_err   = dE_dz_func.GetParError(0) * MeV
+    #print(f"dE/dz = {(dE_dz / (MeV/mm)):.2f} +- {(dE_dz_err / (MeV/mm)):.2f} MeV/mm")
+    #print(f"dE0   = {(dE0 / MeV):.2f} +- {(dE0_err / MeV):.2f}")
 
-        n += 1
-
-    for Ein_Eout_graph, Ein_FWHM_graph in zip(Ein_Eout_graphs, Ein_FWHM_graphs):
-        Ein_Eout_graph.GetXaxis().SetTitle("E_in  [MeV]")
-        Ein_Eout_graph.GetYaxis().SetTitle("E_out [MeV]")
-        Ein_Eout_graph.SetLineStyle(0)
-        Ein_Eout_graph.Write("graphEinEout")
-
-        Ein_FWHM_graph.GetXaxis().SetTitle("E_in [MeV]")
-        Ein_FWHM_graph.GetYaxis().SetTitle("FWHM [MeV]")
-        Ein_FWHM_graph.SetLineStyle(0)
-        Ein_FWHM_graph.Write("graphEinFWHM")
-        
-    Ein_dEdz_graph.GetXaxis().SetTitle("E_in  [MeV]")
-    Ein_dEdz_graph.GetYaxis().SetTitle("dE/dz [MeV/um]")
-    Ein_dEdz_graph.SetLineStyle(0)
-    Ein_dEdz_graph.Write("graphEinDEdz")
+    dE_dz_graph.GetXaxis().SetTitle("E_in [MeV]")
+    dE_dz_graph.GetYaxis().SetTitle("dE/dz [MeV/um]")
+    dE_dz_graph.SetLineStyle(0)
+    dE_dz_graph.Write("graphDEDZ")
     
     file.Close()
     

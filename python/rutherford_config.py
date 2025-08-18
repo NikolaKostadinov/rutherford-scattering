@@ -25,7 +25,7 @@ class RutherfordConfig:
         return self.Ein - self.Eout
 
     def dE_err(self):
-        return sqrt(self.Ein_err**2 + self.E_out**2)
+        return sqrt(self.Ein_err**2 + self.Eout_err**2)
     
     def FWHM(self):
             return FWHM_CONST * self.sigmaE
