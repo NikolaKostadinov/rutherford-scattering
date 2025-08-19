@@ -98,16 +98,53 @@ For a 1um thick gold foil one can calculate that the energies for this threshold
 
 [ low energy regime ]----->( 1.45 MeV )----->[ mid energy regime ]----->( 31.7 MeV )----->[ high energy regime ]
 
+
 PROGRAMS:
 	
 * simulation (executable): rutherford-scattering
 * run generator (script):  rutherford_run_generator.py
 * analyzer (script):       rutherford_analuzer.py
 
-MAKE SIMULATION:
+
+SIMULATION COMPILATION:
+
+To compile the simulation make a build directory.
+Setup `CMake` and `make` the simulation.
 
 $ make
 
-RUN SIMULATION (MACRO FILE):
 
-$ rutherford-scattering --macro run.mac
+RUN SIMULATION:
+
+After the simulation is comiled, locate it in your build directory and execute it with your desired parameters.
+There are two ways to do that.
+You can write a macro file for `Geant4` like `run.mac` and provide it to the simulation:
+
+$ rutherford-scattering --macro [macro file path]
+
+You can also provide the desired parameters inline:
+
+$ rutherford-scattering \\
+	--output [output analysis file path] \\
+	--thickness [foil thickness (in um)] \\
+	--energy [INITIAL energy (in MeV)] \\
+	--distance [INITIAL distance (in cm)] \\
+	--n-events [number of events] \\
+	--energy-min [minimal FINAL energy (in MeV)] \\
+	--energy-max [maximum FINAL energy (in MeV)] \\
+	--energy-bins [number of FINAL energy bins]
+
+If you want to specify a range of initial conditions you would need to run the simulation many times.
+This task is automized by the `Python` script `rutherford_run_generator.py` which can run as many as you want concurent simulation:
+
+$ python rutherford_run_generator.py [output directory] \\
+	--simulation [path to simulation] \\
+	--jobs [number of concurent jobs] \\
+	--n-events [number of events per run] \\
+	--thickness-min [minimum foil thickness (in um)] \\
+	--thickness-max [maximum foil thickness (in um)] \\
+	--thicknesses [number of foil thicknesses] \\
+	--energy-min [minimum INITIAL energy (in MeV)] \\
+	--energy-max [maximum INITIAL energy (in MeV)] \\
+	--energies [number of INITIAL energies] \\
+	--energy-bins [number of FINAL energy bins]

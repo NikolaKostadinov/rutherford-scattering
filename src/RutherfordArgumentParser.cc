@@ -18,7 +18,7 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 	{
 		std::string arg = argv[i];
 		
-		if (arg == "-v" || arg == "--version")
+		if (arg == "--version")
 		{
 			std::cout << RUTHERFORD_VERSION << std::endl;
 		}
@@ -62,7 +62,7 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 		{
 			std::cout <<
 				"Usage: rutherford-scattering [options]\n\n"
-				"  -v / --version                    version\n"
+				"       --version                    version\n"
 				"  -m / --macro [file]               macro file path (all other args are ignored if not false)\n"
 				"  -o / --output [file]              output analysis file path\n"
 				"  -z / --thickness [value in um]    foil thickness\n"
