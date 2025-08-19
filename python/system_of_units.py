@@ -1,13 +1,17 @@
+import scipy.constants
+
+HBAR_C = scipy.constants.hbar * scipy.constants.c / scipy.constants.e # in [eV*m]
+
 # ENERGY UNITS
 eV  = 1e+0
-keV = 1e+3
-MeV = 1e+6
-GeV = 1e+9
-TeV = 1e+12
+keV = 1e+3  * eV
+MeV = 1e+6  * eV
+GeV = 1e+9  * eV
+TeV = 1e+12 * eV
 
 # LENGTH UNITS
-nm = 1e-9
-um = 1e-6
-mm = 1e-3
-cm = 1e-2
-m  = 1e-0
+m  = 1 / HBAR_C / eV
+cm = 1e-2 * m
+mm = 1e-3 * m
+um = 1e-6 * m
+nm = 1e-9 * m

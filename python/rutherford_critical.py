@@ -1,17 +1,13 @@
-from particle        import Particle
-from system_of_units import *
+from rutherford_constants import *
+from rutherford_physics   import *
+
+def rutherford_critical_energy():
+
+    return 0.25 * ALPHA_MASS/ELECTRON_MASS * MEAN_EXCITATION_ENERGY
 
 def main():
 
-    electron = Particle.from_pdgid(11)
-    alpha    = Particle.from_pdgid(1000020040)
-
-    electron_mass = electron.mass * MeV
-    alpha_mass    = alpha.mass * MeV
-
-    I = 790 * eV
-
-    E_crit = alpha_mass/electron_mass/4 * I
+    E_crit = rutherford_critical_energy()
 
     print(f"critical energy: {(E_crit / MeV):.2f} MeV")
 

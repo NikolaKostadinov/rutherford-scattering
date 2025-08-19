@@ -5,7 +5,6 @@ import argparse
 import ROOT
 
 from rutherford_config    import RutherfordConfig
-from rutherford_critical  import rutherford_critical_energy
 from rutherford_constants import *
 from rutherford_physics   import *
 
@@ -60,9 +59,10 @@ def main():
             mean = hist.GetMean() * MeV
             #
             vavilov = vavilov_number(energy, mean, ALPHA_MASS, ELECTRON_MASS)
+            print(vavilov)
             if vavilov < args.vavilov_level:
                 if args.verbose:
-                    print(f"[WARNING] calculated LOW vavilov number: kappa = {vavilov:.1f} < {args.vavilov_level:.0f}")
+                    print(f"[WARNING] calculated LOW vavilov number: kappa = {vavilov:.1f} < {VAVILOV_THRESHOLD:.0f}")
                 bar()
                 continue
 
@@ -134,10 +134,10 @@ def main():
     
     unique_thicknesses = list(set([ config.dz  for config in configs ]))
     unique_energies_in = list(set([ config.Ein for config in configs ]))
-    
+
     energy_in_min = min(unique_energies_in)
     energy_in_max = max(unique_energies_in)
-    
+
     n_thicknesses = len(unique_thicknesses)
     n_energies_in = len(unique_energies_in)
     n_runs_fitted = len(configs)
