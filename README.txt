@@ -103,7 +103,7 @@ PROGRAMS:
 	
 * simulation (executable): rutherford-scattering
 * run generator (script):  rutherford_run_generator.py
-* analyzer (script):       rutherford_analuzer.py
+* analyzer (script):       rutherford_analyzer.py
 
 
 SIMULATION COMPILATION:

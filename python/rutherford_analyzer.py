@@ -181,9 +181,9 @@ def main():
         
         # Caculate Stopping Power
         dz_dE_func = ROOT.TF1("funcEinEout", "pol1", energy_in_min / MeV, energy_in_max / MeV)
-        dz_dE_fit = dz_dE_graph.Fit(dz_dE_func, "QES")
-        dEdz     = dz_dE_func.GetParameter(1) * MeV/um
-        dEdz_err = dz_dE_func.GetParError(1) * MeV/um
+        dz_dE_fit  = dz_dE_graph.Fit(dz_dE_func, "QES")
+        dEdz       = dz_dE_func.GetParameter(1) * MeV/um
+        dEdz_err   = dz_dE_func.GetParError(1) * MeV/um
        
         Ein_dEdz_graph.SetPoint(n,      Ein / MeV, dEdz     / (MeV/um))
         Ein_dEdz_graph.SetPointError(n, 0.0,       dEdz_err / (MeV/um))
