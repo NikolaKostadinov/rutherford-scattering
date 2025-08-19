@@ -98,12 +98,15 @@ For a 1um thick gold foil one can calculate that the energies for this threshold
 
 [ low energy regime ]----->( 1.45 MeV )----->[ mid energy regime ]----->( 31.7 MeV )----->[ high energy regime ]
 
+You can calculate the ranges of the regimes for a given geometry with the script `rutherford_scales.py`.
 
 PROGRAMS:
 	
-* simulation (executable): rutherford-scattering
-* run generator (script):  rutherford_run_generator.py
-* analyzer (script):       rutherford_analyzer.py
+* simulation (executable):           `rutherford-scattering`
+* run generator (script):            `rutherford_run_generator.py`
+* regime range calculation (script): `rutherford_scales.py`
+* regime range analyzer (script):    `rutherford_regimes.py`
+* general analyzer (script):         `rutherford_analyzer.py`
 
 
 SIMULATION COMPILATION:

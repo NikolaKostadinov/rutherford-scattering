@@ -21,10 +21,7 @@ def main():
     ROOT.gEnv.SetValue("WebGui.StartHttp", "no")
     ROOT.gErrorIgnoreLevel = ROOT.kFatal
 
-    mid_scale = vavilov_mode()
-    vavilov_max = vavilov_density(mid_scale)
-
-    thickness_min  = max(args.thickness_min * um, args.vavilov_level / vavilov_max)
+    thickness_min  = args.thickness_min * um
     thickness_max  = args.thickness_max * um
     n_thicknesses  = args.thicknesses
 
@@ -51,7 +48,7 @@ def main():
                 for i, thickness in enumerate(thicknesses)
             }
 
-            with alive_bar(n_thicknesses, title="calculating regime scales", bar="smooth", spinner="squares", unit=" geometries", dual_line=True) as bar:
+            with alive_bar(n_thicknesses, title="calculating regime scales", bar="smooth", spinner="circles", unit=" geometries", dual_line=True) as bar:
                 for future in as_completed(futures):
                     n = futures[future]
                     ir_cutoff, uv_cutoff = future.result()
