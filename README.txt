@@ -7,22 +7,22 @@ The analysis is based on `ROOT` written in `Python`.
 SIMULATION:
 
 This program simulates a run of multiple events.
-Each event is a Rutherford scattering of an alpha particle with a known initial energy (Ein).
+Each event is a Rutherford scattering of an alpha particle with a known initial energy `Ein`.
 It is directed to a target golden foil.
-The thickness of the foil is labeled as (dz).
+The thickness of the foil is labeled as `dz`.
 The particle passes through the foil.
-It scatters at an angle (theta), and it loses some energy (dE = Eout - Ein).
+It scatters at an angle `theta`, and it loses some energy `dE = Eout - Ein`.
 The scattering quantities are recorded in histograms.
 At the end of the run the histograms are saved in a `ROOT` file which can be further analyzed.
 
 
 
-                            +----+          /\
-                            |\    \   Eout  /
-                            | \    \       /
-                            |  \    \     /\ theta
-                            |   \    \   /_|_
-                            |    \    \ 
+                            +----+             /|
+                            |\    \     Eout   /
+                            | \    \          /
+                            |  \    \        /\  theta
+                            |   \    \      /_|_
+                            |    \    \
                Ein          |     \    \
     _                       |      +----+
    (_)      --------->      |      |    |
@@ -41,8 +41,8 @@ At the end of the run the histograms are saved in a `ROOT` file which can be fur
 PHYSICS:
 
 It is expected that the output spectrum should be normally distributed.
-This distribution should be centered around Eout = Ein + dE/dz * dz .
-The quantity dE/dz is the stopping power of the foil.
+This distribution should be centered around `Eout = Ein + dE/dz * dz`.
+The quantity `dE/dz` is the stopping power of the foil.
 The stopping power is expected to match the Bethe-Bloch formula:
 
 .-----------------------------------------------------------------------------------------------.
@@ -50,9 +50,9 @@ The stopping power is expected to match the Bethe-Bloch formula:
 '-----------------------------------------------------------------------------------------------'
 
 `e2/4pi` is the fine structure constant.
-`q` is the charge of the alpha particle which is q = +2 .
-`me` is the mass of the electron which is me = 551 keV .
-`Z` is the atomic number of the foil which is Z = 79 .
+`q` is the charge of the alpha particle which is `q = +2`.
+`me` is the mass of the electron which is `me = 551 keV`.
+`Z` is the atomic number of the foil which is `Z = 79`.
 `n` is the number density of the foil.
 `I` is the mean excitation energy defined by the geometrical average of the electrons' binding energy:
 
@@ -93,10 +93,10 @@ Here by `s` we mean the timelike Mandelstam variable which can be calculated by 
 | s = m2 + 2 * m * me * gamma + me2 |
 '-----------------------------------'
 
-Given a threshold value for the Vavilov number (like kappa = 10) one can calculate the two energies for which the Vavilov number is at the threshold.
+Given a threshold value for the Vavilov number (like `kappa = 10`) one can calculate the two energies for which the Vavilov number is at the threshold.
 For a 1um thick gold foil one can calculate that the energies for this threshold are around the values:
 
-( 0 MeV )------>(low energy regime)------>( 1.45 MeV )------>( mid energy regime )------>( 31.7 MeV )------>( high energy regime )------>...
+[ low energy regime ]----->( 1.45 MeV )----->[ mid energy regime ]----->( 31.7 MeV )----->[ high energy regime ]
 
 PROGRAMS:
 	
