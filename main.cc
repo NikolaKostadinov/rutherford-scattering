@@ -6,6 +6,7 @@
 #include <Randomize.hh>
 
 #include "include/RutherfordArgumentParser.hh"
+#include "include/RutherfordUnitDefinition.hh"
 #include "include/RutherfordPhysicsList.hh"
 #include "include/RutherfordDetectorConstruction.hh"
 #include "include/RutherfordActionInitialization.hh"
@@ -13,9 +14,11 @@
 int main(int argc, char** argv)
 {
 	CLHEP::HepRandom::setTheSeed(time(NULL));
-	
-	auto runManager = new G4RunManager();
 
+	auto runManager = new G4RunManager();
+	
+	RutherfordUnitDefinition();
+	
 	runManager->SetUserInitialization(new RutherfordPhysicsList());
 	runManager->SetUserInitialization(new RutherfordDetectorConstruction());
 	runManager->SetUserInitialization(new RutherfordActionInitialization());

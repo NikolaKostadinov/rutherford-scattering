@@ -106,8 +106,8 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 	);
 	
 	G4double	thickness;
-	if (generator)	thickness = construction->GetFoilThickness();
-	else		thickness = DEFAULT_FOIL_THICKNESS;
+	if (generator)	thickness = construction->GetDetectorThickness();
+	else		thickness = DEFAULT_DETECTOR_THICKNESS;
 	
 	G4double	energy;
 	if (generator)	energy = generator->GetEnergy();

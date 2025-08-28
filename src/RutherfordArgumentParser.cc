@@ -20,7 +20,8 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 		
 		if (arg == "--version")
 		{
-			std::cout << RUTHERFORD_VERSION << std::endl;
+			std::cout << RUTHERFORD << " " << RUTHERFORD_VERSION << std::endl;
+			exit(0);
 		}
 		else if ((arg == "-m" || arg == "--macro") && i+1 < argc)
 		{
@@ -62,16 +63,16 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 		{
 			std::cout <<
 				"Usage: rutherford-scattering [options]\n\n"
-				"       --version                    version\n"
-				"  -m / --macro [file]               macro file path (all other args are ignored if not false)\n"
-				"  -o / --output [file]              output analysis file path\n"
-				"  -z / --thickness [value in um]    foil thickness\n"
-				"  -e / --energy [value in MeV]      initial energy\n"
-				"  -d / --distance [value in cm]     initial distance\n"
-				"  -n / --n-events [value]           number of events\n"
-				"  -i / --energy-min [value in MeV]  minimal final energy\n"
-				"  -u / --energy-max [value in MeV]  maximum final energy\n"
-				"  -b / --energy-bins [value]        number of final energy bins\n"
+				"       --version                            version\n"
+				"  -m / --macro               [path to file] macro file path (all other args are ignored if macro file is provided)\n"
+				"  -o / --output              [path to file] output analysis file path\n"
+				"  -z / --thickness           [value in um]  foil thickness\n"
+				"  -e / --energy              [value in MeV] initial energy of particle\n"
+				"  -d / --distance            [value in cm]  initial distance of particle\n"
+				"  -n / --n-events            [value]        number of events\n"
+				"  -i / --energy-min          [value in MeV] minimum final energy of particle\n"
+				"  -u / --energy-max          [value in MeV] maximum final energy of particle\n"
+				"  -b / --energy-bins         [value]        number of final energy bins\n"
 				<< std::endl;
 			exit(0);
 		}
@@ -88,17 +89,16 @@ void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 	}
 	else
 	{
-		if (!output.empty())	uiManager->ApplyCommand("/analysis/file " + output);
-		if (!thickness.empty())	uiManager->ApplyCommand("/geo/foil/thickness " + thickness + " um");
-		if (!energy.empty())	uiManager->ApplyCommand("/gen/energy " + energy + " MeV");
-		if (!distance.empty())	uiManager->ApplyCommand("/gen/distance " + distance + " cm");
-		if (!eMin.empty())	uiManager->ApplyCommand("/analysis/energy/min " + eMin + " MeV");
-		if (!eMax.empty())	uiManager->ApplyCommand("/analysis/energy/max " + eMax + " MeV");
-		if (!nEnergies.empty())	uiManager->ApplyCommand("/analysis/energy/bins " + nEnergies);
+		if (!output.empty())	uiManager->ApplyCommand("/analysis/file "               + output);
+		if (!thickness.empty())	uiManager->ApplyCommand("/geometry/detector/thickness " + thickness + " um");
+		if (!energy.empty())	uiManager->ApplyCommand("/generate/energy "             + energy + " MeV");
+		if (!distance.empty())	uiManager->ApplyCommand("/generate/distance "           + distance + " cm");
+		if (!eMin.empty())	uiManager->ApplyCommand("/analysis/energy/min "         + eMin + " MeV");
+		if (!eMax.empty())	uiManager->ApplyCommand("/analysis/energy/max "         + eMax + " MeV");
+		if (!nEnergies.empty())	uiManager->ApplyCommand("/analysis/energy/bins "        + nEnergies);
 
 		uiManager->ApplyCommand("/run/initialize");
-		
 		if (!nEvents.empty())	uiManager->ApplyCommand("/run/beamOn " + nEvents);
-		else			uiManager->ApplyCommand("/run/beamOn " + DEFAULT_N_EVENTS);
+		else			uiManager->ApplyCommand("/run/beamOn " + DEFAULT_NUMBER_OF_EVENTS);
 	}
 }

@@ -13,7 +13,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 file(GLOB main    ${PROJECT_SOURCE_DIR}/main.cc)
 
 add_executable(rutherford-scattering ${main} ${sources} ${headers})
-target_include_directories(rutherford-scattering PRIVATE ${ROOT_LIBRARIES})
+
+target_include_directories(rutherford-scattering PRIVATE ${ROOT_INCLUDE_DIRS})
 target_link_libraries(rutherford-scattering ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 
 file(COPY ${MACRO_FILES} DESTINATION ${PROJECT_BINARY_DIR})

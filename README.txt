@@ -45,20 +45,20 @@ This distribution should be centered around `Eout = Ein + dE/dz * dz`.
 The quantity `dE/dz` is the stopping power of the foil.
 The stopping power is expected to match the Bethe-Bloch formula:
 
-.-----------------------------------------------------------------------------------------------.
-| dE/dz = - (e2/4pi)2 * 4pi * q2 / me * Z * n * 1/beta2 * ( log[2me/I * beta * gamma]  - beta2) |
-'-----------------------------------------------------------------------------------------------'
+.-------------------------------------------------------------------------------------------.
+| dE/dz = - (e2/4pi)2 * 4pi / me * Z * n * Q2/beta2 * ( log[2me/I * beta * gamma]  - beta2) |
+'-------------------------------------------------------------------------------------------'
 
 `e2/4pi` is the fine structure constant.
-`q` is the charge of the alpha particle which is `q = +2`.
+`Q` is the charge of the alpha particle which is `Q = +2`.
 `me` is the mass of the electron which is `me = 551 keV`.
 `Z` is the atomic number of the foil which is `Z = 79`.
-`n` is the number density of the foil.
+`n` is the number density of atoms in the foil. The quantity `Z * n` is known as the electron density.
 `I` is the mean excitation energy defined by the geometrical average of the electrons' binding energy:
 
-.----------------------.
-| logI = < log Ebind > |
-'----------------------'
+.-----------------------.
+| log I = < log Ebind > |
+'-----------------------'
 
 `beta` and `gamma` are the relativistic factors.
 They are derived from the alpha particle's energy and mass:
@@ -66,6 +66,9 @@ They are derived from the alpha particle's energy and mass:
 .-----------------.
 | gamma = E/m + 1 |
 '-----------------'
+
+For simplisity we will call the `log-beta2` expression as the Bethe-Bloch function.
+It is the correction to the classical `1/beta2` expectation of the stopping power.
 
 During the analysis of the simulation i found out that this expectation matches the simulation data only in a certain energy range.
 Considering energy spectra below or above this range results in unexpected behavior.

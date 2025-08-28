@@ -3,6 +3,7 @@
 
 #include <G4UImessenger.hh>
 #include <G4UIdirectory.hh>
+#include <G4UIcmdWithAnInteger.hh>
 #include <G4UIcmdWithADoubleAndUnit.hh>
 
 #include "RutherfordDefaults.h"
@@ -23,12 +24,12 @@ class RutherfordGeometryMessenger : public G4UImessenger
 		G4UIdirectory*			fDirectory;
 		
 		G4UIcmdWithADoubleAndUnit* 	fWorldRadiusCmd;
-		G4UIcmdWithADoubleAndUnit* 	fFoilRadiusCmd;
-		G4UIcmdWithADoubleAndUnit* 	fFoilThicknessCmd;
+		G4UIcmdWithAnInteger*	 	fDetectorAtomicNumberCmd;
+		G4UIcmdWithADoubleAndUnit* 	fDetectorNumberDensityCmd;
+		G4UIcmdWithADoubleAndUnit* 	fDetectorRadiusCmd;
+		G4UIcmdWithADoubleAndUnit* 	fDetectorThicknessCmd;
 		
 		RutherfordDetectorConstruction* fDetectorConstruction;
-
-
 };
 
 #endif

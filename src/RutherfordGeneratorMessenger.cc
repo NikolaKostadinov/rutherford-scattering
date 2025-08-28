@@ -4,16 +4,16 @@
 
 RutherfordGeneratorMessenger::RutherfordGeneratorMessenger(RutherfordGeneratorAction* generator) : fGenerator(generator)
 {
-	fDirectory = new G4UIdirectory("/gen/");
+	fDirectory = new G4UIdirectory("/generate/");
 	fDirectory->SetGuidance("Command for particle generation.");
 
-	fEnergyCmd = new G4UIcmdWithADoubleAndUnit("/gen/energy", this);
+	fEnergyCmd = new G4UIcmdWithADoubleAndUnit("/generate/energy", this);
 	fEnergyCmd->SetGuidance("Set inital alpha particle energy.");
 	fEnergyCmd->SetUnitCategory("Energy");
 	fEnergyCmd->SetDefaultValue(DEFAULT_ENERGY / MeV);
 	fEnergyCmd->SetDefaultUnit("MeV");
 
-	fDistanceCmd = new G4UIcmdWithADoubleAndUnit("/gen/distance", this);
+	fDistanceCmd = new G4UIcmdWithADoubleAndUnit("/generate/distance", this);
         fDistanceCmd->SetGuidance("Set inital alpha particle distance from target.");
         fDistanceCmd->SetUnitCategory("Length");
         fDistanceCmd->SetDefaultValue(DEFAULT_DISTANCE / cm);

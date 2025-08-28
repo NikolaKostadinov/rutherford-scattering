@@ -1,13 +1,15 @@
 # GEOMETRY
-/geo/world/radius 1 m
-/geo/foil/radius 1 cm
-/geo/foil/thickness 1 um
+/geometry/world/radius 1 m
+/geometry/detector/atomicNumber 79
+/geometry/detector/numberDensity 6e+22 1/cm3
+/geometry/detector/radius 1 cm
+/geometry/detector/thickness 1 um
 
 # PARTICLE GENERATION
-/gen/energy 5.0 MeV
-/gen/distance 1 cm
+/generate/energy 5.0 MeV
+/generate/distance 1 cm
 
-/analysis/file .data/test/output0.root
+/analysis/file output.root
 
 # ENERGY SPECTRUM HISTOGRAM
 /analysis/energy/bins 1000

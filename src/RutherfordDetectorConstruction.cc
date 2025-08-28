@@ -4,10 +4,11 @@
 
 RutherfordDetectorConstruction::RutherfordDetectorConstruction() : G4VUserDetectorConstruction()
 {
-	// Initialize with default values
-	fWorldRadius = DEFAULT_WORLD_RADIUS;
-	fFoilRadius = DEFAULT_FOIL_RADIUS;
-	fFoilThickness = DEFAULT_FOIL_THICKNESS;
+	fWorldRadius           = DEFAULT_WORLD_RADIUS;
+	fDetectorAtomicNumber  = DEFAULT_DETECTOR_ATOMIC_NUMBER;
+	fDetectorNumberDensity = DEFAULT_DETECTOR_NUMBER_DENSITY;
+	fDetectorRadius        = DEFAULT_DETECTOR_RADIUS;
+	fDetectorThickness     = DEFAULT_DETECTOR_THICKNESS;
 	
 	fMessenger = new RutherfordGeometryMessenger(this);
 }
@@ -22,31 +23,50 @@ void RutherfordDetectorConstruction::SetWorldRadius(G4double radius)
 	fWorldRadius = radius;
 }
 
-void RutherfordDetectorConstruction::SetFoilRadius(G4double radius)
+void RutherfordDetectorConstruction::SetDetectorAtomicNumber(G4int Z)
 {
-	fFoilRadius = radius;
+	fDetectorAtomicNumber = Z;
 }
 
-void RutherfordDetectorConstruction::SetFoilThickness(G4double thickness)
+void RutherfordDetectorConstruction::SetDetectorNumberDensity(G4double n)
 {
-	fFoilThickness = thickness;
+	fDetectorNumberDensity = n;
 }
 
-G4double RutherfordDetectorConstruction::GetFoilThickness() const
+void RutherfordDetectorConstruction::SetDetectorRadius(G4double radius)
 {
-	return fFoilThickness;
+	fDetectorRadius = radius;
+}
+
+void RutherfordDetectorConstruction::SetDetectorThickness(G4double thickness)
+{
+	fDetectorThickness = thickness;
+}
+
+G4double RutherfordDetectorConstruction::GetDetectorThickness() const
+{
+	return fDetectorThickness;
 }
 
 G4VPhysicalVolume* RutherfordDetectorConstruction::Construct() 
 {
 	// NIST Manager
-	auto nist 	= G4NistManager::Instance();
-    	auto air 	= nist->FindOrBuildMaterial("G4_AIR");
-	auto gold 	= nist->FindOrBuildMaterial("G4_Au");
+	auto nist = G4NistManager::Instance();
+
+	// Detector Material
+	auto     detectorElement  = nist->FindOrBuildElement(fDetectorAtomicNumber);
+	G4double detectorAtomMass = detectorElement->GetA() / CLHEP::Avogadro;
+	G4double detectorDensity  = detectorAtomMass * fDetectorNumberDensity;
+	//
+	auto detectorMaterial = new G4Material(DETECTOR_MATERIAL, detectorDensity, 1);
+	detectorMaterial->AddElement(detectorElement, 1);
 	
 	// Vacuum
-	G4Element*  hydrogen = new G4Element("Hydrogen", "H", 1., 1.01*g/mole);
-	G4Material* vacuum   = new G4Material("Vacuum", 1e-25*g/cm3, 1);
+	auto     hydrogen         = nist->FindOrBuildElement(HYDROGEN);
+	G4double hydrogenAtomMass = hydrogen->GetA() / CLHEP::Avogadro;
+	G4double vacuumDensity    = hydrogenAtomMass * VACUUM_NUMBER_DENSITY;
+	//
+	G4Material* vacuum   = new G4Material(VACUUM, vacuumDensity, 1);
 	vacuum->AddElement(hydrogen, 1);
 
 	// World Background
@@ -63,13 +83,13 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	);
 
 	// Golden Foil
-	auto solidFoil 	= new G4Box(FOIL_NAME, fFoilRadius, fFoilRadius, fFoilThickness/2);
-    	auto logicFoil 	= new G4LogicalVolume(solidFoil, gold, FOIL_NAME);
+	auto solidDetector = new G4Box(DETECTOR_NAME, fDetectorRadius, fDetectorRadius, fDetectorThickness/2);
+    	auto logicDetector = new G4LogicalVolume(solidDetector, detectorMaterial, DETECTOR_NAME);
 	new G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
-			logicFoil,		// placed logical volume
-			FOIL_NAME,		// name of volume
+			logicDetector,		// placed logical volume
+			DETECTOR_NAME,		// name of volume
 			logicWorld,		// parent volume
 			false,			// boolean opertion ?
 			0			// number of copies

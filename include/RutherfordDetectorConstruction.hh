@@ -19,18 +19,22 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		~RutherfordDetectorConstruction();
 		
 		void SetWorldRadius(G4double);
-		void SetFoilRadius(G4double);
-		void SetFoilThickness(G4double);
+		void SetDetectorAtomicNumber(G4int);
+		void SetDetectorNumberDensity(G4double);
+		void SetDetectorRadius(G4double);
+		void SetDetectorThickness(G4double);
 		
-		G4double GetFoilThickness() const;
+		G4double GetDetectorThickness() const;
 
 		virtual G4VPhysicalVolume* Construct() override;		
 	
 	private:
 		
-		G4double			fFoilThickness;
-		G4double			fFoilRadius;
 		G4double			fWorldRadius;
+		G4int				fDetectorAtomicNumber;
+		G4double			fDetectorNumberDensity;
+		G4double			fDetectorRadius;
+		G4double			fDetectorThickness;
 		
 		RutherfordGeometryMessenger*	fMessenger;
 };
