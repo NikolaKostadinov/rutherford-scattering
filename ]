@@ -12,7 +12,6 @@ class RutherfordArgument
 
 		G4String	GetLongFlag()  const;
 		G4String	GetShortFlag() const;
-		G4String	GetType()      const;
 		void		SetValue(G4String);
 		void		PrintDescription(int, int, int) const;
 		void		Execute(G4UImanager*) const;
@@ -28,4 +27,4 @@ class RutherfordArgument
 
 };
 
-#endif
+endif

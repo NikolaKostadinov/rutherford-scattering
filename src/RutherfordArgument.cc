@@ -1,5 +1,6 @@
 #include "../include/RutherfordArgument.hh"
 
+#include "../include/RutherfordDefaults.h"
 #include "../include/RutherfordCommands.h"
 
 RutherfordArgument::RutherfordArgument(G4String longFlag, G4String shortFlag, G4String command, G4String type, G4String description)
@@ -26,17 +27,27 @@ G4String RutherfordArgument::GetShortFlag() const
 	return fShortFlag;
 }
 
+G4String RutherfordArgument::GetType() const
+{
+	return fType;
+}
+
 void RutherfordArgument::SetValue(G4String value)
 {
 	fValue = value;
 }
 
-void RutherfordArgument::PrintDescription() const
+void RutherfordArgument::PrintDescription(int longSize, int shortSize, int typeSize) const
 {
+	// --flag / -f [type] description
 	G4cout << fLongFlag;
-	if (fLongFlag != fShortFlag)
-		G4cout << " / " << fShortFlag;
-	G4cout << " [" << fType << "] ";
+	G4cout << std::string((longSize + MARGIN_SIZE) - fLongFlag.size(), ' ');
+	G4cout << "/";
+	G4cout << std::string(MARGIN_SIZE, ' ');
+	G4cout << fShortFlag;
+	G4cout << std::string((shortSize + MARGIN_SIZE) - fShortFlag.size(), ' ');
+	G4cout << "[" << fType << "]";
+	G4cout << std::string((typeSize + MARGIN_SIZE) - fType.size(), ' ');
 	G4cout << fDescription;
 	G4cout << G4endl;
 }

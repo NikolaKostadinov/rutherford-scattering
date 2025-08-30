@@ -7,10 +7,11 @@
 #define RUTHERFORD_PROGRAM		"rutherford-scattering"
 #define RUTHERFORD_VERSION		"v0.2"
 
-
 #define VERSION_FLAG			"--version"
 #define HELP_SHORT_FLAG			"-h"
 #define HELP_LONG_FLAG			"--help"
+#define TAB_SIZE			8
+#define MARGIN_SIZE			3
 
 // DEFAULT UNITS
 #define DEFAULT_ENERGY_UNIT		"MeV"

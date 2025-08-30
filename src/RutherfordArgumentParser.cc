@@ -10,14 +10,55 @@ void RutherfordPrintVersion()
 
 void RutherfordPrintHelp(const std::vector<RutherfordArgument>& arguments)
 {
-	G4cout << RUTHERFORD_PROGRAM << " [options]" << G4endl;
-	G4cout << "\t" << VERSION_FLAG << " version" << G4endl;
-	G4cout << "\t" << HELP_LONG_FLAG << " / " << HELP_SHORT_FLAG << " help" << G4endl;
+	int longSize   = 0;
+	int shortSize  = 0;
+	int typeSize   = 0;
+
 	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
 	{
-		G4cout << "\t";
-		argument->PrintDescription();
+		int thisLongSize  = argument->GetLongFlag().size();
+		int thisShortSize = argument->GetShortFlag().size();
+		int thisTypeSize  = argument->GetType().size();
+
+		if (longSize  < thisLongSize)  longSize  = thisLongSize;
+		if (shortSize < thisShortSize) shortSize = thisShortSize;
+		if (typeSize  < thisTypeSize)  typeSize  = thisTypeSize;
 	}
+	
+	// rutherford-scattering [options]
+	G4cout << RUTHERFORD_PROGRAM;
+	G4cout << std::string((TAB_SIZE + longSize + MARGIN_SIZE + 1 + MARGIN_SIZE + shortSize + MARGIN_SIZE) - (sizeof(RUTHERFORD_PROGRAM) - 1), ' ');
+	G4cout << "[options]";
+	G4cout << G4endl;
+	G4cout << G4endl;
+	
+	// --version
+	G4cout << std::string(TAB_SIZE, ' ');
+	G4cout << VERSION_FLAG;
+	G4cout << std::string((longSize + MARGIN_SIZE + 1 + MARGIN_SIZE + shortSize + MARGIN_SIZE + 1 + typeSize + 1 + MARGIN_SIZE) - (sizeof(VERSION_FLAG) - 1), ' ');
+	G4cout << "version of " << RUTHERFORD_PROGRAM;
+	G4cout << G4endl;
+	
+	// --help / -h
+	G4cout << std::string(TAB_SIZE, ' ');
+	G4cout << HELP_LONG_FLAG;
+	G4cout << std::string((longSize + MARGIN_SIZE) - (sizeof(HELP_LONG_FLAG) - 1), ' ');
+	G4cout << "/";
+	G4cout << std::string(MARGIN_SIZE, ' ');
+	G4cout << HELP_SHORT_FLAG;
+	G4cout << std::string((shortSize + MARGIN_SIZE + 1 + typeSize + 1 + MARGIN_SIZE) - (sizeof(HELP_SHORT_FLAG) - 1), ' ');
+	G4cout << "help (this is help)";
+	G4cout << G4endl;
+	
+	// --flag / -f [type] description
+	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
+	{
+		G4cout << std::string(TAB_SIZE, ' ');
+		argument->PrintDescription(longSize, shortSize, typeSize);
+	}
+
+	G4cout << G4endl;
+
 }
 
 void RutherfordPrintUnknownFlag(G4String flag)

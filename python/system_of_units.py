@@ -33,3 +33,9 @@ cm3 = cm**3
 mm3 = mm**3
 um3 = um**3
 nm3 = nm**3
+
+def str_to_value(string_value):
+    # works for now but still not perfect
+    splitted = string_value.split(" ")
+    listed = list(filter("".__ne__, splitted))
+    return eval("*".join(listed))
