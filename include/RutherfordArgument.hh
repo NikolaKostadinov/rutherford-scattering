@@ -1,0 +1,30 @@
+#ifndef ARGUMENT_HH
+#define ARGUMENT_HH
+
+#include <G4UImanager.hh>
+
+class RutherfordArgument
+{
+	public:
+		
+		RutherfordArgument(G4String longFlag, G4String shortFlag, G4String command, G4String type, G4String description);
+		~RutherfordArgument();
+
+		G4String	GetLongFlag()  const;
+		G4String	GetShortFlag() const;
+		void		SetValue(G4String);
+		void		PrintDescription() const;
+		void		Execute(G4UImanager*) const;
+
+	private:
+
+		G4String fLongFlag;
+		G4String fShortFlag;
+		G4String fCommand;
+		G4String fValue;
+		G4String fType;
+		G4String fDescription;
+
+};
+
+#endif

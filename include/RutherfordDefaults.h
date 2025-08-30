@@ -3,12 +3,24 @@
 
 #include <G4SystemOfUnits.hh>
 
-#define RUTHERFORD			"Rutherford Scattering"
+#define RUTHERFORD_NAME			"Rutherford Scattering"
+#define RUTHERFORD_PROGRAM		"rutherford-scattering"
 #define RUTHERFORD_VERSION		"v0.2"
+
+
+#define VERSION_FLAG			"--version"
+#define HELP_SHORT_FLAG			"-h"
+#define HELP_LONG_FLAG			"--help"
+
+// DEFAULT UNITS
+#define DEFAULT_ENERGY_UNIT		"MeV"
+#define DEFAULT_SHORT_LENGHT_UNIT	"um"
+#define DEFAULT_MID_LENGHT_UNIT		"mm"
+#define DEFAULT_LONG_LENGHT_UNIT	"cm"
 
 // DEFAULT VACUUM
 #define VACUUM				"Vacuum"
-#define HYDROGEN			1
+#define VACUUM_ATOMIC_NUMBER		1
 #define VACUUM_NUMBER_DENSITY		0.06 * 1/cm3
 
 // DEFAULT DETECTOR MATERIAL
@@ -29,6 +41,7 @@
 #define DEFAULT_DISTANCE		1.0 * cm
 
 // DEFAULT ROOT HISTOGRAMS
+//
 #define DEFAULT_FILE_OUT		"output.root"
 //
 // ENERGY SPECTRUM

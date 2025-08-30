@@ -1,25 +1,45 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#define GEOMETRY_CMD	"/geometry"
-#define WORLD_CMD	"/world"
-#define DETECTOR_CMD	"/detector"
-#define RADIUS_CMD	"/radius"
-#define THICKNESS_CMD	"/thickness"
+#define DELIM				" "
+#define NEW				"\n"
 
-#define GENERATE_CMD	"/generate"
-#define ENERGY_CMD	"/energy"
-#define DISTANCE_CMD	"/distance"
+#define GEOMETRY_CMD			"/geometry"
+#define WORLD_CMD			"/world"
+#define DETECTOR_CMD			"/detector"
+#define ATOMIC_NUMBER_CMD		"/atomicNumber"
+#define NUMBER_DENSITY_CMD		"/numberDensity"
+#define RADIUS_CMD			"/radius"
+#define THICKNESS_CMD			"/thickness"
 
-#define ANALYSIS_CMD	"/analysis"
-#define THETA_CMD	"/theta"
-#define	MIN_CMD		"/min"
-#define	MAX_CMD		"/max"
-#define BINS_CMD	"/bins"
+#define GENERATE_CMD			"/generate"
+#define ENERGY_CMD			"/energy"
+#define DISTANCE_CMD			"/distance"
 
-#define RUN_CMD		"/run"
-#define BEAM_ON_CMD	"/beamON"
+#define ANALYSIS_CMD			"/analysis"
+#define FILE_CMD			"/file"
+#define THETA_CMD			"/theta"
+#define	MIN_CMD				"/min"
+#define	MAX_CMD				"/max"
+#define BINS_CMD			"/bins"
 
-#define DELIM		" "
+#define RUN_CMD				"/run"
+#define INIT_CMD			"/initialize"
+#define BEAM_ON_CMD			"/beamON"
+
+#define CONTROL_CMD			"/control"
+#define EXECUTE_CMD			"/execute"
+
+#define MACRO_CMD			CONTROL_CMD EXECUTE_CMD
+#define OUTPUT_CMD			ANALYSIS_CMD FILE_CMD
+#define DETECTOR_ATOMIC_NUMBER_CMD	GEOMETRY_CMD DETECTOR_CMD ATOMIC_NUMBER_CMD
+#define DETECTOR_NUMBER_DENSITY_CMD	GEOMETRY_CMD DETECTOR_CMD ATOMIC_NUMBER_CMD
+#define DETECTOR_THICKNESS_CMD		GEOMETRY_CMD DETECTOR_CMD THICKNESS_CMD
+#define PARTICLE_ENERGY_CMD		GENERATE_CMD ENERGY_CMD
+#define PARTICLE_DISTANCE_CMD		GENERATE_CMD DISTANCE_CMD
+#define ANALYSIS_ENERGY_MIN_CMD		ANALYSIS_CMD ENERGY_CMD MIN_CMD
+#define ANALYSIS_ENERGY_MAX_CMD		ANALYSIS_CMD ENERGY_CMD MAX_CMD
+#define ANALYSIS_ENERGY_BINS_CMD	ANALYSIS_CMD ENERGY_CMD BINS_CMD
+#define RUN_SIMULATION_CMD		RUN_CMD INIT_CMD NEW RUN_CMD BEAM_ON_CMD
 
 #endif

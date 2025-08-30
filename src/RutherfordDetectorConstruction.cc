@@ -53,25 +53,23 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	// NIST Manager
 	auto nist = G4NistManager::Instance();
 
+	// Vacuum Material
+	G4Element*	vacuumElement		= nist->FindOrBuildElement(VACUUM_ATOMIC_NUMBER);
+	G4double	vacuumAtomMass		= vacuumElement->GetA() / CLHEP::Avogadro;
+	G4double	vacuumDensity		= vacuumAtomMass * VACUUM_NUMBER_DENSITY;
+	G4Material*	vacuumMaterial		= new G4Material(VACUUM, vacuumDensity, 1);
+	vacuumMaterial->AddElement(vacuumElement, 1);
+
 	// Detector Material
-	auto     detectorElement  = nist->FindOrBuildElement(fDetectorAtomicNumber);
-	G4double detectorAtomMass = detectorElement->GetA() / CLHEP::Avogadro;
-	G4double detectorDensity  = detectorAtomMass * fDetectorNumberDensity;
-	//
-	auto detectorMaterial = new G4Material(DETECTOR_MATERIAL, detectorDensity, 1);
+	G4Element*	detectorElement		= nist->FindOrBuildElement(fDetectorAtomicNumber);
+	G4double	detectorAtomMass	= detectorElement->GetA() / CLHEP::Avogadro;
+	G4double	detectorDensity		= detectorAtomMass * fDetectorNumberDensity;
+	G4Material*	detectorMaterial	= new G4Material(DETECTOR_MATERIAL, detectorDensity, 1);
 	detectorMaterial->AddElement(detectorElement, 1);
 	
-	// Vacuum
-	auto     hydrogen         = nist->FindOrBuildElement(HYDROGEN);
-	G4double hydrogenAtomMass = hydrogen->GetA() / CLHEP::Avogadro;
-	G4double vacuumDensity    = hydrogenAtomMass * VACUUM_NUMBER_DENSITY;
-	//
-	G4Material* vacuum   = new G4Material(VACUUM, vacuumDensity, 1);
-	vacuum->AddElement(hydrogen, 1);
-
 	// World Background
 	auto solidWorld = new G4Box(WORLD_NAME, fWorldRadius, fWorldRadius, fWorldRadius);
-    	auto logicWorld	= new G4LogicalVolume(solidWorld, vacuum, WORLD_NAME);
+    	auto logicWorld	= new G4LogicalVolume(solidWorld, vacuumMaterial, WORLD_NAME);
     	auto world 	= new G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
@@ -85,7 +83,7 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	// Golden Foil
 	auto solidDetector = new G4Box(DETECTOR_NAME, fDetectorRadius, fDetectorRadius, fDetectorThickness/2);
     	auto logicDetector = new G4LogicalVolume(solidDetector, detectorMaterial, DETECTOR_NAME);
-	new G4PVPlacement(
+	new  G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
 			logicDetector,		// placed logical volume

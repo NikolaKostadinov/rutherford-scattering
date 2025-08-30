@@ -2,103 +2,96 @@
 
 #include "../include/RutherfordDefaults.h"
 
+#include "../include/RutherfordArgument.hh"
+#include "../include/RutherfordCommands.h"
+#include <vector>
+
+void RutherfordPrintVersion()
+{
+	G4cout << RUTHERFORD_NAME << " " << RUTHERFORD_VERSION << G4endl;
+}
+
+void RutherfordPrintHelp(const std::vector<RutherfordArgument>& defArgs)
+{
+	G4cout << RUTHERFORD_PROGRAM << " [options]" << G4endl;
+	G4cout << "\t" << VERSION_FLAG << " version" << G4endl;
+	G4cout << "\t" << HELP_LONG_FLAG << " / " << HELP_SHORT_FLAG << " help" << G4endl;
+	for (auto defArg = defArgs.begin(); defArg != defArgs.end(); ++defArg)
+	{
+		G4cout << "\t";
+		defArg->PrintDescription();
+	}
+}
+
+void RutherfordPrintUnknownFlag(G4String flag)
+{
+	G4cout << "[WARNING] UNKNOWN FLAG: " << flag << G4endl;
+}
+
 void RutherfordArgumentParser(G4UImanager* uiManager, int argc, char** argv)
 {
-	std::string macro;
-	std::string output;
-	std::string thickness;
-	std::string energy;
-	std::string distance;
-	std::string nEvents;
-	std::string eMin;
-	std::string eMax;
-	std::string nEnergies;
+	std::vector<RutherfordArgument> defArgs;
+	defArgs.push_back(RutherfordArgument("--macro",       "-m", MACRO_CMD,                   "file",   "macro file path (all other args are ignored if macro file is provided)"));
+	defArgs.push_back(RutherfordArgument("--output",      "-o", OUTPUT_CMD,                  "file",   "output analysis file path"));
+	defArgs.push_back(RutherfordArgument("--atomic-n",    "-Z", DETECTOR_ATOMIC_NUMBER_CMD,  "value",  "detector atomic number"));
+	defArgs.push_back(RutherfordArgument("--n-density",   "-a", DETECTOR_NUMBER_DENSITY_CMD, "value",  "detector atomic number density"));
+	defArgs.push_back(RutherfordArgument("--thickness",   "-z", DETECTOR_THICKNESS_CMD,      "value",  "detector thickness"));
+	defArgs.push_back(RutherfordArgument("--energy",      "-e", PARTICLE_ENERGY_CMD,         "value",  "particle initial energy"));
+	defArgs.push_back(RutherfordArgument("--distance",    "-d", PARTICLE_DISTANCE_CMD,       "value",  "particle initial distance"));
+	defArgs.push_back(RutherfordArgument("--energy-min",  "-i", ANALYSIS_ENERGY_MIN_CMD,     "value",  "minimum final energy of particle"));
+	defArgs.push_back(RutherfordArgument("--energy-max",  "-u", ANALYSIS_ENERGY_MAX_CMD,     "value",  "maximum final energy of particle"));
+	defArgs.push_back(RutherfordArgument("--energy-bins", "-b", ANALYSIS_ENERGY_BINS_CMD,    "number", "number of final energy bins"));
+	defArgs.push_back(RutherfordArgument("--n-events",    "-n", RUN_SIMULATION_CMD,          "number", "number of events"));
 
 	for (int i = 1; i < argc; ++i)
 	{
 		std::string arg = argv[i];
-		
-		if (arg == "--version")
+
+		if (arg.size() > 1 && arg[0] == '-')
 		{
-			std::cout << RUTHERFORD << " " << RUTHERFORD_VERSION << std::endl;
-			exit(0);
-		}
-		else if ((arg == "-m" || arg == "--macro") && i+1 < argc)
-		{
-			macro = argv[++i];
-		}
-		else if ((arg == "-o" || arg == "--output") && i+1 < argc)
-		{
-			output = argv[++i];
-		}
-		else if ((arg == "-z" || arg == "--thickness") && i+1 < argc)
-		{
-			thickness = argv[++i];
-		}
-		else if ((arg == "-e" || arg == "--energy") && i+1 < argc)
-		{
-			energy = argv[++i];
-		}
-		else if ((arg == "-d" || arg == "--distance") && i+1 < argc)
-		{
-			distance = argv[++i];
-		}
-		else if ((arg == "-n" || arg == "--n-events") && i+1 < argc)
-		{
-			nEvents = argv[++i];
-		}
-		else if ((arg == "-i" || arg == "--energy-min") && i+1 < argc)
-		{
-			eMin = argv[++i];
-		}
-		else if ((arg == "-u" || arg == "--energy-max") && i+1 < argc)
-		{
-			eMax = argv[++i];
-		}
-		else if ((arg == "-b" || arg == "--energy-bins") && i+1 < argc)
-		{
-			nEnergies = argv[++i];
-		}
-		else if (arg == "-h" || arg == "--help")
-		{
-			std::cout <<
-				"Usage: rutherford-scattering [options]\n\n"
-				"       --version                            version\n"
-				"  -m / --macro               [path to file] macro file path (all other args are ignored if macro file is provided)\n"
-				"  -o / --output              [path to file] output analysis file path\n"
-				"  -z / --thickness           [value in um]  foil thickness\n"
-				"  -e / --energy              [value in MeV] initial energy of particle\n"
-				"  -d / --distance            [value in cm]  initial distance of particle\n"
-				"  -n / --n-events            [value]        number of events\n"
-				"  -i / --energy-min          [value in MeV] minimum final energy of particle\n"
-				"  -u / --energy-max          [value in MeV] maximum final energy of particle\n"
-				"  -b / --energy-bins         [value]        number of final energy bins\n"
-				<< std::endl;
-			exit(0);
-		}
-		else
-		{
-			std::cerr << "Unknown argument: " << arg << std::endl;
-			exit(1);
+			std::string flag = arg;
+			std::string value;
+
+			while (i+1 < argc && argv[i+1][0] != '-')
+			{
+				if (!value.empty()) value += " ";
+				value += argv[++i];
+			}
+			
+			bool isArgFound = false;	
+			for (auto defArg = defArgs.begin(); defArg != defArgs.end(); ++defArg)
+			{
+				if (flag == defArg->GetLongFlag() || flag == defArg->GetShortFlag())
+				{
+					isArgFound = true;
+					defArg->SetValue(value);
+					break;
+				}
+				else if (flag == VERSION_FLAG)
+				{
+					isArgFound = true;
+					RutherfordPrintVersion();
+					exit(0);
+				}
+				else if (flag == HELP_SHORT_FLAG || flag == HELP_LONG_FLAG)
+				{
+					isArgFound = true;
+					RutherfordPrintHelp(defArgs);
+					exit(0);
+				}
+				else
+				{
+					isArgFound = false;
+				}
+			}
+			
+			if (!isArgFound)
+			{
+				RutherfordPrintUnknownFlag(flag);
+			}
 		}
 	}
 
-	if (!macro.empty())
-	{
-		uiManager->ApplyCommand("/control/execute " + macro);
-	}
-	else
-	{
-		if (!output.empty())	uiManager->ApplyCommand("/analysis/file "               + output);
-		if (!thickness.empty())	uiManager->ApplyCommand("/geometry/detector/thickness " + thickness + " um");
-		if (!energy.empty())	uiManager->ApplyCommand("/generate/energy "             + energy + " MeV");
-		if (!distance.empty())	uiManager->ApplyCommand("/generate/distance "           + distance + " cm");
-		if (!eMin.empty())	uiManager->ApplyCommand("/analysis/energy/min "         + eMin + " MeV");
-		if (!eMax.empty())	uiManager->ApplyCommand("/analysis/energy/max "         + eMax + " MeV");
-		if (!nEnergies.empty())	uiManager->ApplyCommand("/analysis/energy/bins "        + nEnergies);
-
-		uiManager->ApplyCommand("/run/initialize");
-		if (!nEvents.empty())	uiManager->ApplyCommand("/run/beamOn " + nEvents);
-		else			uiManager->ApplyCommand("/run/beamOn " + DEFAULT_NUMBER_OF_EVENTS);
-	}
+	for (auto defArg = defArgs.begin(); defArg != defArgs.end(); ++defArg)
+		defArg->Execute(uiManager);
 }
