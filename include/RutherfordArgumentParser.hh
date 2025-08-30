@@ -3,6 +3,9 @@
 
 #include <G4UImanager.hh>
 
-void RutherfordArgumentParser(G4UImanager*, int argc, char** argv);
+#include <vector>
+#include "RutherfordArgument.hh"
+
+void RutherfordArgumentParser(int argc, char** argv, std::vector<RutherfordArgument>, G4UImanager*);
 
 #endif
