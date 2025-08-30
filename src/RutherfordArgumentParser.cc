@@ -10,9 +10,27 @@ void RutherfordPrintVersion()
 
 void RutherfordPrintHelp(const std::vector<RutherfordArgument>& arguments)
 {
-	int longSize   = 0;
-	int shortSize  = 0;
-	int typeSize   = 0;
+	//
+	// WARNING DEVELOPERS
+	//
+	// the following lines of c++ code print out the help output
+	// basically it follows the following template
+	//
+	// {TAB} {LONG FLAG} / {SHORT FLAG} [{TYPE}] {DESCRIPTION}
+	//
+	// keep in mind that there is a margin between template holders
+	// the code is finely tune
+	// if you want to mess up with the output alter the values of the following macros
+	//
+	// * `TAB_SIZE`
+	// * `MARGIN_SIZE`
+	//
+	// good luck
+	//
+	
+	int longSize  = 0;
+	int shortSize = 0;
+	int typeSize  = 0;
 
 	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
 	{
@@ -68,6 +86,13 @@ void RutherfordPrintUnknownFlag(G4String flag)
 
 void RutherfordArgumentParser(int argc, char** argv, std::vector<RutherfordArgument> arguments, G4UImanager* uiManager)
 {
+	//
+	// ok so argument parsing is not one of my strong sides
+	// the following lines of code iterate over a vector of already defined cli arguments in the main
+	// this is spaghetti
+	// take your time
+	//
+
 	for (int i = 1; i < argc; ++i)
 	{
 		std::string arg = argv[i];
