@@ -3,6 +3,14 @@
 #include "../include/RutherfordDefaults.h"
 #include "../include/RutherfordCommands.h"
 
+void RutherfordNoArgs()
+{
+	G4cout << "Hello world!" << G4endl;
+	G4cout << "Please provide inline arguments." << G4endl;
+	G4cout << "For help type `--help`." << G4endl;
+	G4cout << G4endl;
+}
+
 void RutherfordPrintVersion()
 {
 	G4cout << RUTHERFORD_NAME << " " << RUTHERFORD_VERSION << G4endl;
@@ -92,6 +100,12 @@ void RutherfordArgumentParser(int argc, char** argv, std::vector<RutherfordArgum
 	// this is spaghetti
 	// take your time
 	//
+	
+	if (argc == 1)
+	{
+		RutherfordNoArgs();
+		exit(0);
+	}
 
 	for (int i = 1; i < argc; ++i)
 	{

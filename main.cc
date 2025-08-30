@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 	arguments.push_back(RutherfordArgument("--theta-max",   "-D", ANALYSIS_THETA_MAX_CMD,      "angle",  "maximum scattering angle"));
 	arguments.push_back(RutherfordArgument("--theta-bins",  "-B", ANALYSIS_THETA_BINS_CMD,     "number", "number of scattering angle bins"));
 	arguments.push_back(RutherfordArgument("--n-events",    "-n", RUN_SIMULATION_CMD,          "number", "number of events"));
-	
+
 	// CLI argument parser
 	RutherfordArgumentParser(argc, argv, arguments, uiManager);
 	
