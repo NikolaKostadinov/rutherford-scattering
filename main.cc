@@ -16,10 +16,13 @@
 
 int main(int argc, char** argv)
 {
+	// random engine, random seed
 	CLHEP::HepRandom::setTheSeed(time(NULL));
-
+	
+	// start Geant4
 	auto runManager = new G4RunManager();
 	
+	// define new non Geant4 units
 	RutherfordUnitDefinition();
 	
 	runManager->SetUserInitialization(new RutherfordPhysicsList());
@@ -28,21 +31,28 @@ int main(int argc, char** argv)
 	
 	G4UImanager* uiManager = G4UImanager::GetUIpointer();
 	
+	// CLI arguments
 	std::vector<RutherfordArgument> arguments;
 	arguments.push_back(RutherfordArgument("--macro",       "-m", MACRO_CMD,                   "file",   "macro file path (all other arguments will be ignored if macro file is provided)"));
 	arguments.push_back(RutherfordArgument("--output",      "-o", OUTPUT_CMD,                  "file",   "output analysis file path"));
 	arguments.push_back(RutherfordArgument("--atomic-n",    "-Z", DETECTOR_ATOMIC_NUMBER_CMD,  "value",  "detector atomic number"));
 	arguments.push_back(RutherfordArgument("--n-density",   "-a", DETECTOR_NUMBER_DENSITY_CMD, "value",  "detector number density of atoms"));
+	arguments.push_back(RutherfordArgument("--radius",      "-r", DETECTOR_RADIUS_CMD,         "value",  "detector radius"));
 	arguments.push_back(RutherfordArgument("--thickness",   "-z", DETECTOR_THICKNESS_CMD,      "value",  "detector thickness"));
 	arguments.push_back(RutherfordArgument("--energy",      "-e", PARTICLE_ENERGY_CMD,         "value",  "particle initial energy"));
 	arguments.push_back(RutherfordArgument("--distance",    "-d", PARTICLE_DISTANCE_CMD,       "value",  "particle initial distance"));
 	arguments.push_back(RutherfordArgument("--energy-min",  "-i", ANALYSIS_ENERGY_MIN_CMD,     "value",  "minimum final energy of particle"));
 	arguments.push_back(RutherfordArgument("--energy-max",  "-u", ANALYSIS_ENERGY_MAX_CMD,     "value",  "maximum final energy of particle"));
 	arguments.push_back(RutherfordArgument("--energy-bins", "-b", ANALYSIS_ENERGY_BINS_CMD,    "number", "number of final energy bins"));
+	arguments.push_back(RutherfordArgument("--theta-min",   "-S", ANALYSIS_THETA_MIN_CMD,      "angle",  "minimum scattering angle"));
+	arguments.push_back(RutherfordArgument("--theta-max",   "-D", ANALYSIS_THETA_MAX_CMD,      "angle",  "maximum scattering angle"));
+	arguments.push_back(RutherfordArgument("--theta-bins",  "-B", ANALYSIS_THETA_BINS_CMD,     "number", "number of scattering angle bins"));
 	arguments.push_back(RutherfordArgument("--n-events",    "-n", RUN_SIMULATION_CMD,          "number", "number of events"));
-
+	
+	// CLI argument parser
 	RutherfordArgumentParser(argc, argv, arguments, uiManager);
-
+	
+	// end simulation
 	delete runManager;
 	return 0;
 }

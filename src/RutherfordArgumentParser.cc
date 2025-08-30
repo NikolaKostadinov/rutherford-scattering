@@ -107,7 +107,7 @@ void RutherfordArgumentParser(int argc, char** argv, std::vector<RutherfordArgum
 				if (!value.empty()) value += " ";
 				value += argv[++i];
 			}
-			
+
 			bool isArgFound = false;	
 			for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
 			{

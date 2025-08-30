@@ -54,6 +54,7 @@ void RutherfordArgument::PrintDescription(int longSize, int shortSize, int typeS
 
 void RutherfordArgument::Execute(G4UImanager* uiManager) const
 {
+	if (fValue.empty()) return;
 	std::string command = fCommand + DELIM + fValue;
 	
 	std::istringstream commandStream(command);
@@ -61,6 +62,7 @@ void RutherfordArgument::Execute(G4UImanager* uiManager) const
 	while(std::getline(commandStream, commandLine))
 	{
 		if (commandLine.empty()) continue;
+		G4cout << commandLine << G4endl;
 		uiManager->ApplyCommand(commandLine);
 	}
 }
