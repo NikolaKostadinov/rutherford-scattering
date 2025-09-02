@@ -51,6 +51,6 @@ void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 			analysisManager->FillH1(energyHistogramID, energyOut / DEFAULT_ENERGY_UNIT);
 			analysisManager->FillH1(thetaHistogramID,  theta / DEFAULT_ANGLE_UNIT);
 
-			G4cout << "event [" << (eventID + 1) << "] final energy: " << energyOut / MeV << G4endl;
+			G4cout << "event [" << (eventID + 1) << "] final energy: " << energyOut / MeV << " MeV" << G4endl;
 		}
 }

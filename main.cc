@@ -39,8 +39,8 @@ int main(int argc, char** argv)
 	arguments.push_back(RutherfordArgument("--n-density",   "-a", DETECTOR_NUMBER_DENSITY_CMD, "value",  "detector number density of atoms"));
 	arguments.push_back(RutherfordArgument("--radius",      "-r", DETECTOR_RADIUS_CMD,         "value",  "detector radius"));
 	arguments.push_back(RutherfordArgument("--thickness",   "-z", DETECTOR_THICKNESS_CMD,      "value",  "detector thickness"));
-	arguments.push_back(RutherfordArgument("--energy",      "-e", PARTICLE_ENERGY_CMD,         "value",  "particle initial energy"));
-	arguments.push_back(RutherfordArgument("--distance",    "-d", PARTICLE_DISTANCE_CMD,       "value",  "particle initial distance"));
+	arguments.push_back(RutherfordArgument("--energy",      "-e", GENERATE_ENERGY_CMD,         "value",  "particle initial energy"));
+	arguments.push_back(RutherfordArgument("--distance",    "-d", GENERATE_DISTANCE_CMD,       "value",  "particle initial distance"));
 	arguments.push_back(RutherfordArgument("--energy-min",  "-i", ANALYSIS_ENERGY_MIN_CMD,     "value",  "minimum final energy of particle"));
 	arguments.push_back(RutherfordArgument("--energy-max",  "-u", ANALYSIS_ENERGY_MAX_CMD,     "value",  "maximum final energy of particle"));
 	arguments.push_back(RutherfordArgument("--energy-bins", "-b", ANALYSIS_ENERGY_BINS_CMD,    "number", "number of final energy bins"));

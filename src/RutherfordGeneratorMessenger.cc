@@ -1,23 +1,25 @@
 #include "../include/RutherfordGeneratorMessenger.hh"
 #include "../include/RutherfordGeneratorAction.hh"
-#include <G4SystemOfUnits.hh>
+
+#include "../include/RutherfordDefaults.h"
+#include "../include/RutherfordCommands.h"
 
 RutherfordGeneratorMessenger::RutherfordGeneratorMessenger(RutherfordGeneratorAction* generator) : fGenerator(generator)
 {
-	fDirectory = new G4UIdirectory("/generate/");
+	fDirectory = new G4UIdirectory(GENERATE_CMD);
 	fDirectory->SetGuidance("Command for particle generation.");
 
-	fEnergyCmd = new G4UIcmdWithADoubleAndUnit("/generate/energy", this);
+	fEnergyCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ENERGY_CMD, this);
 	fEnergyCmd->SetGuidance("Set inital alpha particle energy.");
 	fEnergyCmd->SetUnitCategory("Energy");
-	fEnergyCmd->SetDefaultValue(DEFAULT_ENERGY / MeV);
-	fEnergyCmd->SetDefaultUnit("MeV");
+	fEnergyCmd->SetDefaultValue(DEFAULT_ENERGY / DEFAULT_ENERGY_UNIT);
+	fEnergyCmd->SetDefaultUnit(DEFAULT_ENERGY_UNIT_STRING);
 
-	fDistanceCmd = new G4UIcmdWithADoubleAndUnit("/generate/distance", this);
+	fDistanceCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_DISTANCE_CMD, this);
         fDistanceCmd->SetGuidance("Set inital alpha particle distance from target.");
         fDistanceCmd->SetUnitCategory("Length");
-        fDistanceCmd->SetDefaultValue(DEFAULT_DISTANCE / cm);
-        fDistanceCmd->SetDefaultUnit("cm");
+        fDistanceCmd->SetDefaultValue(DEFAULT_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
+        fDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
 }
 
 RutherfordGeneratorMessenger::~RutherfordGeneratorMessenger()

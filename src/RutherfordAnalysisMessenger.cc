@@ -25,13 +25,13 @@ RutherfordAnalysisMessenger::RutherfordAnalysisMessenger(RutherfordRunAction* ru
 	fEnergyHistogramMinCmd->SetGuidance("Minimum histogram energy.");
 	fEnergyHistogramMinCmd->SetUnitCategory("Energy");
 	fEnergyHistogramMinCmd->SetDefaultValue(DEFAULT_ENERGY_MIN / DEFAULT_ENERGY_UNIT);
-	fEnergyHistogramMinCmd->SetDefaultUnit("MeV");
+	fEnergyHistogramMinCmd->SetDefaultUnit(DEFAULT_ENERGY_UNIT_STRING);
 	
 	fEnergyHistogramMaxCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_ENERGY_MAX_CMD, this);
 	fEnergyHistogramMaxCmd->SetGuidance("Maximum histogram energy.");
 	fEnergyHistogramMaxCmd->SetUnitCategory("Energy");
 	fEnergyHistogramMaxCmd->SetDefaultValue(DEFAULT_ENERGY_MAX / DEFAULT_ENERGY_UNIT);
-	fEnergyHistogramMaxCmd->SetDefaultUnit("MeV");
+	fEnergyHistogramMaxCmd->SetDefaultUnit(DEFAULT_ENERGY_UNIT_STRING);
 	
 	fThetaHistogramTitleCmd = new G4UIcmdWithAString(ANALYSIS_THETA_TITLE_CMD, this);
 	fThetaHistogramTitleCmd->SetGuidance("Title of differential cross section histogram.");
@@ -45,13 +45,13 @@ RutherfordAnalysisMessenger::RutherfordAnalysisMessenger(RutherfordRunAction* ru
 	fThetaHistogramMinCmd->SetGuidance("Minimum histogram theta (scattering angle).");
 	fThetaHistogramMinCmd->SetUnitCategory("Angle");
 	fThetaHistogramMinCmd->SetDefaultValue(DEFAULT_THETA_MIN / DEFAULT_ANGLE_UNIT);
-	fThetaHistogramMinCmd->SetDefaultUnit("deg");
+	fThetaHistogramMinCmd->SetDefaultUnit(DEFAULT_ANGLE_UNIT_STRING);
 	
 	fThetaHistogramMaxCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_THETA_MAX_CMD, this);
 	fThetaHistogramMaxCmd->SetGuidance("Maximum histogram theta (scattering angle).");
 	fThetaHistogramMaxCmd->SetUnitCategory("Angle");
 	fThetaHistogramMaxCmd->SetDefaultValue(DEFAULT_THETA_MAX / DEFAULT_ANGLE_UNIT);
-	fThetaHistogramMaxCmd->SetDefaultUnit("deg");
+	fThetaHistogramMaxCmd->SetDefaultUnit(DEFAULT_ANGLE_UNIT_STRING);
 }
 
 RutherfordAnalysisMessenger::~RutherfordAnalysisMessenger()
