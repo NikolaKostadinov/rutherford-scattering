@@ -8,16 +8,17 @@
 #define RUTHERFORD_VERSION		"v0.2"
 
 #define VERSION_FLAG			"--version"
-#define HELP_SHORT_FLAG			"-h"
 #define HELP_LONG_FLAG			"--help"
+#define HELP_SHORT_FLAG			"-h"
 #define TAB_SIZE			8
-#define MARGIN_SIZE			3
+#define MARGIN_SIZE			2
 
 // DEFAULT UNITS
-#define DEFAULT_ENERGY_UNIT		"MeV"
-#define DEFAULT_SHORT_LENGHT_UNIT	"um"
-#define DEFAULT_MID_LENGHT_UNIT		"mm"
-#define DEFAULT_LONG_LENGHT_UNIT	"cm"
+#define DEFAULT_ENERGY_UNIT		MeV
+#define DEFAULT_SHORT_LENGTH_UNIT	um
+#define DEFAULT_MID_LENGTH_UNIT		mm
+#define DEFAULT_LONG_LENGTH_UNIT	cm
+#define DEFAULT_ANGLE_UNIT		deg
 
 // DEFAULT VACUUM
 #define VACUUM				"Vacuum"
@@ -44,9 +45,10 @@
 // DEFAULT ROOT HISTOGRAMS
 //
 #define DEFAULT_FILE_OUT		"output.root"
+#define DEFAULT_HISTOGRAM_ID		-1
 //
 // ENERGY SPECTRUM
-#define DEFAULT_ENERGY_TITLE		"Energy Spectrum d\\sigma/dE [counts per bin]"
+#define DEFAULT_ENERGY_TITLE		"Energy Spectrum;d\\sigma/dE [counts per bin];Ein [MeV]"
 #define DEFAULT_ENERGY_BINS		100
 #define DEFAULT_ENERGY_MIN		4.0 * MeV
 #define DEFAULT_ENERGY_MAX		5.0 * MeV

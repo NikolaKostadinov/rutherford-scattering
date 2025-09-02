@@ -28,19 +28,18 @@ class RutherfordAnalysisMessenger : public G4UImessenger
 		G4UIcmdWithAString*		fFileOutCmd;
 
 		// Energy Spectrum dσ/dE
-		G4UIcmdWithAString*		fETitleCmd;
-		G4UIcmdWithAnInteger*		fEBinsCmd;
-		G4UIcmdWithADoubleAndUnit*	fEMinCmd;
-		G4UIcmdWithADoubleAndUnit*	fEMaxCmd;
+		G4UIcmdWithAString*		fEnergyHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fEnergyHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fEnergyHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fEnergyHistogramMaxCmd;
 		
 		// Differential Cross Section dσ/dΩ
-		G4UIcmdWithAString*		fThetaTitleCmd;
-		G4UIcmdWithAnInteger*		fThetaBinsCmd;
-		G4UIcmdWithADoubleAndUnit*	fThetaMinCmd;
-		G4UIcmdWithADoubleAndUnit*	fThetaMaxCmd;
+		G4UIcmdWithAString*		fThetaHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fThetaHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fThetaHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fThetaHistogramMaxCmd;
 		
 		RutherfordRunAction*		fRunAction;
-		
 };
 
 #endif

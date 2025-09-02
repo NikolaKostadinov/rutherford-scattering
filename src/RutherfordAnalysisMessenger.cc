@@ -1,68 +1,71 @@
 #include "../include/RutherfordAnalysisMessenger.hh"
 #include "../include/RutherfordRunAction.hh"
 
+#include <G4UnitsTable.hh>
+#include "../include/RutherfordCommands.h"
+
 RutherfordAnalysisMessenger::RutherfordAnalysisMessenger(RutherfordRunAction* runAction) : fRunAction(runAction)
 {
-	fDirectory = new G4UIdirectory("/analysis/");
+	fDirectory = new G4UIdirectory(ANALYSIS_CMD);
 	fDirectory->SetGuidance("Commands for simulation analysis. This includes (only) ROOT histogram setup.");
 
-	fFileOutCmd = new G4UIcmdWithAString("/analysis/file", this);
+	fFileOutCmd = new G4UIcmdWithAString(OUTPUT_CMD, this);
 	fFileOutCmd->SetGuidance("Path to analysis file.");
 	fFileOutCmd->SetDefaultValue(DEFAULT_FILE_OUT);
 	
-	fETitleCmd = new G4UIcmdWithAString("/analysis/energy/title", this);
-	fETitleCmd->SetGuidance("Title of energy spectrum histogram.");
-	fETitleCmd->SetDefaultValue(DEFAULT_ENERGY_TITLE);
+	fEnergyHistogramTitleCmd = new G4UIcmdWithAString(ANALYSIS_ENERGY_TITLE_CMD, this);
+	fEnergyHistogramTitleCmd->SetGuidance("Title of energy spectrum histogram.");
+	fEnergyHistogramTitleCmd->SetDefaultValue(DEFAULT_ENERGY_TITLE);
 	
-	fEBinsCmd = new G4UIcmdWithAnInteger("/analysis/energy/bins", this);
-	fEBinsCmd->SetGuidance("Number of bins for energy spectrum histogram.");
-	fEBinsCmd->SetDefaultValue(DEFAULT_ENERGY_BINS);
+	fEnergyHistogramBinsCmd = new G4UIcmdWithAnInteger(ANALYSIS_ENERGY_BINS_CMD, this);
+	fEnergyHistogramBinsCmd->SetGuidance("Number of bins for energy spectrum histogram.");
+	fEnergyHistogramBinsCmd->SetDefaultValue(DEFAULT_ENERGY_BINS);
 	
-	fEMinCmd = new G4UIcmdWithADoubleAndUnit("/analysis/energy/min", this);
-	fEMinCmd->SetGuidance("Minimum histogram energy.");
-	fEMinCmd->SetUnitCategory("Energy");
-	fEMinCmd->SetDefaultValue(DEFAULT_ENERGY_MIN / MeV);
-	fEMinCmd->SetDefaultUnit("MeV");
+	fEnergyHistogramMinCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_ENERGY_MIN_CMD, this);
+	fEnergyHistogramMinCmd->SetGuidance("Minimum histogram energy.");
+	fEnergyHistogramMinCmd->SetUnitCategory("Energy");
+	fEnergyHistogramMinCmd->SetDefaultValue(DEFAULT_ENERGY_MIN / DEFAULT_ENERGY_UNIT);
+	fEnergyHistogramMinCmd->SetDefaultUnit("MeV");
 	
-	fEMaxCmd = new G4UIcmdWithADoubleAndUnit("/analysis/energy/max", this);
-	fEMaxCmd->SetGuidance("Maximum histogram energy.");
-	fEMaxCmd->SetUnitCategory("Energy");
-	fEMaxCmd->SetDefaultValue(DEFAULT_ENERGY_MAX / MeV);
-	fEMaxCmd->SetDefaultUnit("MeV");
+	fEnergyHistogramMaxCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_ENERGY_MAX_CMD, this);
+	fEnergyHistogramMaxCmd->SetGuidance("Maximum histogram energy.");
+	fEnergyHistogramMaxCmd->SetUnitCategory("Energy");
+	fEnergyHistogramMaxCmd->SetDefaultValue(DEFAULT_ENERGY_MAX / DEFAULT_ENERGY_UNIT);
+	fEnergyHistogramMaxCmd->SetDefaultUnit("MeV");
 	
-	fThetaTitleCmd = new G4UIcmdWithAString("/analysis/theta/title", this);
-	fThetaTitleCmd->SetGuidance("Title of differential cross section histogram.");
-	fThetaTitleCmd->SetDefaultValue(DEFAULT_THETA_TITLE);
+	fThetaHistogramTitleCmd = new G4UIcmdWithAString(ANALYSIS_THETA_TITLE_CMD, this);
+	fThetaHistogramTitleCmd->SetGuidance("Title of differential cross section histogram.");
+	fThetaHistogramTitleCmd->SetDefaultValue(DEFAULT_THETA_TITLE);
 	
-	fThetaBinsCmd = new G4UIcmdWithAnInteger("/analysis/theta/bins", this);
-	fThetaBinsCmd->SetGuidance("Number of bins for differential cross section (scattering angle distribution).");
-	fThetaBinsCmd->SetDefaultValue(DEFAULT_THETA_BINS);
+	fThetaHistogramBinsCmd = new G4UIcmdWithAnInteger(ANALYSIS_THETA_BINS_CMD, this);
+	fThetaHistogramBinsCmd->SetGuidance("Number of bins for differential cross section (scattering angle distribution).");
+	fThetaHistogramBinsCmd->SetDefaultValue(DEFAULT_THETA_BINS);
 	
-	fThetaMinCmd = new G4UIcmdWithADoubleAndUnit("/analysis/theta/min", this);
-	fThetaMinCmd->SetGuidance("Minimum histogram theta (scattering angle).");
-	fThetaMinCmd->SetUnitCategory("Angle");
-	fThetaMinCmd->SetDefaultValue(DEFAULT_THETA_MIN / deg);
-	fThetaMinCmd->SetDefaultUnit("deg");
+	fThetaHistogramMinCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_THETA_MIN_CMD, this);
+	fThetaHistogramMinCmd->SetGuidance("Minimum histogram theta (scattering angle).");
+	fThetaHistogramMinCmd->SetUnitCategory("Angle");
+	fThetaHistogramMinCmd->SetDefaultValue(DEFAULT_THETA_MIN / DEFAULT_ANGLE_UNIT);
+	fThetaHistogramMinCmd->SetDefaultUnit("deg");
 	
-	fThetaMaxCmd = new G4UIcmdWithADoubleAndUnit("/analysis/theta/max", this);
-	fThetaMaxCmd->SetGuidance("Maximum histogram theta (scattering angle).");
-	fThetaMaxCmd->SetUnitCategory("Angle");
-	fThetaMaxCmd->SetDefaultValue(DEFAULT_THETA_MAX / deg);
-	fThetaMaxCmd->SetDefaultUnit("deg");
+	fThetaHistogramMaxCmd = new G4UIcmdWithADoubleAndUnit(ANALYSIS_THETA_MAX_CMD, this);
+	fThetaHistogramMaxCmd->SetGuidance("Maximum histogram theta (scattering angle).");
+	fThetaHistogramMaxCmd->SetUnitCategory("Angle");
+	fThetaHistogramMaxCmd->SetDefaultValue(DEFAULT_THETA_MAX / DEFAULT_ANGLE_UNIT);
+	fThetaHistogramMaxCmd->SetDefaultUnit("deg");
 }
 
 RutherfordAnalysisMessenger::~RutherfordAnalysisMessenger()
 {
 	delete fDirectory;
 	delete fFileOutCmd;
-	delete fETitleCmd;
-	delete fEBinsCmd;
-	delete fEMinCmd;
-	delete fEMaxCmd;
-	delete fThetaTitleCmd;
-	delete fThetaBinsCmd;
-	delete fThetaMinCmd;
-	delete fThetaMaxCmd;
+	delete fEnergyHistogramTitleCmd;
+	delete fEnergyHistogramBinsCmd;
+	delete fEnergyHistogramMinCmd;
+	delete fEnergyHistogramMaxCmd;
+	delete fThetaHistogramTitleCmd;
+	delete fThetaHistogramBinsCmd;
+	delete fThetaHistogramMinCmd;
+	delete fThetaHistogramMaxCmd;
 }
 
 void RutherfordAnalysisMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
@@ -71,42 +74,42 @@ void RutherfordAnalysisMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 	{
 		fRunAction->SetFileOut(value);
 	}
-	else if (cmd == fETitleCmd)
+	else if (cmd == fEnergyHistogramTitleCmd)
 	{
-		fRunAction->SetETitle(value);
+		fRunAction->SetEnergyHistogramTitle(value);
 	}
-	else if (cmd == fEBinsCmd)
+	else if (cmd == fEnergyHistogramBinsCmd)
 	{
-		auto bins = fEBinsCmd->GetNewIntValue(value);
-		fRunAction->SetEBins(bins);
+		auto bins = fEnergyHistogramBinsCmd->GetNewIntValue(value);
+		fRunAction->SetEnergyHistogramBins(bins);
 	}
-	else if (cmd == fEMinCmd)
+	else if (cmd == fEnergyHistogramMinCmd)
 	{
-		auto min = fEMinCmd->GetNewDoubleValue(value);
-		fRunAction->SetEMin(min);
+		auto min = fEnergyHistogramMinCmd->GetNewDoubleValue(value);
+		fRunAction->SetEnergyHistogramMin(min);
 	}
-	else if (cmd == fEMaxCmd)
+	else if (cmd == fEnergyHistogramMaxCmd)
 	{
-		auto max = fEMaxCmd->GetNewDoubleValue(value);
-		fRunAction->SetEMax(max);
+		auto max = fEnergyHistogramMaxCmd->GetNewDoubleValue(value);
+		fRunAction->SetEnergyHistogramMax(max);
 	}
-	else if (cmd == fThetaTitleCmd)
+	else if (cmd == fThetaHistogramTitleCmd)
 	{
-		fRunAction->SetThetaTitle(value);
+		fRunAction->SetThetaHistogramTitle(value);
 	}
-	else if (cmd == fThetaBinsCmd)
+	else if (cmd == fThetaHistogramBinsCmd)
 	{
-		auto bins = fThetaBinsCmd->GetNewIntValue(value);
-		fRunAction->SetThetaBins(bins);
+		auto bins = fThetaHistogramBinsCmd->GetNewIntValue(value);
+		fRunAction->SetThetaHistogramBins(bins);
 	}
-	else if (cmd == fThetaMinCmd)
+	else if (cmd == fThetaHistogramMinCmd)
 	{
-		auto min = fThetaMinCmd->GetNewDoubleValue(value);
-		fRunAction->SetThetaMin(min);
+		auto min = fThetaHistogramMinCmd->GetNewDoubleValue(value);
+		fRunAction->SetThetaHistogramMin(min);
 	}
-	else if (cmd == fThetaMaxCmd)
+	else if (cmd == fThetaHistogramMaxCmd)
 	{
-		auto max = fThetaMaxCmd->GetNewDoubleValue(value);
-		fRunAction->SetThetaMax(max);
+		auto max = fThetaHistogramMaxCmd->GetNewDoubleValue(value);
+		fRunAction->SetThetaHistogramMax(max);
 	}
 }

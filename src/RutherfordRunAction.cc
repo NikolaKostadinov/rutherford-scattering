@@ -10,18 +10,22 @@
 #include "../include/RutherfordGeneratorAction.hh"
 #include "../include/RutherfordDetectorConstruction.hh"
 
-RutherfordRunAction::RutherfordRunAction() :
-
-	fFileOut(DEFAULT_FILE_OUT),
-	fETitle(DEFAULT_ENERGY_TITLE),
-	fEBins(DEFAULT_ENERGY_BINS),
-	fEMin(DEFAULT_ENERGY_MIN),
-	fEMax(DEFAULT_ENERGY_MAX),
-	fThetaTitle(DEFAULT_THETA_TITLE),
-	fThetaBins(DEFAULT_THETA_BINS),
-	fThetaMin(DEFAULT_THETA_MIN),
-	fThetaMax(DEFAULT_THETA_MAX)
+RutherfordRunAction::RutherfordRunAction()
 {
+	fFileOut = DEFAULT_FILE_OUT;
+
+	fEnergyHistogramID    = DEFAULT_HISTOGRAM_ID;
+	fEnergyHistogramTitle = DEFAULT_ENERGY_TITLE;
+	fEnergyHistogramBins  = DEFAULT_ENERGY_BINS;
+	fEnergyHistogramMin   = DEFAULT_ENERGY_MIN;
+	fEnergyHistogramMax   = DEFAULT_ENERGY_MAX;
+	
+	fThetaHistogramID     = DEFAULT_HISTOGRAM_ID;
+	fThetaHistogramTitle  = DEFAULT_THETA_TITLE;
+	fThetaHistogramBins   = DEFAULT_THETA_BINS;
+	fThetaHistogramMin    = DEFAULT_THETA_MIN;
+	fThetaHistogramMax    = DEFAULT_THETA_MAX;
+
 	fMessenger = new RutherfordAnalysisMessenger(this);
 }
 
@@ -37,44 +41,54 @@ void RutherfordRunAction::SetFileOut(G4String file)
 	fFileOut = file;
 }
 
-void RutherfordRunAction::SetETitle(G4String title)
+void RutherfordRunAction::SetEnergyHistogramTitle(G4String title)
 {
-	fETitle = title;
+	fEnergyHistogramTitle = title;
 }
 
-void RutherfordRunAction::SetEBins(G4int bins)
+void RutherfordRunAction::SetEnergyHistogramBins(G4int bins)
 {
-	fEBins = bins;
+	fEnergyHistogramBins = bins;
 }
 
-void RutherfordRunAction::SetEMin(G4double min)
+void RutherfordRunAction::SetEnergyHistogramMin(G4double min)
 {
-	fEMin = min;
+	fEnergyHistogramMin = min;
 }
 
-void RutherfordRunAction::SetEMax(G4double max)
+void RutherfordRunAction::SetEnergyHistogramMax(G4double max)
 {
-	fEMax = max;
+	fEnergyHistogramMax = max;
 }
 
-void RutherfordRunAction::SetThetaTitle(G4String title)
+void RutherfordRunAction::SetThetaHistogramTitle(G4String title)
 {
-	fThetaTitle = title;
+	fThetaHistogramTitle = title;
 }
 
-void RutherfordRunAction::SetThetaBins(G4int bins)
+void RutherfordRunAction::SetThetaHistogramBins(G4int bins)
 {
-	fThetaBins = bins;
+	fThetaHistogramBins = bins;
 }
 
-void RutherfordRunAction::SetThetaMin(G4double min)
+void RutherfordRunAction::SetThetaHistogramMin(G4double min)
 {
-	fThetaMin = min;
+	fThetaHistogramMin = min;
 }
 
-void RutherfordRunAction::SetThetaMax(G4double max)
+void RutherfordRunAction::SetThetaHistogramMax(G4double max)
 {
-	fThetaMax = max;
+	fThetaHistogramMax = max;
+}
+
+G4int RutherfordRunAction::GetEnergyHistogramID() const
+{
+	return fEnergyHistogramID;
+}
+
+G4int RutherfordRunAction::GetThetaHistogramID() const
+{
+	return fThetaHistogramID;
 }
 
 void RutherfordRunAction::BeginOfRunAction(const G4Run*)
@@ -85,8 +99,8 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 	{
 		analysisManager->OpenFile(fFileOut);
 		
-		analysisManager->CreateH1("histoEnergy", fETitle,     fEBins,     fEMin / MeV,     fEMax / MeV    );
-		analysisManager->CreateH1("histoTheta",  fThetaTitle, fThetaBins, fThetaMin / deg, fThetaMax / deg);
+		fEnergyHistogramID = analysisManager->CreateH1("histoEnergy", fEnergyHistogramTitle, fEnergyHistogramBins, fEnergyHistogramMin / DEFAULT_ENERGY_UNIT, fEnergyHistogramMax / DEFAULT_ENERGY_UNIT);
+		fThetaHistogramID  = analysisManager->CreateH1("histoTheta",  fThetaHistogramTitle,  fThetaHistogramBins,  fThetaHistogramMin / DEFAULT_ANGLE_UNIT,   fThetaHistogramMax / DEFAULT_ENERGY_UNIT);
 	}
 }
 
@@ -94,28 +108,28 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 {
 	auto analysisManager = G4AnalysisManager::Instance();
 	
-	auto construction = dynamic_cast<RutherfordDetectorConstruction*>(
+	auto detectorConstruction = dynamic_cast<RutherfordDetectorConstruction*>(
 		const_cast<G4VUserDetectorConstruction*>(
 			G4RunManager::GetRunManager()->GetUserDetectorConstruction()
 		)
 	);
-	auto generator = dynamic_cast<RutherfordGeneratorAction*>(
+	auto generatorAction = dynamic_cast<RutherfordGeneratorAction*>(
 		const_cast<G4VUserPrimaryGeneratorAction*>(
 			G4RunManager::GetRunManager()->GetUserPrimaryGeneratorAction()
 		)
 	);
 	
-	G4double	thickness;
-	if (generator)	thickness = construction->GetDetectorThickness();
-	else		thickness = DEFAULT_DETECTOR_THICKNESS;
+	G4double		thickness;
+	if (generatorAction)	thickness = detectorConstruction->GetDetectorThickness();
+	else			thickness = DEFAULT_DETECTOR_THICKNESS;
 	
-	G4double	energy;
-	if (generator)	energy = generator->GetEnergy();
-	else		energy = DEFAULT_ENERGY;
+	G4double		energy;
+	if (generatorAction)	energy = generatorAction->GetEnergy();
+	else			energy = DEFAULT_ENERGY;
 
-	G4double	distance;
-	if (generator)	distance = generator->GetDistance();
-	else		distance = DEFAULT_DISTANCE;
+	G4double		distance;
+	if (generatorAction)	distance = generatorAction->GetDistance();
+	else			distance = DEFAULT_DISTANCE;
 
 	if (analysisManager)
 	{
@@ -124,13 +138,13 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 
 		TFile file(analysisManager->GetFileName().c_str(), "UPDATE");
 		
-		TParameter<double> thicknessParameter("Thickness", thickness / um);
+		TParameter<double> thicknessParameter("Thickness", thickness / DEFAULT_SHORT_LENGTH_UNIT);
 		thicknessParameter.Write();
 		
-		TParameter<double> energyParameter("Energy", energy / MeV);
+		TParameter<double> energyParameter("Energy", energy / DEFAULT_ENERGY_UNIT);
 		energyParameter.Write();
 		
-		TParameter<double> distanceParameter("Distance", distance / cm);
+		TParameter<double> distanceParameter("Distance", distance / DEFAULT_LONG_LENGTH_UNIT);
 		distanceParameter.Write();
 		
 		file.Close();

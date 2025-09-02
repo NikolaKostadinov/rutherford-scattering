@@ -15,15 +15,18 @@ class RutherfordRunAction : public G4UserRunAction
 
 		void SetFileOut(G4String);
 		
-		void SetETitle(G4String);
-		void SetEBins(G4int);
-		void SetEMin(G4double);
-		void SetEMax(G4double);
+		void SetEnergyHistogramTitle(G4String);
+		void SetEnergyHistogramBins(G4int);
+		void SetEnergyHistogramMin(G4double);
+		void SetEnergyHistogramMax(G4double);
 
-		void SetThetaTitle(G4String);
-		void SetThetaBins(G4int);
-		void SetThetaMin(G4double);
-		void SetThetaMax(G4double);
+		void SetThetaHistogramTitle(G4String);
+		void SetThetaHistogramBins(G4int);
+		void SetThetaHistogramMin(G4double);
+		void SetThetaHistogramMax(G4double);
+
+		G4int GetEnergyHistogramID() const;
+		G4int GetThetaHistogramID()  const;
 
 		void BeginOfRunAction(const G4Run*) override;
 		void   EndOfRunAction(const G4Run*) override;
@@ -31,16 +34,18 @@ class RutherfordRunAction : public G4UserRunAction
 	private:
 		
 		G4String			fFileOut;
-
-		G4String			fETitle;
-		G4int				fEBins;
-		G4double			fEMin;
-		G4double			fEMax;
-
-		G4String			fThetaTitle;
-		G4int				fThetaBins;
-		G4double			fThetaMin;
-		G4double			fThetaMax;
+		
+		G4int				fEnergyHistogramID;
+		G4String			fEnergyHistogramTitle;
+		G4int				fEnergyHistogramBins;
+		G4double			fEnergyHistogramMin;
+		G4double			fEnergyHistogramMax;
+		
+		G4int				fThetaHistogramID;
+		G4String			fThetaHistogramTitle;
+		G4int				fThetaHistogramBins;
+		G4double			fThetaHistogramMin;
+		G4double			fThetaHistogramMax;
 		
 		RutherfordAnalysisMessenger*	fMessenger;
 };

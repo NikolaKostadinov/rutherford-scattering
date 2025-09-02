@@ -45,9 +45,9 @@ This distribution should be centered around `Eout = Ein + dE/dz * dz`.
 The quantity `dE/dz` is the stopping power of the foil.
 The stopping power is expected to match the Bethe-Bloch formula:
 
-.-------------------------------------------------------------------------------------------.
-| dE/dz = - (e2/4pi)2 * 4pi / me * Z * n * Q2/beta2 * ( log[2me/I * beta * gamma]  - beta2) |
-'-------------------------------------------------------------------------------------------'
+.------------------------------------------------------------------------------------------------.
+| < dE/dz > = - (e2/4pi)2 * 4pi / me * Z * n * Q2/beta2 * ( log[2me/I * beta * gamma]  - beta2 ) |
+'------------------------------------------------------------------------------------------------'
 
 `e2/4pi` is the fine structure constant.
 `Q` is the charge of the alpha particle which is `Q = +2`.

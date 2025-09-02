@@ -1,5 +1,12 @@
 #include "../include/RutherfordDetectorConstruction.hh"
+
 #include <G4LogicalVolume.hh>
+#include <G4NistManager.hh>
+#include <G4Box.hh>
+#include <G4Tubs.hh>
+#include <G4PVPlacement.hh>
+#include <G4SystemOfUnits.hh>
+
 #include "../include/RutherfordDefaults.h"
 
 RutherfordDetectorConstruction::RutherfordDetectorConstruction() : G4VUserDetectorConstruction()
@@ -81,7 +88,7 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	);
 
 	// Golden Foil
-	auto solidDetector = new G4Box(DETECTOR_NAME, fDetectorRadius, fDetectorRadius, fDetectorThickness/2);
+	auto solidDetector = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 10.0 * deg);
     	auto logicDetector = new G4LogicalVolume(solidDetector, detectorMaterial, DETECTOR_NAME);
 	new  G4PVPlacement(
 			nullptr,		// rotation ?

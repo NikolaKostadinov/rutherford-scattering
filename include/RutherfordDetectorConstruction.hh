@@ -3,13 +3,8 @@
 
 #include <G4VUserDetectorConstruction.hh>
 #include <G4VPhysicalVolume.hh>
-#include <G4NistManager.hh>
-#include <G4Box.hh>
-#include <G4PVPlacement.hh>
-#include <G4SystemOfUnits.hh>
 
 #include "RutherfordGeometryMessenger.hh"
-#include "RutherfordDefaults.h"
 
 class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 {
