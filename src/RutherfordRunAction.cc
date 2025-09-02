@@ -100,7 +100,7 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 		analysisManager->OpenFile(fFileOut);
 		
 		fEnergyHistogramID = analysisManager->CreateH1("histoEnergy", fEnergyHistogramTitle, fEnergyHistogramBins, fEnergyHistogramMin / DEFAULT_ENERGY_UNIT, fEnergyHistogramMax / DEFAULT_ENERGY_UNIT);
-		fThetaHistogramID  = analysisManager->CreateH1("histoTheta",  fThetaHistogramTitle,  fThetaHistogramBins,  fThetaHistogramMin / DEFAULT_ANGLE_UNIT,   fThetaHistogramMax / DEFAULT_ENERGY_UNIT);
+		fThetaHistogramID  = analysisManager->CreateH1("histoTheta",  fThetaHistogramTitle,  fThetaHistogramBins,  fThetaHistogramMin / DEFAULT_ANGLE_UNIT,   fThetaHistogramMax / DEFAULT_ANGLE_UNIT);
 	}
 }
 

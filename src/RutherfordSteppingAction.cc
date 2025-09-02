@@ -1,5 +1,17 @@
 #include "../include/RutherfordSteppingAction.hh"
 
+#include <G4Track.hh>
+#include <G4EventManager.hh>
+#include <G4Event.hh>
+#include <G4ParticleDefinition.hh>
+#include <G4RunManager.hh>
+#include <G4EventManager.hh>
+#include <G4AnalysisManager.hh>
+#include <G4SystemOfUnits.hh>
+
+#include "../include/RutherfordRunAction.hh"
+#include "../include/RutherfordDefaults.h"
+
 RutherfordSteppingAction::RutherfordSteppingAction() : G4UserSteppingAction()
 {
 
@@ -12,26 +24,33 @@ RutherfordSteppingAction::~RutherfordSteppingAction()
 
 void RutherfordSteppingAction::UserSteppingAction(const G4Step* step)
 {
-	G4Track* track = step->GetTrack();
+	auto track = step->GetTrack();
 	
-	G4int eventID = G4EventManager::GetEventManager()->GetConstCurrentEvent()->GetEventID() + 1;
-	
-	const G4StepPoint* postStepPoint = step->GetPostStepPoint();
-	const G4VPhysicalVolume* postVolume = postStepPoint->GetPhysicalVolume();
+	const G4StepPoint*       postStepPoint = step->GetPostStepPoint();
+	const G4VPhysicalVolume* postVolume    = postStepPoint->GetPhysicalVolume();
 
 	if (track->GetDefinition()->GetParticleName() == PARTICLE_NAME)
 		if (postVolume && postVolume->GetName() == WORLD_NAME)
 		{
-			auto direction = step->GetPostStepPoint()->GetMomentumDirection();
-			auto theta = direction.theta();
-		
-			auto energy = track->GetKineticEnergy();
-			
+			auto runManager = G4RunManager::GetRunManager();
+			auto runAction  = static_cast<const RutherfordRunAction*>(runManager->GetUserRunAction());
+	
+			auto eventManager = G4EventManager::GetEventManager();
+			auto event        = eventManager->GetConstCurrentEvent();
+	
 			auto analysisManager = G4AnalysisManager::Instance();
+			
+			G4int energyHistogramID = runAction->GetEnergyHistogramID(); 
+			G4int thetaHistogramID  = runAction->GetThetaHistogramID(); 
+			G4int eventID           = event->GetEventID();
+			
+			auto energyOut = track->GetKineticEnergy();
+			auto direction = step->GetPostStepPoint()->GetMomentumDirection();
+			auto theta     = direction.theta();
+			
+			analysisManager->FillH1(energyHistogramID, energyOut / DEFAULT_ENERGY_UNIT);
+			analysisManager->FillH1(thetaHistogramID,  theta / DEFAULT_ANGLE_UNIT);
 
-			analysisManager->FillH1(0, energy / MeV);
-			analysisManager->FillH1(1, theta / deg);
-
-			G4cout << "event [" << eventID << "] final energy: " << energy / MeV << " MeV" << G4endl;
+			G4cout << "event [" << (eventID + 1) << "] final energy: " << energyOut / MeV << G4endl;
 		}
 }
