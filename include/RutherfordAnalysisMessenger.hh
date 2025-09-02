@@ -27,17 +27,30 @@ class RutherfordAnalysisMessenger : public G4UImessenger
 		
 		G4UIcmdWithAString*		fFileOutCmd;
 
-		// Energy Spectrum dσ/dE
-		G4UIcmdWithAString*		fEnergyHistogramTitleCmd;
-		G4UIcmdWithAnInteger*		fEnergyHistogramBinsCmd;
-		G4UIcmdWithADoubleAndUnit*	fEnergyHistogramMinCmd;
-		G4UIcmdWithADoubleAndUnit*	fEnergyHistogramMaxCmd;
+		G4UIcmdWithAString*		fAlphaEnergyHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fAlphaEnergyHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fAlphaEnergyHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fAlphaEnergyHistogramMaxCmd;
 		
-		// Differential Cross Section dσ/dΩ
-		G4UIcmdWithAString*		fThetaHistogramTitleCmd;
-		G4UIcmdWithAnInteger*		fThetaHistogramBinsCmd;
-		G4UIcmdWithADoubleAndUnit*	fThetaHistogramMinCmd;
-		G4UIcmdWithADoubleAndUnit*	fThetaHistogramMaxCmd;
+		G4UIcmdWithAString*		fAlphaThetaHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fAlphaThetaHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fAlphaThetaHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fAlphaThetaHistogramMaxCmd;
+		
+		G4UIcmdWithAString*		fDeltasHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fDeltasHistogramBinsCmd;
+		G4UIcmdWithAnInteger*		fDeltasHistogramMinCmd;
+		G4UIcmdWithAnInteger*		fDeltasHistogramMaxCmd;
+		
+		G4UIcmdWithAString*		fDeltaEnergyHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fDeltaEnergyHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fDeltaEnergyHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fDeltaEnergyHistogramMaxCmd;
+		
+		G4UIcmdWithAString*		fDeltaThetaHistogramTitleCmd;
+		G4UIcmdWithAnInteger*		fDeltaThetaHistogramBinsCmd;
+		G4UIcmdWithADoubleAndUnit*	fDeltaThetaHistogramMinCmd;
+		G4UIcmdWithADoubleAndUnit*	fDeltaThetaHistogramMaxCmd;
 		
 		RutherfordRunAction*		fRunAction;
 };

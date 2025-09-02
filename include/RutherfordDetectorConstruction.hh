@@ -21,7 +21,7 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		
 		G4double GetDetectorThickness() const;
 
-		virtual G4VPhysicalVolume* Construct() override;		
+		virtual G4VPhysicalVolume* Construct() override;
 	
 	private:
 		

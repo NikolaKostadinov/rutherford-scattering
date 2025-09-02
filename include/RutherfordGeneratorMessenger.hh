@@ -21,8 +21,8 @@ class RutherfordGeneratorMessenger : public G4UImessenger
 		
 		G4UIdirectory*			fDirectory;
 		
-		G4UIcmdWithADoubleAndUnit* 	fEnergyCmd;
-		G4UIcmdWithADoubleAndUnit* 	fDistanceCmd;
+		G4UIcmdWithADoubleAndUnit* 	fAlphaEnergyCmd;
+		G4UIcmdWithADoubleAndUnit* 	fAlphaDistanceCmd;
 		
 		RutherfordGeneratorAction* 	fGenerator;
 };

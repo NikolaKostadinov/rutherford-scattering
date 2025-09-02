@@ -15,38 +15,86 @@ class RutherfordRunAction : public G4UserRunAction
 
 		void SetFileOut(G4String);
 		
-		void SetEnergyHistogramTitle(G4String);
-		void SetEnergyHistogramBins(G4int);
-		void SetEnergyHistogramMin(G4double);
-		void SetEnergyHistogramMax(G4double);
+		void SetAlphaEnergyHistogramTitle(G4String);
+		void SetAlphaEnergyHistogramBins(G4int);
+		void SetAlphaEnergyHistogramMin(G4double);
+		void SetAlphaEnergyHistogramMax(G4double);
 
-		void SetThetaHistogramTitle(G4String);
-		void SetThetaHistogramBins(G4int);
-		void SetThetaHistogramMin(G4double);
-		void SetThetaHistogramMax(G4double);
+		void SetAlphaThetaHistogramTitle(G4String);
+		void SetAlphaThetaHistogramBins(G4int);
+		void SetAlphaThetaHistogramMin(G4double);
+		void SetAlphaThetaHistogramMax(G4double);
 
-		G4int GetEnergyHistogramID() const;
-		G4int GetThetaHistogramID()  const;
+		void SetDeltasHistogramTitle(G4String);
+		void SetDeltasHistogramBins(G4int);
+		void SetDeltasHistogramMin(G4int);
+		void SetDeltasHistogramMax(G4int);
+
+		void SetDeltaEnergyHistogramTitle(G4String);
+		void SetDeltaEnergyHistogramBins(G4int);
+		void SetDeltaEnergyHistogramMin(G4double);
+		void SetDeltaEnergyHistogramMax(G4double);
+
+		void SetDeltaThetaHistogramTitle(G4String);
+		void SetDeltaThetaHistogramBins(G4int);
+		void SetDeltaThetaHistogramMin(G4double);
+		void SetDeltaThetaHistogramMax(G4double);
+
+		G4int GetAlphaEnergyHistogramID() const;
+		G4int GetAlphaThetaHistogramID()  const;
+		G4int GetDeltasHistogramID()      const;
+		G4int GetDeltaEnergyHistogramID() const;
+		G4int GetDeltaThetaHistogramID()  const;
 
 		void BeginOfRunAction(const G4Run*) override;
 		void   EndOfRunAction(const G4Run*) override;
 
 	private:
 		
+		// Path to Analysis File	
 		G4String			fFileOut;
 		
-		G4int				fEnergyHistogramID;
-		G4String			fEnergyHistogramTitle;
-		G4int				fEnergyHistogramBins;
-		G4double			fEnergyHistogramMin;
-		G4double			fEnergyHistogramMax;
+		// Final Energy of
+		// Alpha Particle Histogram
+		G4int				fAlphaEnergyHistogramID;
+		G4String			fAlphaEnergyHistogramTitle;
+		G4int				fAlphaEnergyHistogramBins;
+		G4double			fAlphaEnergyHistogramMin;
+		G4double			fAlphaEnergyHistogramMax;
 		
-		G4int				fThetaHistogramID;
-		G4String			fThetaHistogramTitle;
-		G4int				fThetaHistogramBins;
-		G4double			fThetaHistogramMin;
-		G4double			fThetaHistogramMax;
+		// Scattering Angle of
+		// Alpha Particle Histogram
+		G4int				fAlphaThetaHistogramID;
+		G4String			fAlphaThetaHistogramTitle;
+		G4int				fAlphaThetaHistogramBins;
+		G4double			fAlphaThetaHistogramMin;
+		G4double			fAlphaThetaHistogramMax;
 		
+		// Number of
+		// Delta Particles Histogram	
+		G4int				fDeltasHistogramID;
+		G4String			fDeltasHistogramTitle;
+		G4int				fDeltasHistogramBins;
+		G4int				fDeltasHistogramMin;
+		G4int				fDeltasHistogramMax;
+		
+		// Inital Energy of
+		// Delta Particle Histogram
+		G4int				fDeltaEnergyHistogramID;
+		G4String			fDeltaEnergyHistogramTitle;
+		G4int				fDeltaEnergyHistogramBins;
+		G4double			fDeltaEnergyHistogramMin;
+		G4double			fDeltaEnergyHistogramMax;
+		
+		// Scattering angle of
+		// Delta Particle Histogram
+		G4int				fDeltaThetaHistogramID;
+		G4String			fDeltaThetaHistogramTitle;
+		G4int				fDeltaThetaHistogramBins;
+		G4double			fDeltaThetaHistogramMin;
+		G4double			fDeltaThetaHistogramMax;
+		
+		// Analysis Messenger
 		RutherfordAnalysisMessenger*	fMessenger;
 };
 

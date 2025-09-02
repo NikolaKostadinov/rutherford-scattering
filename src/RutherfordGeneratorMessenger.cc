@@ -9,36 +9,36 @@ RutherfordGeneratorMessenger::RutherfordGeneratorMessenger(RutherfordGeneratorAc
 	fDirectory = new G4UIdirectory(GENERATE_CMD);
 	fDirectory->SetGuidance("Command for particle generation.");
 
-	fEnergyCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ENERGY_CMD, this);
-	fEnergyCmd->SetGuidance("Set inital alpha particle energy.");
-	fEnergyCmd->SetUnitCategory("Energy");
-	fEnergyCmd->SetDefaultValue(DEFAULT_ENERGY / DEFAULT_ENERGY_UNIT);
-	fEnergyCmd->SetDefaultUnit(DEFAULT_ENERGY_UNIT_STRING);
+	fAlphaEnergyCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ALPHA_ENERGY_CMD, this);
+	fAlphaEnergyCmd->SetGuidance("Set inital alpha particle energy.");
+	fAlphaEnergyCmd->SetUnitCategory("Energy");
+	fAlphaEnergyCmd->SetDefaultValue(DEFAULT_ALPHA_ENERGY / DEFAULT_HIGH_ENERGY_UNIT);
+	fAlphaEnergyCmd->SetDefaultUnit(DEFAULT_HIGH_ENERGY_UNIT_STRING);
 
-	fDistanceCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_DISTANCE_CMD, this);
-        fDistanceCmd->SetGuidance("Set inital alpha particle distance from target.");
-        fDistanceCmd->SetUnitCategory("Length");
-        fDistanceCmd->SetDefaultValue(DEFAULT_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
-        fDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
+	fAlphaDistanceCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ALPHA_DISTANCE_CMD, this);
+        fAlphaDistanceCmd->SetGuidance("Set inital alpha particle distance from target center.");
+        fAlphaDistanceCmd->SetUnitCategory("Length");
+        fAlphaDistanceCmd->SetDefaultValue(DEFAULT_ALPHA_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
+        fAlphaDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
 }
 
 RutherfordGeneratorMessenger::~RutherfordGeneratorMessenger()
 {
 	delete fDirectory;
-	delete fEnergyCmd;
-	delete fDistanceCmd;
+	delete fAlphaEnergyCmd;
+	delete fAlphaDistanceCmd;
 }
 
 void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 {
-	if (cmd == fEnergyCmd)
+	if (cmd == fAlphaEnergyCmd)
 	{
-		auto energy = fEnergyCmd->GetNewDoubleValue(value);
-		fGenerator->SetEnergy(energy);
+		auto energy = fAlphaEnergyCmd->GetNewDoubleValue(value);
+		fGenerator->SetAlphaEnergy(energy);
 	}
-	else if (cmd == fDistanceCmd)
+	else if (cmd == fAlphaDistanceCmd)
 	{
-		auto distance = fDistanceCmd->GetNewDoubleValue(value);
-		fGenerator->SetDistance(distance);
+		auto distance = fAlphaDistanceCmd->GetNewDoubleValue(value);
+		fGenerator->SetAlphaDistance(distance);
 	}
 }

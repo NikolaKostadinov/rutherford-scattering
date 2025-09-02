@@ -3,24 +3,26 @@
 
 #include <G4SystemOfUnits.hh>
 
-#define RUTHERFORD_NAME			"Rutherford Scattering"
-#define RUTHERFORD_PROGRAM		"rutherford-scattering"
-#define RUTHERFORD_VERSION		"v0.2"
+#define RUTHERFORD_NAME				"Rutherford Scattering"
+#define RUTHERFORD_PROGRAM			"rutherford-scattering"
+#define RUTHERFORD_VERSION			"v0.2"
 
-#define VERSION_FLAG			"--version"
-#define HELP_LONG_FLAG			"--help"
-#define HELP_SHORT_FLAG			"-h"
-#define TAB_SIZE			8
-#define MARGIN_SIZE			2
+#define VERSION_FLAG				"--version"
+#define HELP_LONG_FLAG				"--help"
+#define HELP_SHORT_FLAG				"-h"
+#define TAB_SIZE				8
+#define MARGIN_SIZE				2
 
 // DEFAULT UNITS
-#define DEFAULT_ENERGY_UNIT			MeV
+#define DEFAULT_HIGH_ENERGY_UNIT		MeV
+#define DEFAULT_LOW_ENERGY_UNIT			keV
 #define DEFAULT_SHORT_LENGTH_UNIT		um
 #define DEFAULT_MID_LENGTH_UNIT			mm
 #define DEFAULT_LONG_LENGTH_UNIT		cm
 #define DEFAULT_ANGLE_UNIT			deg
 #define DEFAULT_NUMBER_DENSITY_UNIT		1/cm3
-#define DEFAULT_ENERGY_UNIT_STRING		"MeV"
+#define DEFAULT_HIGH_ENERGY_UNIT_STRING		"MeV"
+#define DEFAULT_LOW_ENERGY_UNIT_STRING		"keV"
 #define DEFAULT_SHORT_LENGTH_UNIT_STRING	"um"
 #define DEFAULT_MID_LENGTH_UNIT_STRING		"mm"
 #define DEFAULT_LONG_LENGTH_UNIT_STRING		"cm"
@@ -28,45 +30,60 @@
 #define DEFAULT_NUMBER_DENSITY_UNIT_STRING	"1/cm3"
 
 // DEFAULT VACUUM
-#define VACUUM				"Vacuum"
-#define VACUUM_ATOMIC_NUMBER		1
-#define VACUUM_NUMBER_DENSITY		0.06 * 1/cm3
+#define VACUUM					"Vacuum"
+#define VACUUM_ATOMIC_NUMBER			1
+#define VACUUM_NUMBER_DENSITY			0.06 * 1/cm3
 
 // DEFAULT DETECTOR MATERIAL
-#define DETECTOR_MATERIAL		"Detectorium"
-#define DEFAULT_DETECTOR_ATOMIC_NUMBER	79
-#define DEFAULT_DETECTOR_NUMBER_DENSITY 5.91e+22 * 1/cm3
+#define DETECTOR_MATERIAL			"Detectorium"
+#define DEFAULT_DETECTOR_ATOMIC_NUMBER		79
+#define DEFAULT_DETECTOR_NUMBER_DENSITY 	6.0e+22 * 1/cm3
 
 // DEFAULT DETECTOR GEOMETRY
-#define WORLD_NAME			"Manchester"
-#define DETECTOR_NAME			"Rutherfoil"
-#define DEFAULT_WORLD_RADIUS		1.0 *  m
-#define DEFAULT_DETECTOR_RADIUS		1.0 * cm
-#define DEFAULT_DETECTOR_THICKNESS	1.0 * um
+#define WORLD_NAME				"Manchester"
+#define DETECTOR_NAME				"Rutherfoil"
+#define DEFAULT_WORLD_RADIUS			1.0 *  m
+#define DEFAULT_DETECTOR_RADIUS			1.0 * cm
+#define DEFAULT_DETECTOR_THICKNESS		1.0 * um
 
 // DEFAULT GENERATED PARTICLE
-#define PARTICLE_NAME			"alpha"
-#define DEFAULT_ENERGY			5.0 * MeV
-#define DEFAULT_DISTANCE		1.0 * cm
+#define DEFAULT_ALPHA_ENERGY			5.0 * MeV
+#define DEFAULT_ALPHA_DISTANCE			1.0 * cm
 
 // DEFAULT ROOT HISTOGRAMS
-//
-#define DEFAULT_FILE_OUT		"output.root"
-#define DEFAULT_HISTOGRAM_ID		-1
-//
-// ENERGY SPECTRUM
-#define DEFAULT_ENERGY_TITLE		"Energy Spectrum;d\\sigma/dE [counts per bin];Ein [MeV]"
-#define DEFAULT_ENERGY_BINS		100
-#define DEFAULT_ENERGY_MIN		4.0 * MeV
-#define DEFAULT_ENERGY_MAX		5.0 * MeV
-//
-// DIFFERENTIAL CROSS SECTION
-#define DEFAULT_THETA_TITLE		"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
-#define DEFAULT_THETA_BINS		1000
-#define DEFAULT_THETA_MIN		0.0   * deg
-#define DEFAULT_THETA_MAX		180.0 * deg
+#define DEFAULT_FILE_OUT			"output.root"
+#define DEFAULT_HISTOGRAM_ID			-1
+
+// ALPHA ENERGY SPECTRUM
+#define DEFAULT_ALPHA_ENERGY_TITLE		"Energy Spectrum d\\sigma/dE [counts per bin]"
+#define DEFAULT_ALPHA_ENERGY_BINS		1000
+#define DEFAULT_ALPHA_ENERGY_MIN		4.0 * MeV
+#define DEFAULT_ALPHA_ENERGY_MAX		5.0 * MeV
+
+// ALPHA DIFFERENTIAL CROSS SECTION
+#define DEFAULT_ALPHA_THETA_TITLE		"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
+#define DEFAULT_ALPHA_THETA_BINS		1000
+#define DEFAULT_ALPHA_THETA_MIN			0.0   * deg
+#define DEFAULT_ALPHA_THETA_MAX			180.0 * deg
+
+// NUMBER OF DELTA PARTICLES 
+#define DEFAULT_DELTAS_TITLE			"Number of ionized electrons [counts per bin]"
+#define DEFAULT_DELTAS_BINS			50
+#define DEFAULT_DELTAS_MIN			0
+#define DEFAULT_DELTAS_MAX			50
+
+// DELTA ENERGY SPECTRUM
+#define DEFAULT_DELTA_ENERGY_TITLE		"Energy Spectrum d\\sigma/dE [counts per bin]"
+#define DEFAULT_DELTA_ENERGY_BINS		1000
+#define DEFAULT_DELTA_ENERGY_MIN		0.9 * keV
+#define DEFAULT_DELTA_ENERGY_MAX		2.9 * keV
+
+// DELTA DIFFERENTIAL CROSS SECTION
+#define DEFAULT_DELTA_THETA_TITLE		"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
+#define DEFAULT_DELTA_THETA_BINS		1000
+#define DEFAULT_DELTA_THETA_MIN			0.0   * deg
+#define DEFAULT_DELTA_THETA_MAX			180.0 * deg
 
 // RUN
-#define DEFAULT_NUMBER_OF_EVENTS	1
-
+#define DEFAULT_NUMBER_OF_EVENTS		1
 #endif

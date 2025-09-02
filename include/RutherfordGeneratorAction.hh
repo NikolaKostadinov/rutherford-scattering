@@ -14,18 +14,18 @@ class RutherfordGeneratorAction : public G4VUserPrimaryGeneratorAction
 		RutherfordGeneratorAction();
 		virtual ~RutherfordGeneratorAction();
 		
-		void SetEnergy(G4double);
-		void SetDistance(G4double);
+		void SetAlphaEnergy(G4double);
+		void SetAlphaDistance(G4double);
 
-		G4double GetEnergy() const;
-		G4double GetDistance() const;
+		G4double GetAlphaEnergy() const;
+		G4double GetAlphaDistance() const;
 
 		virtual void GeneratePrimaries(G4Event*) override;
 
 	private:
 
-		G4double			fEnergy;
-		G4double			fDistance;
+		G4double			fAlphaEnergy;
+		G4double			fAlphaDistance;
 		
 		G4ParticleGun*			fParticleGun;
 		

@@ -12,10 +12,6 @@ class RutherfordSteppingAction : public G4UserSteppingAction
 		~RutherfordSteppingAction();
 
 		virtual void UserSteppingAction(const G4Step*) override;
-	
-	private:
-
-		bool fIsParticleOut = false;
 };
 
 #endif
