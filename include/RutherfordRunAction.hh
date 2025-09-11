@@ -2,6 +2,7 @@
 #define RUN_ACTION_HH
 
 #include <G4UserRunAction.hh>
+#include <G4Timer.hh>
 
 #include "RutherfordDefaults.h"
 #include "RutherfordAnalysisMessenger.hh"
@@ -12,6 +13,9 @@ class RutherfordRunAction : public G4UserRunAction
 
 		RutherfordRunAction();
 		~RutherfordRunAction();
+		
+		G4double SaveLapTime();
+		G4double GetElapsedTime() const;
 
 		void SetFileOut(G4String);
 		
@@ -24,6 +28,8 @@ class RutherfordRunAction : public G4UserRunAction
 		void SetAlphaThetaHistogramBins(G4int);
 		void SetAlphaThetaHistogramMin(G4double);
 		void SetAlphaThetaHistogramMax(G4double);
+		
+		void SetAlphaHistogramTitle(G4String);
 
 		void SetDeltasHistogramTitle(G4String);
 		void SetDeltasHistogramBins(G4int);
@@ -39,18 +45,25 @@ class RutherfordRunAction : public G4UserRunAction
 		void SetDeltaThetaHistogramBins(G4int);
 		void SetDeltaThetaHistogramMin(G4double);
 		void SetDeltaThetaHistogramMax(G4double);
+		
+		void SetDeltaHistogramTitle(G4String);
 
 		G4int GetAlphaEnergyHistogramID() const;
 		G4int GetAlphaThetaHistogramID()  const;
+		G4int GetAlphaHistogramID()       const;
 		G4int GetDeltasHistogramID()      const;
 		G4int GetDeltaEnergyHistogramID() const;
 		G4int GetDeltaThetaHistogramID()  const;
+		G4int GetDeltaHistogramID()       const;
 
 		void BeginOfRunAction(const G4Run*) override;
 		void   EndOfRunAction(const G4Run*) override;
 
 	private:
 		
+		G4Timer*			fTimer;
+		G4double			fElapsedTime;
+
 		// Path to Analysis File	
 		G4String			fFileOut;
 		
@@ -70,6 +83,11 @@ class RutherfordRunAction : public G4UserRunAction
 		G4double			fAlphaThetaHistogramMin;
 		G4double			fAlphaThetaHistogramMax;
 		
+		// Product of
+		// Alpha Particle Histograms
+		G4int				fAlphaHistogramID;
+		G4String			fAlphaHistogramTitle;
+
 		// Number of
 		// Delta Particles Histogram	
 		G4int				fDeltasHistogramID;
@@ -93,6 +111,11 @@ class RutherfordRunAction : public G4UserRunAction
 		G4int				fDeltaThetaHistogramBins;
 		G4double			fDeltaThetaHistogramMin;
 		G4double			fDeltaThetaHistogramMax;
+		
+		// Product of
+		// Delta Particle Histograms
+		G4int				fDeltaHistogramID;
+		G4String			fDeltaHistogramTitle;
 		
 		// Analysis Messenger
 		RutherfordAnalysisMessenger*	fMessenger;

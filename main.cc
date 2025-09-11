@@ -47,6 +47,7 @@ int main(int argc, char** argv)
 	arguments.push_back(RutherfordArgument("--theta-min",   "-S", ANALYSIS_ALPHA_THETA_MIN_CMD,   "angle",  "minimum scattering angle"));
 	arguments.push_back(RutherfordArgument("--theta-max",   "-D", ANALYSIS_ALPHA_THETA_MAX_CMD,   "angle",  "maximum scattering angle"));
 	arguments.push_back(RutherfordArgument("--theta-bins",  "-B", ANALYSIS_ALPHA_THETA_BINS_CMD,  "number", "number of scattering angle bins"));
+	arguments.push_back(RutherfordArgument("--cut",         "-c", CUT_LOW_ENERGY_CMD,             "value",  "low energy production cut"));
 	arguments.push_back(RutherfordArgument("--n-events",    "-n", RUN_SIMULATION_CMD,             "number", "number of events"));
 
 	RutherfordArgumentParser(argc, argv, arguments, uiManager);

@@ -2,7 +2,7 @@
 /geometry/detector/atomicNumber 14
 /geometry/detector/numberDensity 5e+22 1/cm3
 /geometry/detector/radius 1 cm
-/geometry/detector/thickness 1 um
+/geometry/detector/thickness 2 um
 
 /generate/alpha/energy 5.0 MeV
 /generate/alpha/distance 1 cm
@@ -13,22 +13,23 @@
 /analysis/alpha/energy/min 4.0 MeV
 /analysis/alpha/energy/max 5.0 MeV
 
-/analysis/alpha/theta/bins 100
+/analysis/alpha/theta/bins 1000
 /analysis/alpha/theta/min 0.0 deg
 /analysis/alpha/theta/max 5.0 deg
 
-/analysis/delta/number/bins 40
+/analysis/delta/number/bins 100
 /analysis/delta/number/min 0
-/analysis/delta/number/max 40
+/analysis/delta/number/max 100
 
-/analysis/delta/energy/bins 100
-/analysis/delta/energy/min 0.9 keV
-/analysis/delta/energy/max 2.9 keV
+/analysis/delta/energy/bins 1000
+/analysis/delta/energy/min 1.0 keV
+/analysis/delta/energy/max 3.0 keV
 
-/analysis/delta/theta/bins 100
+/analysis/delta/theta/bins 1000
 /analysis/delta/theta/min 0.0 deg
-/analysis/delta/theta/max 90.0 deg
+/analysis/delta/theta/max 180.0 deg
 
-/run/verbose 1
+/cuts/setLowEdge 1.0 keV
+
 /run/initialize
-/run/beamOn 100000
+/run/beamOn 10000000

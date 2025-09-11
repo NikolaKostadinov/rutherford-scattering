@@ -5,13 +5,14 @@
 
 #define RUTHERFORD_NAME				"Rutherford Scattering"
 #define RUTHERFORD_PROGRAM			"rutherford-scattering"
-#define RUTHERFORD_VERSION			"v0.2"
+#define RUTHERFORD_VERSION			"v0.3"
 
 #define VERSION_FLAG				"--version"
 #define HELP_LONG_FLAG				"--help"
 #define HELP_SHORT_FLAG				"-h"
 #define TAB_SIZE				8
 #define MARGIN_SIZE				2
+#define BAR_SIZE				80
 
 // DEFAULT UNITS
 #define DEFAULT_HIGH_ENERGY_UNIT		MeV
@@ -55,34 +56,45 @@
 #define DEFAULT_HISTOGRAM_ID			-1
 
 // ALPHA ENERGY SPECTRUM
+#define DEFAULT_ALPHA_ENERGY_NAME		"histoAlphaEnergy"
 #define DEFAULT_ALPHA_ENERGY_TITLE		"Energy Spectrum d\\sigma/dE [counts per bin]"
 #define DEFAULT_ALPHA_ENERGY_BINS		1000
 #define DEFAULT_ALPHA_ENERGY_MIN		4.0 * MeV
 #define DEFAULT_ALPHA_ENERGY_MAX		5.0 * MeV
 
 // ALPHA DIFFERENTIAL CROSS SECTION
+#define DEFAULT_ALPHA_THETA_NAME		"histoAlphaTheta"
 #define DEFAULT_ALPHA_THETA_TITLE		"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
 #define DEFAULT_ALPHA_THETA_BINS		1000
 #define DEFAULT_ALPHA_THETA_MIN			0.0   * deg
 #define DEFAULT_ALPHA_THETA_MAX			180.0 * deg
 
+#define DEFAULT_ALPHA_NAME			"histoAlpha"
+#define DEFAULT_ALPHA_TITLE			"ALPHA"
+
 // NUMBER OF DELTA PARTICLES 
-#define DEFAULT_DELTAS_TITLE			"Number of ionized electrons [counts per bin]"
+#define DEFAULT_DELTAS_NAME			"histoDeltas"
+#define DEFAULT_DELTAS_TITLE			"Number of tracked ionized electrons [counts per bin]"
 #define DEFAULT_DELTAS_BINS			50
 #define DEFAULT_DELTAS_MIN			0
 #define DEFAULT_DELTAS_MAX			50
 
 // DELTA ENERGY SPECTRUM
+#define DEFAULT_DELTA_ENERGY_NAME		"histoDeltaEnergy"
 #define DEFAULT_DELTA_ENERGY_TITLE		"Energy Spectrum d\\sigma/dE [counts per bin]"
 #define DEFAULT_DELTA_ENERGY_BINS		1000
 #define DEFAULT_DELTA_ENERGY_MIN		0.9 * keV
 #define DEFAULT_DELTA_ENERGY_MAX		2.9 * keV
 
 // DELTA DIFFERENTIAL CROSS SECTION
+#define DEFAULT_DELTA_THETA_NAME		"histoDeltaTheta"
 #define DEFAULT_DELTA_THETA_TITLE		"Differential Cross Section d\\sigma/d\\Omega [counts per bin]"
 #define DEFAULT_DELTA_THETA_BINS		1000
 #define DEFAULT_DELTA_THETA_MIN			0.0   * deg
 #define DEFAULT_DELTA_THETA_MAX			180.0 * deg
+
+#define DEFAULT_DELTA_NAME			"histoDelta"
+#define DEFAULT_DELTA_TITLE			"DELTA"
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1

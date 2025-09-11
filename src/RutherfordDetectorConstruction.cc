@@ -52,9 +52,44 @@ void RutherfordDetectorConstruction::SetDetectorThickness(G4double thickness)
 	fDetectorThickness = thickness;
 }
 
+G4int RutherfordDetectorConstruction::GetDetectorAtomicNumber() const
+{
+	return fDetectorAtomicNumber;
+}
+
+G4double RutherfordDetectorConstruction::GetDetectorNumberDensity() const
+{
+	return fDetectorNumberDensity;
+}
+
+G4double RutherfordDetectorConstruction::GetDetectorElectronDensity() const
+{
+	return fDetectorAtomicNumber * fDetectorNumberDensity;
+}
+
+G4double RutherfordDetectorConstruction::GetDetectorRadius() const
+{
+	return fDetectorRadius;
+}
+
 G4double RutherfordDetectorConstruction::GetDetectorThickness() const
 {
 	return fDetectorThickness;
+}
+
+G4Material* RutherfordDetectorConstruction::GetWorldMaterial() const
+{
+	return fWorldMaterial;
+}
+
+G4Material* RutherfordDetectorConstruction::GetDetectorMaterial() const
+{
+	return fDetectorMaterial;
+}
+
+G4double RutherfordDetectorConstruction::GetDetectorMeanExcitation() const
+{
+	return fDetectorMaterial->GetIonisation()->GetMeanExcitationEnergy();
 }
 
 G4VPhysicalVolume* RutherfordDetectorConstruction::Construct() 
@@ -66,19 +101,21 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	G4Element*  vacuumElement   = nist->FindOrBuildElement(VACUUM_ATOMIC_NUMBER);
 	G4double    vacuumAtomMass  = vacuumElement->GetA() / CLHEP::Avogadro;
 	G4double    vacuumDensity   = vacuumAtomMass * VACUUM_NUMBER_DENSITY;
-	G4Material* vacuumMaterial = new G4Material(VACUUM, vacuumDensity, 1);
-	vacuumMaterial->AddElement(vacuumElement, 1);
+	//
+	fWorldMaterial = new G4Material(VACUUM, vacuumDensity, 1);
+	fWorldMaterial->AddElement(vacuumElement, 1);
 
 	// Detector Material
 	G4Element*  detectorElement  = nist->FindOrBuildElement(fDetectorAtomicNumber);
 	G4double    detectorAtomMass = detectorElement->GetA() / CLHEP::Avogadro;
 	G4double    detectorDensity  = detectorAtomMass * fDetectorNumberDensity;
-	G4Material* detectorMaterial = new G4Material(DETECTOR_MATERIAL, detectorDensity, 1);
-	detectorMaterial->AddElement(detectorElement, 1);
+	//
+	fDetectorMaterial = new G4Material(DETECTOR_MATERIAL, detectorDensity, 1);
+	fDetectorMaterial->AddElement(detectorElement, 1);
 	
 	// World Background
 	auto worldSolid = new G4Box(WORLD_NAME, fWorldRadius, fWorldRadius, fWorldRadius);
-    	auto worldLogic	= new G4LogicalVolume(worldSolid, vacuumMaterial, WORLD_NAME);
+    	auto worldLogic	= new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
     	auto world 	= new G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
@@ -91,7 +128,7 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 
 	// Detector
 	auto detectorSolid = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 360.0 * deg);
-    	auto detectorLogic = new G4LogicalVolume(detectorSolid, detectorMaterial, DETECTOR_NAME);
+    	auto detectorLogic = new G4LogicalVolume(detectorSolid, fDetectorMaterial, DETECTOR_NAME);
 	new  G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
@@ -101,14 +138,15 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 			false,			// boolean opertion ?
 			0			// number of copies
 	);
-
+	
+	auto cutValue = 1 * fermi;
 	auto detectorRegion = new G4Region("DetectorRegion");
 	detectorRegion->AddRootLogicalVolume(detectorLogic);
 
 	auto cuts = new G4ProductionCuts();
-	cuts->SetProductionCut(1.0 * nm, "e-");
-	cuts->SetProductionCut(1.0 * nm, "e+");
-	cuts->SetProductionCut(1.0 * nm, "gamma");
+	cuts->SetProductionCut(cutValue, "e-");
+	cuts->SetProductionCut(cutValue, "e+");
+	cuts->SetProductionCut(cutValue, "gamma");
 
 	detectorRegion->SetProductionCuts(cuts);
 

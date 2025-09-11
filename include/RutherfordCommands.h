@@ -27,6 +27,9 @@
 #define	MIN_CMD					"/min"
 #define	MAX_CMD					"/max"
 
+#define CUT_CMD					"/cuts"
+#define LOW_ENERGY_CMD				"/setLowEdge"
+
 #define RUN_CMD					"/run"
 #define INIT_CMD				"/initialize"
 #define BEAM_ON_CMD				"/beamOn"
@@ -63,6 +66,7 @@
 #define ANALYSIS_DELTA_THETA_BINS_CMD		ANALYSIS_CMD	DELTA_CMD	THETA_CMD	BINS_CMD
 #define ANALYSIS_DELTA_THETA_MIN_CMD		ANALYSIS_CMD	DELTA_CMD	THETA_CMD	MIN_CMD
 #define ANALYSIS_DELTA_THETA_MAX_CMD		ANALYSIS_CMD	DELTA_CMD	THETA_CMD	MAX_CMD
+#define CUT_LOW_ENERGY_CMD			CUT_CMD		LOW_ENERGY_CMD
 #define RUN_SIMULATION_CMD			RUN_CMD		INIT_CMD  	NEW		RUN_CMD		BEAM_ON_CMD
 
 #endif

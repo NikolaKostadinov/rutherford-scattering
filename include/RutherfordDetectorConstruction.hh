@@ -3,6 +3,7 @@
 
 #include <G4VUserDetectorConstruction.hh>
 #include <G4VPhysicalVolume.hh>
+#include <G4Material.hh>
 
 #include "RutherfordGeometryMessenger.hh"
 
@@ -19,7 +20,14 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		void SetDetectorRadius(G4double);
 		void SetDetectorThickness(G4double);
 		
-		G4double GetDetectorThickness() const;
+		G4int		GetDetectorAtomicNumber()    const;
+		G4double	GetDetectorNumberDensity()   const;
+		G4double	GetDetectorElectronDensity() const;
+		G4double	GetDetectorRadius()          const;
+		G4double	GetDetectorThickness()       const;
+		G4Material*	GetWorldMaterial()           const;
+		G4Material*	GetDetectorMaterial()        const;
+		G4double	GetDetectorMeanExcitation()  const;
 
 		virtual G4VPhysicalVolume* Construct() override;
 	
@@ -30,7 +38,10 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		G4double			fDetectorNumberDensity;
 		G4double			fDetectorRadius;
 		G4double			fDetectorThickness;
-		
+
+		G4Material*			fWorldMaterial;
+		G4Material*			fDetectorMaterial;
+
 		RutherfordGeometryMessenger*	fMessenger;
 };
 
