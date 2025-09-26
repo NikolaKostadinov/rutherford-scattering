@@ -2,10 +2,14 @@
 #define GENERATOR_ACTION_HH
 
 #include <G4VUserPrimaryGeneratorAction.hh>
+#include <G4ParticleDefinition.hh>
 #include <G4ParticleGun.hh>
+#include <G4ParticleTable.hh>
 
 #include "RutherfordDefaults.h"
 #include "RutherfordGeneratorMessenger.hh"
+
+#define TO_PARTICLE_DEFINITION(name) G4ParticleTable::GetParticleTable()->FindParticle(name)
 
 class RutherfordGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
@@ -14,20 +18,25 @@ class RutherfordGeneratorAction : public G4VUserPrimaryGeneratorAction
 		RutherfordGeneratorAction();
 		virtual ~RutherfordGeneratorAction();
 		
-		void SetAlphaEnergy(G4double);
-		void SetAlphaDistance(G4double);
+		void SetPrimaryParticleDefinition(G4ParticleDefinition* value) { fPrimaryParticleDefinition = value;                         };
+		void SetPrimaryParticleDefinition(G4String value)              { fPrimaryParticleDefinition = TO_PARTICLE_DEFINITION(value); };
+		void SetPrimaryEnergy(G4double value)                          { fPrimaryEnergy             = value;                         };
+		void SetPrimaryDistance(G4double value)                        { fPrimaryDistance           = value;                         };
+		void SetParticleGun();
 
-		G4double GetAlphaEnergy() const;
-		G4double GetAlphaDistance() const;
+		G4ParticleDefinition* GetPrimaryParticleDefinition() const     { return fPrimaryParticleDefinition; };
+		G4double              GetPrimaryEnergy()             const     { return fPrimaryEnergy;             };
+		G4double              GetPrimaryDistance()           const     { return fPrimaryDistance;           };
 
 		virtual void GeneratePrimaries(G4Event*) override;
 
 	private:
 
-		G4double			fAlphaEnergy;
-		G4double			fAlphaDistance;
+		G4ParticleDefinition*		fPrimaryParticleDefinition = TO_PARTICLE_DEFINITION(DEFAULT_PRIMARY_PARTICLE);
+		G4double			fPrimaryEnergy             = DEFAULT_PRIMARY_ENERGY;
+		G4double			fPrimaryDistance           = DEFAULT_PRIMARY_DISTANCE;
 		
-		G4ParticleGun*			fParticleGun;
+		G4ParticleGun*			fParticleGun               = new G4ParticleGun(1);
 		
 		RutherfordGeneratorMessenger*	fMessenger;
 };

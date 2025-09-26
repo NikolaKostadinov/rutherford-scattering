@@ -3,17 +3,12 @@
 
 #include <G4VUserActionInitialization.hh>
 
-// Forward declarations
-class RutherfordGeneratorAction;
-class RutherfordRunAction;
-class RutherfordSteppingAction;
-
 class RutherfordActionInitialization : public G4VUserActionInitialization
 {
 	public:
 	
-		RutherfordActionInitialization();
-		virtual ~RutherfordActionInitialization();
+		RutherfordActionInitialization()          = default;
+		virtual ~RutherfordActionInitialization() = default;
 		
 		virtual void Build() const override;
 };

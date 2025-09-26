@@ -8,7 +8,9 @@ class RutherfordPhysicsList : public G4VModularPhysicsList
 	public:
 
 		RutherfordPhysicsList();
-		~RutherfordPhysicsList();
+		virtual ~RutherfordPhysicsList() = default;
+
+		virtual void SetCuts() override;
 };
 
 #endif

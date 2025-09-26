@@ -3,23 +3,11 @@
 #include <G4Alpha.hh>
 #include <G4SystemOfUnits.hh>
 
+#include "../include/RutherfordDefaults.h"
+
 RutherfordGeneratorAction::RutherfordGeneratorAction()
 {
-	fAlphaEnergy   = DEFAULT_ALPHA_ENERGY;
-	fAlphaDistance = DEFAULT_ALPHA_DISTANCE;
-
-	fMessenger 	= new RutherfordGeneratorMessenger(this);
-	
-	auto particle 	= G4Alpha::AlphaDefinition();
-	auto position	= G4ThreeVector(0., 0., -fAlphaDistance);
-	auto direction 	= G4ThreeVector(0., 0., +1.);
-
-	fParticleGun 	= new G4ParticleGun(1);
-	
-	fParticleGun->SetParticleDefinition(particle);
-	fParticleGun->SetParticlePosition(position);
-	fParticleGun->SetParticleMomentumDirection(direction);
-	fParticleGun->SetParticleEnergy(fAlphaEnergy);
+	fMessenger = new RutherfordGeneratorMessenger(this);
 }
 
 RutherfordGeneratorAction::~RutherfordGeneratorAction()
@@ -28,27 +16,19 @@ RutherfordGeneratorAction::~RutherfordGeneratorAction()
 	delete fMessenger;
 }
 
-void RutherfordGeneratorAction::SetAlphaEnergy(G4double energy)
+void RutherfordGeneratorAction::SetParticleGun()
 {
-	fAlphaEnergy = energy;
+	auto particle 	= fPrimaryParticleDefinition;
+	auto position	= G4ThreeVector(0.0, 0.0, -fPrimaryDistance);
+	auto direction 	= G4ThreeVector(0.0, 0.0, +1.0);
+
+	fParticleGun->SetParticleDefinition(particle);
+	fParticleGun->SetParticlePosition(position);
+	fParticleGun->SetParticleMomentumDirection(direction);
 }
 
-void RutherfordGeneratorAction::SetAlphaDistance(G4double distance)
-{
-	fAlphaDistance = distance;
-}
-
-G4double RutherfordGeneratorAction::GetAlphaEnergy() const
-{
-	return fAlphaEnergy;
-}
-
-G4double RutherfordGeneratorAction::GetAlphaDistance() const
-{
-	return fAlphaDistance;
-}
 void RutherfordGeneratorAction::GeneratePrimaries(G4Event* event)
 {
-	fParticleGun->SetParticleEnergy(fAlphaEnergy);
+	SetParticleGun();
 	fParticleGun->GeneratePrimaryVertex(event);
 }

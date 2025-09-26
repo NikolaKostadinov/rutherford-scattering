@@ -2,43 +2,47 @@
 #include "../include/RutherfordGeneratorAction.hh"
 
 #include "../include/RutherfordDefaults.h"
-#include "../include/RutherfordCommands.h"
 
 RutherfordGeneratorMessenger::RutherfordGeneratorMessenger(RutherfordGeneratorAction* generator) : fGenerator(generator)
 {
-	fDirectory = new G4UIdirectory(GENERATE_CMD);
 	fDirectory->SetGuidance("Command for particle generation.");
 
-	fAlphaEnergyCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ALPHA_ENERGY_CMD, this);
-	fAlphaEnergyCmd->SetGuidance("Set inital alpha particle energy.");
-	fAlphaEnergyCmd->SetUnitCategory("Energy");
-	fAlphaEnergyCmd->SetDefaultValue(DEFAULT_ALPHA_ENERGY / DEFAULT_HIGH_ENERGY_UNIT);
-	fAlphaEnergyCmd->SetDefaultUnit(DEFAULT_HIGH_ENERGY_UNIT_STRING);
+	fPrimaryParticleDefinitionCmd->SetGuidance("Set primary particle type.");
+	fPrimaryParticleDefinitionCmd->SetDefaultValue(DEFAULT_PRIMARY_PARTICLE);
 
-	fAlphaDistanceCmd = new G4UIcmdWithADoubleAndUnit(GENERATE_ALPHA_DISTANCE_CMD, this);
-        fAlphaDistanceCmd->SetGuidance("Set inital alpha particle distance from target center.");
-        fAlphaDistanceCmd->SetUnitCategory("Length");
-        fAlphaDistanceCmd->SetDefaultValue(DEFAULT_ALPHA_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
-        fAlphaDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
+	fPrimaryEnergyCmd->SetGuidance("Set primary particle inital energy.");
+	fPrimaryEnergyCmd->SetUnitCategory("Energy");
+	fPrimaryEnergyCmd->SetDefaultValue(DEFAULT_PRIMARY_ENERGY / DEFAULT_HIGH_ENERGY_UNIT);
+	fPrimaryEnergyCmd->SetDefaultUnit(DEFAULT_HIGH_ENERGY_UNIT_STRING);
+
+        fPrimaryDistanceCmd->SetGuidance("Set primary particle initial distance from target center.");
+        fPrimaryDistanceCmd->SetUnitCategory("Length");
+        fPrimaryDistanceCmd->SetDefaultValue(DEFAULT_PRIMARY_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
+        fPrimaryDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
 }
 
 RutherfordGeneratorMessenger::~RutherfordGeneratorMessenger()
 {
 	delete fDirectory;
-	delete fAlphaEnergyCmd;
-	delete fAlphaDistanceCmd;
+	delete fPrimaryParticleDefinitionCmd;
+	delete fPrimaryEnergyCmd;
+	delete fPrimaryDistanceCmd;
 }
 
 void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 {
-	if (cmd == fAlphaEnergyCmd)
+	if      (cmd == fPrimaryParticleDefinitionCmd)
 	{
-		auto energy = fAlphaEnergyCmd->GetNewDoubleValue(value);
-		fGenerator->SetAlphaEnergy(energy);
+		fGenerator->SetPrimaryParticleDefinition(value);
 	}
-	else if (cmd == fAlphaDistanceCmd)
+	else if (cmd == fPrimaryEnergyCmd)
 	{
-		auto distance = fAlphaDistanceCmd->GetNewDoubleValue(value);
-		fGenerator->SetAlphaDistance(distance);
+		auto evalue = fPrimaryEnergyCmd->GetNewDoubleValue(value);
+		fGenerator->SetPrimaryEnergy(evalue);
+	}
+	else if (cmd == fPrimaryDistanceCmd)
+	{
+		auto evalue = fPrimaryDistanceCmd->GetNewDoubleValue(value);
+		fGenerator->SetPrimaryEnergy(evalue);
 	}
 }
