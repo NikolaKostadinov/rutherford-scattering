@@ -20,11 +20,11 @@ class RutherfordRunMessenger : public G4UImessenger
 
 	private:
 		
-		G4UIdirectory*			fDirectory = new G4UIdirectory(ANALYSIS_CMD);
+		G4UIdirectory*		fDirectory = new G4UIdirectory(ANALYSIS_CMD);
 		
-		G4UIcmdWithAString*		fFileOutCmd = new G4UIcmdWithAString(ANALYSIS_FILE_CMD, this);
+		G4UIcmdWithAString*	fFileOutCmd = new G4UIcmdWithAString(ANALYSIS_FILE_CMD, this);
 		
-		RutherfordRunAction*		fRunAction;
+		RutherfordRunAction*	fRunAction;
 };
 
 #endif

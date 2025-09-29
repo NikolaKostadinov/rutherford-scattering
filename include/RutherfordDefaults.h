@@ -61,4 +61,9 @@
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1
+
+// G4
+#include <vector>
+#define G4Vector std::vector
+
 #endif

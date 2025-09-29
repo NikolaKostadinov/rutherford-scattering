@@ -14,14 +14,18 @@ class RutherfordArgument
 			G4String type,		// [value]
 			G4String description	// ...
 		);
-		~RutherfordArgument();
+		~RutherfordArgument() = default;
 
-		G4String	GetLongFlag()                   const;
-		G4String	GetShortFlag()                  const;
-		G4String	GetType()                       const;
-		void		SetValue(G4String);
-		void		PrintDescription(int, int, int) const;
-		void		Execute(G4UImanager*)           const;
+		G4String	GetLongFlag()		const { return fLongFlag;    };
+		G4String	GetShortFlag()		const { return fShortFlag;   };
+		G4String	GetCommand()		const { return fCommand;     };
+		G4String	GetValue()		const { return fValue;       };
+		G4String	GetType()		const { return fType;        };
+		G4String	GetDescription()	const { return fDescription; };
+
+		void		SetValue(G4String value)      { fValue = value;      };
+		
+		void		Execute(G4UImanager*)	const;
 
 	private:
 

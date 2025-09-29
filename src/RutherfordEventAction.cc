@@ -21,7 +21,11 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	auto eventID = event->GetEventID();
 
 	auto runManager = G4RunManager::GetRunManager();
-	auto runAction  = dynamic_cast<RutherfordRunAction*>(const_cast<G4UserRunAction*>(runManager->GetUserRunAction()));
+	auto runAction  = dynamic_cast<RutherfordRunAction*>(
+		const_cast<G4UserRunAction*>(
+			runManager->GetUserRunAction()
+		)
+	);
 	auto numberOfEvents = runAction->GetNumberOfEvents();
 	runAction->SaveLapTime();
 	auto elapsedTime = runAction->GetElapsedTime();
@@ -29,9 +33,9 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	auto remainingTime = (1.0 - progress)/progress * elapsedTime;
 	auto freq = (eventID + 1) / elapsedTime;
 	int  ERTmin = int(elapsedTime  /s) / 60;
-	int  ERTs   = int(elapsedTime  /s) % 60;
+	int  ERTs   = int(elapsedTime  /s) % 60;	// Elapsed Running Time
 	int  ETAmin = int(remainingTime/s) / 60;
-	int  ETAs   = int(remainingTime/s) % 60;
+	int  ETAs   = int(remainingTime/s) % 60;	// Estimated Time of Arrival
 
 	G4cout << '\r';
 	G4cout << "[*";
@@ -62,7 +66,9 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	auto sensitiveDetectorManager = G4SDManager::GetSDMpointer();
 	auto hitsCollectionID = sensitiveDetectorManager->GetCollectionID(HITS_COLLECTION_NAME);
 	
-	auto hitsCollection = static_cast<RutherfordHitsCollection*>(hitsCollections->GetHC(hitsCollectionID));
+	auto hitsCollection = static_cast<RutherfordHitsCollection*>(
+		hitsCollections->GetHC(hitsCollectionID)
+	);
 	if (!hitsCollection) return;
 
 	auto analysisManager = G4AnalysisManager::Instance();
@@ -70,8 +76,6 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	{
 		auto hit = (*hitsCollection)[i];
 
-		//G4cout << hit->GetProcess()->GetProcessName() << G4endl;
-		
 		analysisManager->FillNtupleIColumn( 0, eventID);
 		analysisManager->FillNtupleIColumn( 1, hit->GetTrackID());
 		analysisManager->FillNtupleIColumn( 2, hit->GetParentTrackID());
