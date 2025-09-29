@@ -5,7 +5,11 @@
 #include <G4Box.hh>
 #include <G4Tubs.hh>
 #include <G4PVPlacement.hh>
+#include <G4SDManager.hh>
+#include <G4LogicalVolumeStore.hh>
 #include <G4SystemOfUnits.hh>
+
+#include "../include/RutherfordSensitiveDetector.hh"
 
 RutherfordDetectorConstruction::RutherfordDetectorConstruction()
 {	
@@ -89,4 +93,17 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	);
 	
 	return world;
+}
+
+void RutherfordDetectorConstruction::ConstructSDandField()
+{
+	auto sensitiveDetectorManager = G4SDManager::GetSDMpointer();
+	auto sensitiveDetector = new RutherfordSensitiveDetector(DETECTOR_NAME, HITS_COLLECTION_NAME);
+	
+	sensitiveDetectorManager->AddNewDetector(sensitiveDetector);
+	
+	auto logicalVolumeStore = G4LogicalVolumeStore::GetInstance();
+	auto detectorLogic = logicalVolumeStore->GetVolume(DETECTOR_NAME);
+	if (detectorLogic)
+		detectorLogic->SetSensitiveDetector(sensitiveDetector);
 }

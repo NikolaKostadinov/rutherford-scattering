@@ -34,7 +34,8 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		G4Material* GetDetectorMaterial()             const { return fDetectorMaterial;       };
 		G4double    GetDetectorMeanExcitationEnergy() const ;
 
-		virtual G4VPhysicalVolume* Construct() override;
+		virtual G4VPhysicalVolume* Construct()           override;
+		virtual void               ConstructSDandField() override;
 	
 	private:
 		

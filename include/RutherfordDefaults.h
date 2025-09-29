@@ -5,7 +5,7 @@
 
 #define RUTHERFORD_NAME				"Rutherford Scattering"
 #define RUTHERFORD_PROGRAM			"rutherford-scattering"
-#define RUTHERFORD_VERSION			"v1.0"
+#define RUTHERFORD_VERSION			"v1.0-beta"
 
 #define VERSION_FLAG				"--version"
 #define HELP_LONG_FLAG				"--help"
@@ -57,6 +57,7 @@
 
 // DEFAULT ROOT HISTOGRAMS
 #define DEFAULT_FILE_OUT			"output.root"
+#define HITS_COLLECTION_NAME			"RutherfordHitsCollection"
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1

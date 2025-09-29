@@ -11,4 +11,4 @@
 /analysis/file output.root
 
 /run/initialize
-/run/beamOn 10000
+/run/beamOn 1000000
