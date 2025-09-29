@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_MESSENGER_HH
-#define GEOMETRY_MESSENGER_HH
+#ifndef CONSTRUCTION_MESSENGER_HH
+#define CONSTRUCTION_MESSENGER_HH
 
 #include <G4UImessenger.hh>
 #include <G4UIdirectory.hh>

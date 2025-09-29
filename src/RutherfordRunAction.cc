@@ -43,7 +43,8 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 	UpdateNumberOfEvents();
 
 	auto analysisManager = G4AnalysisManager::Instance();
-	analysisManager->SetNtupleMerging(true);
+	if (G4Threading::IsMultithreadedApplication())
+		analysisManager->SetNtupleMerging(true);
 	analysisManager->OpenFile(fFileOut);
 	analysisManager->CreateNtuple("Hits", "Detector hits");
 	analysisManager->CreateNtupleIColumn("EventID");

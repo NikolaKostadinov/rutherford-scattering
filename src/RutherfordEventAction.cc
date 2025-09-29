@@ -5,11 +5,9 @@
 #include <G4SDManager.hh>
 #include <G4SystemOfUnits.hh>
 
-#include <iomanip>
-
 #include "../include/RutherfordRunAction.hh"
 #include "../include/RutherfordHit.hh"
-#include "../include/RutherfordDefaults.h"
+#include "../include/RutherfordPrint.hh"
 
 void RutherfordEventAction::BeginOfEventAction(const G4Event* event)
 {
@@ -29,36 +27,8 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	auto numberOfEvents = runAction->GetNumberOfEvents();
 	runAction->SaveLapTime();
 	auto elapsedTime = runAction->GetElapsedTime();
-	auto progress = (G4double) (eventID + 1) / (G4double) numberOfEvents;
-	auto remainingTime = (1.0 - progress)/progress * elapsedTime;
-	auto freq = (eventID + 1) / elapsedTime;
-	int  ERTmin = int(elapsedTime  /s) / 60;
-	int  ERTs   = int(elapsedTime  /s) % 60;	// Elapsed Running Time
-	int  ETAmin = int(remainingTime/s) / 60;
-	int  ETAs   = int(remainingTime/s) % 60;	// Estimated Time of Arrival
 
-	G4cout << '\r';
-	G4cout << "[*";
-	int position = progress * BAR_SIZE;
-	for (int i = 0; i < BAR_SIZE; ++i)
-	{
-		if      (i <  position) G4cout << '-';
-		else if (i == position) G4cout << '>';
-		else                    G4cout << ' ';
-	}	
-	G4cout << "*]";
-	G4cout << std::string(MARGIN_SIZE, ' ');
-	G4cout << eventID+1 << "/" << numberOfEvents << " events";
-	G4cout << std::string(MARGIN_SIZE, ' ');
-	G4cout << "[ " << int(progress * 100.0) << "%]";
-	G4cout << std::string(MARGIN_SIZE, ' ');
-	G4cout << "ERT " << ERTmin << "min " << ERTs << "s";
-	G4cout << std::string(MARGIN_SIZE, ' ');
-	G4cout << "ETA " << ETAmin << "min " << ETAs << "s";
-	G4cout << std::string(MARGIN_SIZE, ' ');
-	G4cout << "freq " << float(int(freq / kilohertz * 10)) / 10 << "kHz";
-	G4cout.flush();
-	if (progress == 1.0) G4cout << G4endl;
+	RutherfordPrintRunLoadingBar(eventID+1, numberOfEvents, elapsedTime);
 
 	auto hitsCollections = event->GetHCofThisEvent();
 	if (!hitsCollections) return;
