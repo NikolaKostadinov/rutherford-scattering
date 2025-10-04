@@ -79,10 +79,10 @@ void RutherfordPrintHelp(int longSize, int shortSize, int typeSize, G4Vector<Rut
 	RutherfordPrintHelpArgumentDescription(longSize, shortSize, typeSize);
 
 	// --flag / -f [type] description
-	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
+	for (auto& argument : arguments)
 	{
 		G4cout << G4TabSpace;
-		RutherfordPrintArgumentDescription(longSize, shortSize, typeSize, *argument);
+		RutherfordPrintArgumentDescription(longSize, shortSize, typeSize, argument);
 	}
 
 	G4cout << G4endl;
@@ -93,11 +93,11 @@ void RutherfordPrintHelp(G4Vector<RutherfordArgument> arguments)
 	int longSize  = 0;
 	int shortSize = 0;
 	int typeSize  = 0;
-	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
+	for (auto& argument : arguments)
 	{
-		int thisLongSize  = argument->GetLongFlag().size();
-		int thisShortSize = argument->GetShortFlag().size();
-		int thisTypeSize  = argument->GetType().size();
+		int thisLongSize  = argument.GetLongFlag().size();
+		int thisShortSize = argument.GetShortFlag().size();
+		int thisTypeSize  = argument.GetType().size();
 
 		if (longSize  < thisLongSize ) longSize  = thisLongSize;
 		if (shortSize < thisShortSize) shortSize = thisShortSize;
@@ -158,8 +158,6 @@ void RutherfordPrintRunProgressBar(G4int eventNumber, G4int numberOfEvents, G4do
 	G4cout << "s";
 	G4cout << G4WhiteSpace(MARGIN_SIZE);
 	
-	G4cout.precision(1);
-	G4cout.setf(G4IOFixed);
 	G4cout << "ER " << G4BestUnit(eventFrequency, "Frequency");
 	G4cout << G4WhiteSpace(MARGIN_SIZE);
 	

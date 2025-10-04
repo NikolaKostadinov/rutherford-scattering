@@ -18,9 +18,9 @@ RutherfordGeneratorAction::~RutherfordGeneratorAction()
 
 void RutherfordGeneratorAction::SetParticleGun()
 {
-	auto particle 	= fPrimaryParticleDefinition;
-	auto position	= G4ThreeVector(0.0, 0.0, -fPrimaryDistance);
-	auto direction 	= G4ThreeVector(0.0, 0.0, +1.0);
+	auto* particle  = fPrimaryParticleDefinition;
+	auto  position  = G4ThreeVector(0.0, 0.0, -fPrimaryDistance);
+	auto  direction = G4ThreeVector(0.0, 0.0, +1.0);
 
 	fParticleGun->SetParticleDefinition(particle);
 	fParticleGun->SetParticlePosition(position);

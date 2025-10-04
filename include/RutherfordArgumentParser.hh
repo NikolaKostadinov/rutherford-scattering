@@ -72,8 +72,8 @@ void RutherfordArgumentParser(int argc, char** argv, G4Vector<RutherfordArgument
 		}
 	}
 
-	for (auto argument = arguments.begin(); argument != arguments.end(); ++argument)
-		argument->Execute(uiManager);
+	for (auto& argument : arguments)
+		argument.Execute(uiManager);
 }
 
 #endif

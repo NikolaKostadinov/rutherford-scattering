@@ -16,7 +16,7 @@ void RutherfordSensitiveDetector::Initialize(G4HCofThisEvent* hitsCollection)
 
 	if (fHitsCollectionID < 0)
 	{
-		auto sensitiveDetectorManager = G4SDManager::GetSDMpointer();
+		auto* sensitiveDetectorManager = G4SDManager::GetSDMpointer();
 		fHitsCollectionID = sensitiveDetectorManager->GetCollectionID(fHitsCollection);
 	}
 
@@ -25,8 +25,8 @@ void RutherfordSensitiveDetector::Initialize(G4HCofThisEvent* hitsCollection)
 
 G4bool RutherfordSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
-	auto hit = new RutherfordHit(step);
-
+	auto* hit = new RutherfordHit(step);
+	
 	if (hit->GetEnergyDeposit() == 0.0)
 	{
 		delete hit;

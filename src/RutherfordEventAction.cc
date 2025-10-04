@@ -18,8 +18,8 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 {
 	auto eventID = event->GetEventID();
 
-	auto runManager = G4RunManager::GetRunManager();
-	auto runAction  = dynamic_cast<RutherfordRunAction*>(
+	auto* runManager = G4RunManager::GetRunManager();
+	auto* runAction  = dynamic_cast<RutherfordRunAction*>(
 		const_cast<G4UserRunAction*>(
 			runManager->GetUserRunAction()
 		)
@@ -32,21 +32,21 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	if ((eventID+1) % eventProgressInterval == 0 || (eventID+1) == numberOfEvents)
 		RutherfordPrintRunProgressBar(eventID+1, numberOfEvents, elapsedTime);
 
-	auto hitsCollections = event->GetHCofThisEvent();
+	auto* hitsCollections = event->GetHCofThisEvent();
 	if (!hitsCollections) return;
 	
-	auto sensitiveDetectorManager = G4SDManager::GetSDMpointer();
-	auto hitsCollectionID = sensitiveDetectorManager->GetCollectionID(HITS_COLLECTION_NAME);
+	auto* sensitiveDetectorManager = G4SDManager::GetSDMpointer();
+	auto  hitsCollectionID = sensitiveDetectorManager->GetCollectionID(HITS_COLLECTION_NAME);
 	
-	auto hitsCollection = static_cast<RutherfordHitsCollection*>(
+	auto* hitsCollection = static_cast<RutherfordHitsCollection*>(
 		hitsCollections->GetHC(hitsCollectionID)
 	);
 	if (!hitsCollection) return;
 
-	auto analysisManager = G4AnalysisManager::Instance();
+	auto* analysisManager = G4AnalysisManager::Instance();
 	for (size_t i = 0; i < hitsCollection->entries(); ++i)
 	{
-		auto hit = (*hitsCollection)[i];
+		auto* hit = (*hitsCollection)[i];
 
 		analysisManager->FillNtupleIColumn( 0, eventID);
 		analysisManager->FillNtupleIColumn( 1, hit->GetTrackID());

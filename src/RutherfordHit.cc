@@ -9,36 +9,36 @@
 
 RutherfordHit::RutherfordHit(G4Step* step)
 {
-	auto track         = step->GetTrack();
-	auto preStepPoint  = step->GetPreStepPoint();
-	auto postStepPoint = step->GetPostStepPoint();
-	auto process       = postStepPoint->GetProcessDefinedStep();
+	auto* track         = step->GetTrack();
+	auto* preStepPoint  = step->GetPreStepPoint();
+	auto* postStepPoint = step->GetPostStepPoint();
+	auto* process       = postStepPoint->GetProcessDefinedStep();
 
-	fTrackID           = track->GetTrackID();
-	fParentTrackID     = track->GetParentID();
-	fPDGCode           = track->GetParticleDefinition()->GetPDGEncoding();
-	fProcessType       = process->GetProcessType();
-	fProcessSubType    = process->GetProcessSubType();
-	fEnergyDeposit     = step->GetTotalEnergyDeposit();
-	fPosition          = preStepPoint->GetPosition();
-	fTime              = preStepPoint->GetGlobalTime();
+	fTrackID            = track->GetTrackID();
+	fParentTrackID      = track->GetParentID();
+	fPDGCode            = track->GetParticleDefinition()->GetPDGEncoding();
+	fProcessType        = process->GetProcessType();
+	fProcessSubType     = process->GetProcessSubType();
+	fEnergyDeposit      = step->GetTotalEnergyDeposit();
+	fPosition           = preStepPoint->GetPosition();
+	fTime               = preStepPoint->GetGlobalTime();
 }
 
 G4VProcess* RutherfordHit::GetProcess() const
 {
-	auto particleTable = G4ParticleTable::GetParticleTable();
+	auto* particleTable = G4ParticleTable::GetParticleTable();
 
-	auto particleDefinition = particleTable->FindParticle(fPDGCode);
-	if (!particleDefinition) return nullptr;
+	auto* particleDefinition = particleTable->FindParticle(fPDGCode);
+	if  (!particleDefinition) return nullptr;
 	
-	auto processManager = particleDefinition->GetProcessManager();
-	if (!processManager) return nullptr;
+	auto* processManager = particleDefinition->GetProcessManager();
+	if  (!processManager) return nullptr;
 
-	auto processList = processManager->GetProcessList();
+	auto* processList = processManager->GetProcessList();
 	for (G4int i = 0; i < processList->entries(); ++i)
 	{
-		auto process = (*processList)[i];
-		if (!process) continue;
+		auto* process = (*processList)[i];
+		if  (!process) continue;
 
 		if (
 			process->GetProcessType()    == fProcessType &&

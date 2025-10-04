@@ -34,19 +34,17 @@ G4double RutherfordRunAction::SaveLapTime()
 
 void RutherfordRunAction::UpdateNumberOfEvents()
 {
-	auto runManager = G4RunManager::GetRunManager();
-	fNumberOfEvents = runManager->GetNumberOfEventsToBeProcessed();
+	auto* runManager = G4RunManager::GetRunManager();
+	fNumberOfEvents  = runManager->GetNumberOfEventsToBeProcessed();
 }
 
 void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 {
 	UpdateNumberOfEvents();
 
-	auto analysisManager = G4AnalysisManager::Instance();
-	
+	auto* analysisManager = G4AnalysisManager::Instance();
 	if (G4Threading::IsMultithreadedApplication())
 		analysisManager->SetNtupleMerging(true);
-	
 	analysisManager->OpenFile(fFileOut);
 	analysisManager->CreateNtuple("Hits", "Detector hits");
 	analysisManager->CreateNtupleIColumn("EventID");
@@ -70,7 +68,7 @@ void RutherfordRunAction::EndOfRunAction(const G4Run*)
 {
 	fTimer->Stop();
 
-	auto analysisManager = G4AnalysisManager::Instance();
+	auto* analysisManager = G4AnalysisManager::Instance();
 	analysisManager->Write();
 	analysisManager->CloseFile();
 }

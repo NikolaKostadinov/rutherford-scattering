@@ -25,7 +25,7 @@ RutherfordDetectorConstruction::~RutherfordDetectorConstruction()
 
 void RutherfordDetectorConstruction::SetWorldMaterial()
 {
-	auto nist = G4NistManager::Instance();
+	auto* nist = G4NistManager::Instance();
 
 	G4Element*  vacuumElement   = nist->FindOrBuildElement(VACUUM_ATOMIC_NUMBER);
 	G4double    vacuumAtomMass  = vacuumElement->GetA() / CLHEP::Avogadro;
@@ -37,7 +37,7 @@ void RutherfordDetectorConstruction::SetWorldMaterial()
 
 void RutherfordDetectorConstruction::SetDetectorMaterial()
 {
-	auto nist = G4NistManager::Instance();
+	auto* nist = G4NistManager::Instance();
 
 	G4Element*  detectorElement  = nist->FindOrBuildElement(fDetectorAtomicNumber);
 	G4double    detectorAtomMass = detectorElement->GetA() / CLHEP::Avogadro;
@@ -68,9 +68,9 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	SetWorldMaterial();
 	SetDetectorMaterial();
 	
-	auto worldSolid = new G4Box(WORLD_NAME, fWorldRadius, fWorldRadius, fWorldRadius);
-    	auto worldLogic	= new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
-    	auto world 	= new G4PVPlacement(
+	auto* worldSolid = new G4Box(WORLD_NAME, fWorldRadius, fWorldRadius, fWorldRadius);
+    	auto* worldLogic = new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
+    	auto* world      = new G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
 			worldLogic,		// placed logical volume
@@ -80,8 +80,8 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 			0			// number of copies
 	);
 
-	auto detectorSolid = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 360.0 * deg);
-    	auto detectorLogic = new G4LogicalVolume(detectorSolid, fDetectorMaterial, DETECTOR_NAME);
+	auto* detectorSolid = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 360.0 * deg);
+    	auto* detectorLogic = new G4LogicalVolume(detectorSolid, fDetectorMaterial, DETECTOR_NAME);
 	new  G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
@@ -97,13 +97,13 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 
 void RutherfordDetectorConstruction::ConstructSDandField()
 {
-	auto sensitiveDetectorManager = G4SDManager::GetSDMpointer();
-	auto sensitiveDetector = new RutherfordSensitiveDetector(DETECTOR_NAME, HITS_COLLECTION_NAME);
+	auto* sensitiveDetectorManager = G4SDManager::GetSDMpointer();
+	auto* sensitiveDetector = new RutherfordSensitiveDetector(DETECTOR_NAME, HITS_COLLECTION_NAME);
 	
 	sensitiveDetectorManager->AddNewDetector(sensitiveDetector);
 	
-	auto logicalVolumeStore = G4LogicalVolumeStore::GetInstance();
-	auto detectorLogic = logicalVolumeStore->GetVolume(DETECTOR_NAME);
+	auto* logicalVolumeStore = G4LogicalVolumeStore::GetInstance();
+	auto* detectorLogic = logicalVolumeStore->GetVolume(DETECTOR_NAME);
 	if (detectorLogic)
 		detectorLogic->SetSensitiveDetector(sensitiveDetector);
 }

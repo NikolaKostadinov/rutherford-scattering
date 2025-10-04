@@ -10,7 +10,7 @@ RutherfordPhysicsList::RutherfordPhysicsList()
 
 void RutherfordPhysicsList::SetCuts()
 {
-	G4double cut = 10 * fermi;
+	auto cut = 10 * fermi;
 
 	SetDefaultCutValue(cut);
 	
