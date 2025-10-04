@@ -10,7 +10,8 @@ class RutherfordActionInitialization : public G4VUserActionInitialization
 		RutherfordActionInitialization()          = default;
 		virtual ~RutherfordActionInitialization() = default;
 		
-		virtual void Build() const override;
+		virtual void BuildForMaster() const override;
+		virtual void Build()          const override;
 };
 
 #endif

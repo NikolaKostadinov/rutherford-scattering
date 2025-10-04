@@ -13,6 +13,7 @@
 #define TAB_SIZE				8
 #define MARGIN_SIZE				2
 #define BAR_SIZE				40
+#define EVENTS_PER_BAR_GLYPH			10
 
 // DEFAULT UNITS
 #define DEFAULT_HIGH_ENERGY_UNIT		MeV
@@ -61,9 +62,12 @@
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1
+#define DEFAULT_NUMBER_OF_THREADS		1
 
 // G4
-#include <vector>
-#define G4Vector std::vector
+#define G4Vector				std::vector
+#define G4IStringStream				std::istringstream
+#define G4GetLine				std::getline
+#define G4IOFixed				std::ios::fixed
 
 #endif

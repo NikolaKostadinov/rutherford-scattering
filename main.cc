@@ -6,6 +6,10 @@
 #include <G4UImanager.hh>
 #include <Randomize.hh>
 
+#ifdef   G4MULTITHREADED
+#include <G4MTRunManager.hh>
+#endif
+
 #include "include/RutherfordCommands.h"
 #include "include/RutherfordArgument.hh"
 #include "include/RutherfordArgumentParser.hh"
@@ -18,7 +22,12 @@ int main(int argc, char** argv)
 {
 	CLHEP::HepRandom::setTheSeed(time(NULL));
 	
-	G4RunManager* runManager = new G4RunManager();
+	G4RunManager* runManager =
+	#ifdef G4MULTITHREADED
+		new G4MTRunManager();
+	#else
+		new G4RunManager();
+	#endif
 	
 	RutherfordUnitDefinition();
 	
@@ -28,6 +37,7 @@ int main(int argc, char** argv)
 	
 	std::vector<RutherfordArgument> arguments;
 	arguments.push_back(RutherfordArgument("--macro",     "-m", MACRO_CMD,                      "file",   "macro file path (all other arguments will be ignored if macro file is provided)"));
+	arguments.push_back(RutherfordArgument("--jobs",      "-j", RUN_THREADS_CMD,                "number", "number of concurent jobs (events)"));
 	arguments.push_back(RutherfordArgument("--output",    "-o", ANALYSIS_FILE_CMD,              "file",   "output analysis file path"));
 	arguments.push_back(RutherfordArgument("--atomic-n",  "-Z", DETECTOR_ATOMIC_NUMBER_CMD,     "value",  "detector atomic number"));
 	arguments.push_back(RutherfordArgument("--n-density", "-a", DETECTOR_NUMBER_DENSITY_CMD,    "value",  "detector number density of atoms"));
@@ -39,6 +49,7 @@ int main(int argc, char** argv)
 	arguments.push_back(RutherfordArgument("--n-events",  "-n", RUN_SIMULATION_CMD,             "number", "number of events"));
 	
 	G4UImanager* uiManager = G4UImanager::GetUIpointer();
+	uiManager->SetCoutDestination(nullptr);
 	RutherfordArgumentParser(argc, argv, arguments, uiManager);
 	
 	exit(0);

@@ -33,6 +33,7 @@
 #define LOW_ENERGY_CMD				"/setLowEdge"
 
 #define RUN_CMD					"/run/"
+#define THREADS_CMD				"numberOfThreads"
 #define INIT_CMD				"initialize"
 #define BEAM_ON_CMD				"beamOn"
 
@@ -73,6 +74,7 @@
 #define ANALYSIS_SECONDARY_THETA_MAX_CMD	ANALYSIS_CMD		SECONDARY_CMD	THETA_CMD	MAX_CMD
 #define CUT_LOW_ENERGY_CMD			CUT_CMD			LOW_ENERGY_CMD
 
-#define RUN_SIMULATION_CMD			RUN_CMD			INIT_CMD	NEW		RUN_CMD		BEAM_ON_CMD
+#define RUN_THREADS_CMD				RUN_CMD			THREADS_CMD	NEW		RUN_CMD			INIT_CMD
+#define RUN_SIMULATION_CMD			RUN_CMD			BEAM_ON_CMD
 
 #endif

@@ -17,9 +17,9 @@ void RutherfordArgument::Execute(G4UImanager* uiManager) const
 	if (fValue.empty()) return;
 	G4String command = fCommand + DELIM + fValue;
 	
-	std::istringstream commandStream(command);		// <------- (!)
+	G4IStringStream commandStream(command);
 	G4String commandLine;
-	while(std::getline(commandStream, commandLine))
+	while(G4GetLine(commandStream, commandLine))
 	{
 		if (commandLine.empty()) continue;
 		G4cout << commandLine << G4endl;

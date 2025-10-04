@@ -28,7 +28,9 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	runAction->SaveLapTime();
 	auto elapsedTime = runAction->GetElapsedTime();
 
-	RutherfordPrintRunLoadingBar(eventID+1, numberOfEvents, elapsedTime);
+	auto eventProgressInterval = numberOfEvents / BAR_SIZE / EVENTS_PER_BAR_GLYPH;
+	if ((eventID+1) % eventProgressInterval == 0 || (eventID+1) == numberOfEvents)
+		RutherfordPrintRunProgressBar(eventID+1, numberOfEvents, elapsedTime);
 
 	auto hitsCollections = event->GetHCofThisEvent();
 	if (!hitsCollections) return;

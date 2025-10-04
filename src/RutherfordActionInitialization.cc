@@ -4,6 +4,11 @@
 #include "../include/RutherfordEventAction.hh"
 #include "../include/RutherfordSteppingAction.hh"
 
+void RutherfordActionInitialization::BuildForMaster() const
+{
+	SetUserAction(new RutherfordRunAction());
+}
+
 void RutherfordActionInitialization::Build() const
 {
 	SetUserAction(new RutherfordGeneratorAction());

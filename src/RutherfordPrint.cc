@@ -99,9 +99,9 @@ void RutherfordPrintHelp(G4Vector<RutherfordArgument> arguments)
 		int thisShortSize = argument->GetShortFlag().size();
 		int thisTypeSize  = argument->GetType().size();
 
-		if (longSize  < thisLongSize)  longSize  = thisLongSize;
+		if (longSize  < thisLongSize ) longSize  = thisLongSize;
 		if (shortSize < thisShortSize) shortSize = thisShortSize;
-		if (typeSize  < thisTypeSize)  typeSize  = thisTypeSize;
+		if (typeSize  < thisTypeSize ) typeSize  = thisTypeSize;
 	}
 
 	RutherfordPrintHelp(longSize, shortSize, typeSize, arguments);
@@ -112,7 +112,7 @@ void RutherfordPrintUnknownFlag(G4String flag)
 	G4cout << "[WARNING] UNKNOWN FLAG: " << flag << G4endl;
 }
 
-void RutherfordPrintRunLoadingBar(G4int eventNumber, G4int numberOfEvents, G4double elapsedTime)
+void RutherfordPrintRunProgressBar(G4int eventNumber, G4int numberOfEvents, G4double elapsedTime)
 {
 	auto progress = (G4double) eventNumber / (G4double) numberOfEvents;
 
@@ -158,9 +158,13 @@ void RutherfordPrintRunLoadingBar(G4int eventNumber, G4int numberOfEvents, G4dou
 	G4cout << "s";
 	G4cout << G4WhiteSpace(MARGIN_SIZE);
 	
-	G4cout << "freq " << G4BestUnit(eventFrequency, "Frequency");
+	G4cout.precision(1);
+	G4cout.setf(G4IOFixed);
+	G4cout << "ER " << G4BestUnit(eventFrequency, "Frequency");
+	G4cout << G4WhiteSpace(MARGIN_SIZE);
 	
 	G4cout.flush();
 	
-	if (progress == 1.0) G4cout << G4endl;
+	if (progress >= 1.0)
+		G4cout << G4endl;
 }

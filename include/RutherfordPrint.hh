@@ -12,13 +12,22 @@
 #define G4TabSpace	G4WhiteSpace(TAB_SIZE)
 
 void RutherfordPrintNoArguments();
+
 void RutherfordPrintVersion();
-void RutherfordPrintArgumentDescription(int longSize, int shortSize, int typeSize, const RutherfordArgument& argument);
+
+void RutherfordPrintArgumentDescription(
+	int longSize, int shortSize, int typeSize,
+	const RutherfordArgument& argument
+);
 void RutherfordPrintVersionArgumentDescription(int longSize, int shortSize, int typeSize);
 void RutherfordPrintHelpArgumentDescription(int longSize, int shortSize, int typeSize);
-void RutherfordPrintHelp(int longSize, int shortSize, int typeSize, G4Vector<RutherfordArgument> arguments);
+void RutherfordPrintHelp(
+	int longSize, int shortSize, int typeSize,
+	G4Vector<RutherfordArgument> arguments
+);
 void RutherfordPrintHelp(G4Vector<RutherfordArgument> arguments);
 void RutherfordPrintUnknownFlag(G4String flag);
-void RutherfordPrintRunLoadingBar(G4int eventNumber, G4int numberOfEvents, G4double elapsedTime);
+
+void RutherfordPrintRunProgressBar(G4int eventNumber, G4int numberOfEvents, G4double elapsedTime);
 
 #endif

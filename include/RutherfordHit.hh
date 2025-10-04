@@ -13,16 +13,16 @@ class RutherfordHit : public G4VHit
 		RutherfordHit(G4Step*);
 		virtual ~RutherfordHit() = default;
 
-		G4int		GetTrackID()       const { return fTrackID;        };
-		G4int		GetParentTrackID() const { return fParentTrackID;  };
-		G4int		GetPDGCode()       const { return fPDGCode;        };
-		G4int		GetProcessType()   const { return fProcessType;    };
-		G4int		GetProcessSubType()const { return fProcessSubType; };
-		G4double	GetEnergyDeposit() const { return fEnergyDeposit;  };
-		G4ThreeVector	GetPosition()      const { return fPosition;       };
-		G4double	GetTime()          const { return fTime;           };
+		G4int		GetTrackID()        const { return fTrackID;        };
+		G4int		GetParentTrackID()  const { return fParentTrackID;  };
+		G4int		GetPDGCode()        const { return fPDGCode;        };
+		G4int		GetProcessType()    const { return fProcessType;    };
+		G4int		GetProcessSubType() const { return fProcessSubType; };
+		G4double	GetEnergyDeposit()  const { return fEnergyDeposit;  };
+		G4ThreeVector	GetPosition()       const { return fPosition;       };
+		G4double	GetTime()           const { return fTime;           };
 
-		G4VProcess*	GetProcess()       const;
+		G4VProcess*	GetProcess()        const;
 
 	private:
 
