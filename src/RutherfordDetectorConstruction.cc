@@ -68,7 +68,7 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	SetWorldMaterial();
 	SetDetectorMaterial();
 	
-	auto* worldSolid = new G4Box(WORLD_NAME, fWorldRadius, fWorldRadius, fWorldRadius);
+	auto* worldSolid = new G4Box(WORLD_NAME, fDetectorRadius, fDetectorRadius, fWorldRadius);
     	auto* worldLogic = new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
     	auto* world      = new G4PVPlacement(
 			nullptr,		// rotation ?
@@ -82,7 +82,7 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 
 	auto* detectorSolid = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 360.0 * deg);
     	auto* detectorLogic = new G4LogicalVolume(detectorSolid, fDetectorMaterial, DETECTOR_NAME);
-	new  G4PVPlacement(
+	new   G4PVPlacement(
 			nullptr,		// rotation ?
 			G4ThreeVector(),	// placement position
 			detectorLogic,		// placed logical volume

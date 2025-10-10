@@ -27,13 +27,13 @@ int main(int argc, char** argv)
 	
 	RutherfordUnitDefinition();
 	
-	G4cout.precision(1);
-	G4cout.setf(G4IOFixed);
-
 	runManager->SetUserInitialization(new RutherfordPhysicsList());
 	runManager->SetUserInitialization(new RutherfordDetectorConstruction());
 	runManager->SetUserInitialization(new RutherfordActionInitialization());
 	
+	G4cout.precision(1);
+	G4cout.setf(G4IOFixed);
+
 	G4Vector<RutherfordArgument> arguments =
 	{
 		RutherfordArgument("--macro",     "-m", MACRO_CMD,                      "file",   "macro file path (all other arguments will be ignored if macro file is provided)"),
