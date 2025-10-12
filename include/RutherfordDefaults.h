@@ -5,7 +5,7 @@
 
 #define RUTHERFORD_NAME				"Rutherford Scattering"
 #define RUTHERFORD_PROGRAM			"rutherford-scattering"
-#define RUTHERFORD_VERSION			"v1.0-beta"
+#define RUTHERFORD_VERSION			"v1.0.1-beta"
 
 #define VERSION_FLAG				"--version"
 #define HELP_LONG_FLAG				"--help"
@@ -56,9 +56,12 @@
 #define DEFAULT_PRIMARY_ENERGY			5.0 * MeV
 #define DEFAULT_PRIMARY_DISTANCE		1.0 * cm
 
-// DEFAULT ROOT HISTOGRAMS
+// DEFAULT ANALYSIS PARAMETERS
 #define DEFAULT_FILE_OUT			"output.root"
 #define HITS_COLLECTION_NAME			"RutherfordHitsCollection"
+#define HITS_NTUPLE_NAME			"Hits"
+#define HITS_NTUPLE_TITLE			"Hits"
+#define DEFAULT_MIN_ENERGY_DEPOSIT		10.0 * eV
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1

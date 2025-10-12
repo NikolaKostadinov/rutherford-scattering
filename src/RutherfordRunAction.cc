@@ -46,7 +46,7 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 	if (G4Threading::IsMultithreadedApplication())
 		analysisManager->SetNtupleMerging(true);
 	analysisManager->OpenFile(fFileOut);
-	analysisManager->CreateNtuple("Hits", "Detector hits");
+	analysisManager->CreateNtuple(HITS_NTUPLE_NAME, HITS_NTUPLE_TITLE);
 	analysisManager->CreateNtupleIColumn("EventID");
 	analysisManager->CreateNtupleIColumn("TrackID");
 	analysisManager->CreateNtupleIColumn("ParentTrackID");
@@ -54,10 +54,10 @@ void RutherfordRunAction::BeginOfRunAction(const G4Run*)
 	analysisManager->CreateNtupleIColumn("ProcessType");
 	analysisManager->CreateNtupleIColumn("ProcessSubType");
 	analysisManager->CreateNtupleDColumn("Edep_keV");
+	analysisManager->CreateNtupleDColumn("T_ns");
 	analysisManager->CreateNtupleDColumn("X_mm");
 	analysisManager->CreateNtupleDColumn("Y_mm");
 	analysisManager->CreateNtupleDColumn("Z_mm");
-	analysisManager->CreateNtupleDColumn("T_ns");
 	analysisManager->FinishNtuple();
 
 	fTimer->Start();

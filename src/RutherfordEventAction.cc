@@ -58,10 +58,10 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 		analysisManager->FillNtupleIColumn( 4, hit->GetProcessType());
 		analysisManager->FillNtupleIColumn( 5, hit->GetProcessSubType());
 		analysisManager->FillNtupleDColumn( 6, hit->GetEnergyDeposit() / keV);
-		analysisManager->FillNtupleDColumn( 7, hit->GetPosition().x() / mm);
-		analysisManager->FillNtupleDColumn( 8, hit->GetPosition().y() / mm);
-		analysisManager->FillNtupleDColumn( 9, hit->GetPosition().z() / mm);
-		analysisManager->FillNtupleDColumn(10, hit->GetTime() / ns);
+		analysisManager->FillNtupleDColumn( 7, hit->GetTime() / ns);
+		analysisManager->FillNtupleDColumn( 8, hit->GetPosition().x() / mm);
+		analysisManager->FillNtupleDColumn( 9, hit->GetPosition().y() / mm);
+		analysisManager->FillNtupleDColumn(10, hit->GetPosition().z() / mm);
 
 		analysisManager->AddNtupleRow();
 	}
