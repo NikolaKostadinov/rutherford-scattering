@@ -1,16 +1,17 @@
-/run/numberOfThreads 8
-/run/initialize
+/run/numberOfThreads 6
 
 /analysis/file output.root
 
 /construction/world/radius 1 m
 /construction/detector/atomicNumber 14
-/construction/detector/numberDensity 5e+22 1/cm3
-/construction/detector/radius 1 cm
-/construction/detector/thickness 2 um
+/construction/detector/numberDensity 6e+22 1/cm3
+/construction/detector/radius 12 mm
+/construction/detector/thickness 500 um
+
+/run/initialize
 
 /generator/primary/particle alpha
 /generator/primary/energy 5.0 MeV
 /generator/primary/distance 1 cm
 
-/run/beamOn 1000000
+/run/beamOn 10000

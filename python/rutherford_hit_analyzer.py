@@ -23,20 +23,23 @@ def main():
 
 	event_to_Edep_prime  = { }
 	event_to_Edep_second = { }
+	event_to_Edep_total  = { }
 	with alive_bar(n_hits, title="Analyzing hits") as bar:
 		for hit in tree:
 
 			eventID  = hit.EventID
 			Edep     = hit.Edep_keV
 			parentID = hit.ParentTrackID
-			time     = hit.T_ns + eventID * 1e6  # ns (to separate events in time graph)
+			time     = hit.T_ns
 
-			if   parentID == 0:
+			if parentID == 0:
 				event_to_Edep_prime[eventID] = event_to_Edep_prime.get(eventID, 0) + Edep
 				n_hits_prime += 1
-			elif parentID == 1:
+			else:
 				event_to_Edep_second[eventID] = event_to_Edep_second.get(eventID, 0) + Edep
 				n_hits_second += 1
+			
+			event_to_Edep_total[eventID] = event_to_Edep_total.get(eventID, 0) + Edep
 
 			bar()
 
@@ -44,17 +47,22 @@ def main():
 
 	file = ROOT.TFile(args.output_file, "RECREATE")
 	
-	n_events = len(event_to_Edep_prime)
+	n_events = len(event_to_Edep_second)
  
-	histoEdepPrime = ROOT.TH1F("histoEdepPrime", "Total Energy Deposit per Event;Edep [keV];Counts", 1000, 0, 10)
+	histoEdepPrime = ROOT.TH1F("histoEdepPrime", "Total Energy Deposit per Event;Edep [keV];Counts", 1000, 0, 6000)
 	for Edep in event_to_Edep_prime.values():
 		histoEdepPrime.Fill(Edep)
 	histoEdepPrime.Write()
  
-	histoEdepSecond = ROOT.TH1F("histoEdepSecond", "Total Energy Deposit per Event;Edep [keV];Counts", 1000, 0, 10)
+	histoEdepSecond = ROOT.TH1F("histoEdepSecond", "Total Energy Deposit per Event;Edep [keV];Counts", 1000, 0, 6000)
 	for Edep in event_to_Edep_second.values():
 		histoEdepSecond.Fill(Edep)
 	histoEdepSecond.Write()
+ 
+	histoEdepTotal = ROOT.TH1F("histoEdepTotal", "Total Energy Deposit per Event;Edep [keV];Counts", 1000, 0, 6000)
+	for Edep in event_to_Edep_total.values():
+		histoEdepTotal.Fill(Edep)
+	histoEdepTotal.Write()
 
 	file.Close()
 

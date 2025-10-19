@@ -31,7 +31,6 @@ void RutherfordEventAction::EndOfEventAction(const G4Event* event)
 	auto eventProgressInterval = numberOfEvents / BAR_SIZE / EVENTS_PER_BAR_GLYPH;
 	if (eventProgressInterval == 0)
 		eventProgressInterval = 1;
-
 	if ((eventID+1) % eventProgressInterval == 0 || (eventID+1) == numberOfEvents)
 		RutherfordPrintRunProgressBar(eventID+1, numberOfEvents, elapsedTime);
 

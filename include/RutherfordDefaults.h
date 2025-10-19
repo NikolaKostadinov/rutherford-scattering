@@ -49,7 +49,7 @@
 #define DETECTOR_NAME				"Ruthertector"
 #define DEFAULT_WORLD_RADIUS			1.0 *  m
 #define DEFAULT_DETECTOR_RADIUS			1.0 * cm
-#define DEFAULT_DETECTOR_THICKNESS		1.0 * um
+#define DEFAULT_DETECTOR_THICKNESS		0.5 * mm
 
 // DEFAULT GENERATED PARTICLE
 #define DEFAULT_PRIMARY_PARTICLE		"alpha"
@@ -61,7 +61,7 @@
 #define HITS_COLLECTION_NAME			"RutherfordHitsCollection"
 #define HITS_NTUPLE_NAME			"Hits"
 #define HITS_NTUPLE_TITLE			"Hits"
-#define DEFAULT_MIN_ENERGY_DEPOSIT		10.0 * eV
+#define DEFAULT_MIN_ENERGY_DEPOSIT		0.0 * eV
 
 // RUN
 #define DEFAULT_NUMBER_OF_EVENTS		1

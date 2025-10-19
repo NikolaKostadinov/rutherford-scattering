@@ -43,6 +43,6 @@ void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 	else if (cmd == fPrimaryDistanceCmd)
 	{
 		auto evalue = fPrimaryDistanceCmd->GetNewDoubleValue(value);
-		fGenerator->SetPrimaryEnergy(evalue);
+		fGenerator->SetPrimaryDistance(evalue);
 	}
 }

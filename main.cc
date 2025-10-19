@@ -39,6 +39,7 @@ int main(int argc, char** argv)
 		RutherfordArgument("--macro",     "-m", MACRO_CMD,                      "file",   "macro file path (all other arguments will be ignored if macro file is provided)"),
 		RutherfordArgument("--jobs",      "-j", RUN_THREADS_CMD,                "number", "number of concurent jobs (events)"),
 		RutherfordArgument("--output",    "-o", ANALYSIS_FILE_CMD,              "file",   "output analysis file path"),
+		RutherfordArgument("--temp",      "-t", DETECTOR_TEMPERATURE_CMD,       "value",  "detector temperature"),
 		RutherfordArgument("--atomic-n",  "-Z", DETECTOR_ATOMIC_NUMBER_CMD,     "value",  "detector atomic number"),
 		RutherfordArgument("--n-density", "-a", DETECTOR_NUMBER_DENSITY_CMD,    "value",  "detector number density of atoms"),
 		RutherfordArgument("--radius",    "-r", DETECTOR_RADIUS_CMD,            "value",  "detector radius"),

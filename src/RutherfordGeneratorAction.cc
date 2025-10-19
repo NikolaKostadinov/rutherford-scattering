@@ -25,6 +25,7 @@ void RutherfordGeneratorAction::SetParticleGun()
 	fParticleGun->SetParticleDefinition(particle);
 	fParticleGun->SetParticlePosition(position);
 	fParticleGun->SetParticleMomentumDirection(direction);
+	fParticleGun->SetParticleEnergy(fPrimaryEnergy);
 }
 
 void RutherfordGeneratorAction::GeneratePrimaries(G4Event* event)
