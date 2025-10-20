@@ -2,7 +2,6 @@
 #define EVENT_ACTION_HH
 
 #include <G4UserEventAction.hh>
-//#include <globals.hh>
 
 class RutherfordEventAction : public G4UserEventAction
 {

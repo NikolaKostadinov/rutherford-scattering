@@ -5,7 +5,7 @@
 
 #define RUTHERFORD_NAME				"Rutherford Scattering"
 #define RUTHERFORD_PROGRAM			"rutherford-scattering"
-#define RUTHERFORD_VERSION			"v1.0.1-beta"
+#define RUTHERFORD_VERSION			"v1.0.2-beta"
 
 #define VERSION_FLAG				"--version"
 #define HELP_LONG_FLAG				"--help"

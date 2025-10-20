@@ -58,6 +58,12 @@ G4double RutherfordDetectorConstruction::GetDetectorElectronDensity() const
 	return fDetectorMaterial->GetElectronDensity();
 }
 
+G4double RutherfordDetectorConstruction::GetDetectorIntegratedLuminosity() const
+{
+	auto   electronDensity = GetDetectorElectronDensity();
+	return electronDensity * fDetectorThickness;
+}
+
 G4double RutherfordDetectorConstruction::GetDetectorMeanExcitationEnergy() const
 {
 	return fDetectorMaterial->GetIonisation()->GetMeanExcitationEnergy();
@@ -98,6 +104,9 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 			false,						// boolean opertion ?
 			0						// number of copies
 	);
+
+	if (fDetectorDeadLayer <= 0.0)
+		return world;
 
 	auto* detectorDeadLayerSolid = new G4Tubs(
 		DETECTOR_DEAD_LAYER_NAME,

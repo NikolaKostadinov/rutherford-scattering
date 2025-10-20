@@ -28,12 +28,13 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		G4int       GetDetectorAtomicNumber()         const { return fDetectorAtomicNumber;   };
 		G4double    GetDetectorNumberDensity()        const { return fDetectorNumberDensity;  };
 		G4double    GetDetectorTemperature()          const { return fDetectorTemperature;    };
-		G4double    GetDetectorElectronDensity()      const ;
 		G4double    GetDetectorRadius()               const { return fDetectorRadius;         };
 		G4double    GetDetectorThickness()            const { return fDetectorThickness;      };
 		G4double    GetDetectorDeadLayer()            const { return fDetectorDeadLayer;      };
 		G4Material* GetWorldMaterial()                const { return fWorldMaterial;          };
 		G4Material* GetDetectorMaterial()             const { return fDetectorMaterial;       };
+		G4double    GetDetectorElectronDensity()      const ;
+		G4double    GetDetectorIntegratedLuminosity() const ;
 		G4double    GetDetectorMeanExcitationEnergy() const ;
 
 		virtual G4VPhysicalVolume* Construct()           override;

@@ -44,6 +44,7 @@ int main(int argc, char** argv)
 		RutherfordArgument("--n-density", "-a", DETECTOR_NUMBER_DENSITY_CMD,    "value",  "detector number density of atoms"),
 		RutherfordArgument("--radius",    "-r", DETECTOR_RADIUS_CMD,            "value",  "detector radius"),
 		RutherfordArgument("--thickness", "-z", DETECTOR_THICKNESS_CMD,         "value",  "detector thickness"),
+		RutherfordArgument("--dead",      "-D", DETECTOR_DEAD_LAYER_CMD,        "value",  "detector dead layer thickness"),
 		RutherfordArgument("--particle",  "-p", GENERATOR_PRIMARY_PARTICLE_CMD, "type",   "primary particle"),
 		RutherfordArgument("--energy",    "-e", GENERATOR_PRIMARY_ENERGY_CMD,   "value",  "particle initial energy"),
 		RutherfordArgument("--distance",  "-d", GENERATOR_PRIMARY_DISTANCE_CMD, "value",  "particle initial distance"),
