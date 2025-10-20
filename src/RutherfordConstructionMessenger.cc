@@ -34,6 +34,11 @@ RutherfordConstructionMessenger::RutherfordConstructionMessenger(RutherfordDetec
 	fDetectorThicknessCmd->SetUnitCategory("Length");
 	fDetectorThicknessCmd->SetDefaultValue(DEFAULT_DETECTOR_THICKNESS / DEFAULT_SHORT_LENGTH_UNIT);
 	fDetectorThicknessCmd->SetDefaultUnit(DEFAULT_SHORT_LENGTH_UNIT_STRING);
+
+	fDetectorDeadLayerCmd->SetGuidance("Set dead layer thickness of the detector.");
+	fDetectorDeadLayerCmd->SetUnitCategory("Length");
+	fDetectorDeadLayerCmd->SetDefaultValue(DEFAULT_DETECTOR_DEAD_LAYER / DEFAULT_SHORT_LENGTH_UNIT);
+	fDetectorDeadLayerCmd->SetDefaultUnit(DEFAULT_SHORT_LENGTH_UNIT_STRING);
 }
 
 RutherfordConstructionMessenger::~RutherfordConstructionMessenger()
@@ -45,6 +50,7 @@ RutherfordConstructionMessenger::~RutherfordConstructionMessenger()
 	delete fDetectorTemperatureCmd;
 	delete fDetectorRadiusCmd;
 	delete fDetectorThicknessCmd;
+	delete fDetectorDeadLayerCmd;
 }
 
 void RutherfordConstructionMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
@@ -78,5 +84,10 @@ void RutherfordConstructionMessenger::SetNewValue(G4UIcommand* cmd, G4String val
 	{
 		auto evalue = fDetectorThicknessCmd->GetNewDoubleValue(value);
 		fDetectorConstruction->SetDetectorThickness(evalue);
+	}
+	else if (cmd == fDetectorDeadLayerCmd)
+	{
+		auto evalue = fDetectorDeadLayerCmd->GetNewDoubleValue(value);
+		fDetectorConstruction->SetDetectorDeadLayer(evalue);
 	}
 }

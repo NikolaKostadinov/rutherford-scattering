@@ -30,6 +30,7 @@ class RutherfordConstructionMessenger : public G4UImessenger
 		G4UIcmdWithADoubleAndUnit*	fDetectorTemperatureCmd   = new G4UIcmdWithADoubleAndUnit(DETECTOR_TEMPERATURE_CMD, this);
 		G4UIcmdWithADoubleAndUnit*	fDetectorRadiusCmd        = new G4UIcmdWithADoubleAndUnit(DETECTOR_RADIUS_CMD, this);
 		G4UIcmdWithADoubleAndUnit*	fDetectorThicknessCmd     = new G4UIcmdWithADoubleAndUnit(DETECTOR_THICKNESS_CMD, this);
+		G4UIcmdWithADoubleAndUnit*	fDetectorDeadLayerCmd     = new G4UIcmdWithADoubleAndUnit(DETECTOR_DEAD_LAYER_CMD, this);
 		
 		RutherfordDetectorConstruction*	fDetectorConstruction;
 };

@@ -21,6 +21,7 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		void SetDetectorTemperature(G4double value)         { fDetectorTemperature   = value; };
 		void SetDetectorRadius(G4double value)              { fDetectorRadius        = value; };
 		void SetDetectorThickness(G4double value)           { fDetectorThickness     = value; };
+		void SetDetectorDeadLayer(G4double value)           { fDetectorDeadLayer     = value; };
 		void SetWorldMaterial();
 		void SetDetectorMaterial();
 
@@ -30,6 +31,7 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		G4double    GetDetectorElectronDensity()      const ;
 		G4double    GetDetectorRadius()               const { return fDetectorRadius;         };
 		G4double    GetDetectorThickness()            const { return fDetectorThickness;      };
+		G4double    GetDetectorDeadLayer()            const { return fDetectorDeadLayer;      };
 		G4Material* GetWorldMaterial()                const { return fWorldMaterial;          };
 		G4Material* GetDetectorMaterial()             const { return fDetectorMaterial;       };
 		G4double    GetDetectorMeanExcitationEnergy() const ;
@@ -46,6 +48,7 @@ class RutherfordDetectorConstruction : public G4VUserDetectorConstruction
 		G4double				fDetectorTemperature   = DEFAULT_DETECTOR_TEMPERATURE;
 		G4double				fDetectorRadius        = DEFAULT_DETECTOR_RADIUS;
 		G4double				fDetectorThickness     = DEFAULT_DETECTOR_THICKNESS;
+		G4double				fDetectorDeadLayer     = DEFAULT_DETECTOR_DEAD_LAYER;
 
 		G4Material*				fWorldMaterial;
 		G4Material*				fDetectorMaterial;

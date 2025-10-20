@@ -12,7 +12,7 @@
 #include "../include/RutherfordSensitiveDetector.hh"
 
 RutherfordDetectorConstruction::RutherfordDetectorConstruction()
-{	
+{
 	fMessenger = new RutherfordConstructionMessenger(this);
 }
 
@@ -67,29 +67,53 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 {
 	SetWorldMaterial();
 	SetDetectorMaterial();
+
+	auto sensitiveLayer = fDetectorThickness - fDetectorDeadLayer;
 	
 	auto* worldSolid = new G4Box(WORLD_NAME, fDetectorRadius, fDetectorRadius, fWorldRadius);
-    	auto* worldLogic = new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
-    	auto* world      = new G4PVPlacement(
-			nullptr,		// rotation ?
-			G4ThreeVector(),	// placement position
-			worldLogic,		// placed logical volume
-			WORLD_NAME,		// name of volume
-			nullptr,		// parent volume
-			false,			// boolean opertion ?
-			0			// number of copies
+	auto* worldLogic = new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
+	auto* world      = new G4PVPlacement(
+			nullptr,					// rotation ?
+			G4ThreeVector(),				// placement position
+			worldLogic,					// placed logical volume
+			WORLD_NAME,					// name of volume
+			nullptr,					// parent volume
+			false,						// boolean opertion ?
+			0						// number of copies
 	);
 
-	auto* detectorSolid = new G4Tubs(DETECTOR_NAME, 0.0, fDetectorRadius, fDetectorThickness/2, 0.0, 360.0 * deg);
-    	auto* detectorLogic = new G4LogicalVolume(detectorSolid, fDetectorMaterial, DETECTOR_NAME);
+	auto* detectorSensitiveLayerSolid = new G4Tubs(
+		DETECTOR_SENSITIVE_LAYER_NAME,
+		0.0, fDetectorRadius,
+		sensitiveLayer/2,
+		0.0, 360.0 * deg
+	);
+	auto* detectorSensitiveLayerLogic = new G4LogicalVolume(detectorSensitiveLayerSolid, fDetectorMaterial, DETECTOR_SENSITIVE_LAYER_NAME);
 	new   G4PVPlacement(
-			nullptr,		// rotation ?
-			G4ThreeVector(),	// placement position
-			detectorLogic,		// placed logical volume
-			DETECTOR_NAME,		// name of volume
-			worldLogic,		// parent volume
-			false,			// boolean opertion ?
-			0			// number of copies
+			nullptr,					// rotation ?
+			G4ThreeVector(0.0, 0.0, +fDetectorDeadLayer/2),	// placement position
+			detectorSensitiveLayerLogic,			// placed logical volume
+			DETECTOR_SENSITIVE_LAYER_NAME,			// name of volume
+			worldLogic,					// parent volume
+			false,						// boolean opertion ?
+			0						// number of copies
+	);
+
+	auto* detectorDeadLayerSolid = new G4Tubs(
+		DETECTOR_DEAD_LAYER_NAME,
+		0.0, fDetectorRadius,
+		fDetectorDeadLayer/2,
+		0.0, 360.0 * deg
+	);
+	auto* detectorDeadLayerLogic = new G4LogicalVolume(detectorDeadLayerSolid, fDetectorMaterial, DETECTOR_SENSITIVE_LAYER_NAME);
+	new   G4PVPlacement(
+			nullptr,					// rotation ?
+			G4ThreeVector(0.0, 0.0, -sensitiveLayer/2),	// placement position
+			detectorDeadLayerLogic,				// placed logical volume
+			DETECTOR_DEAD_LAYER_NAME,			// name of volume
+			worldLogic,					// parent volume
+			false,						// boolean opertion ?
+			0						// number of copies
 	);
 	
 	return world;
@@ -98,12 +122,12 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 void RutherfordDetectorConstruction::ConstructSDandField()
 {
 	auto* sensitiveDetectorManager = G4SDManager::GetSDMpointer();
-	auto* sensitiveDetector = new RutherfordSensitiveDetector(DETECTOR_NAME, HITS_COLLECTION_NAME);
+	auto* sensitiveDetector = new RutherfordSensitiveDetector(DETECTOR_SENSITIVE_LAYER_NAME, HITS_COLLECTION_NAME);
 	
 	sensitiveDetectorManager->AddNewDetector(sensitiveDetector);
 	
 	auto* logicalVolumeStore = G4LogicalVolumeStore::GetInstance();
-	auto* detectorLogic = logicalVolumeStore->GetVolume(DETECTOR_NAME);
-	if (detectorLogic)
-		detectorLogic->SetSensitiveDetector(sensitiveDetector);
+	auto* detectorSensitiveLayerLogic = logicalVolumeStore->GetVolume(DETECTOR_SENSITIVE_LAYER_NAME);
+	if (detectorSensitiveLayerLogic)
+		detectorSensitiveLayerLogic->SetSensitiveDetector(sensitiveDetector);
 }

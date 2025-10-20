@@ -29,7 +29,7 @@ G4bool RutherfordSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory
 {
 	auto* hit = new RutherfordHit(step);
 	
-	if (hit->GetEnergyDeposit() < DEFAULT_MIN_ENERGY_DEPOSIT)
+	if      (hit->GetEnergyDeposit() < DEFAULT_MIN_ENERGY_DEPOSIT)
 	{
 		delete hit;
 		return false;

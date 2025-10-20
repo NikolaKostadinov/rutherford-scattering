@@ -7,6 +7,7 @@
 /construction/detector/numberDensity 6e+22 1/cm3
 /construction/detector/radius 12 mm
 /construction/detector/thickness 500 um
+/construction/detector/deadLayer 50 nm
 
 /run/initialize
 
