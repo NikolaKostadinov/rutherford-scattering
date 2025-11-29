@@ -11,8 +11,10 @@
 
 /run/initialize
 
-/generator/primary/particle alpha
-/generator/primary/energy 5.0 MeV
-/generator/primary/distance 1 cm
+/generator/primary/ion/atomicNumber 84
+/generator/primary/ion/massNumber 210
+/generator/primary/energy 0.0 MeV
+/generator/primary/distance 10 mm
+/generator/type decay
 
-/run/beamOn 10000
+/run/beamOn 100000

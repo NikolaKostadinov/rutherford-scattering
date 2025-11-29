@@ -1,6 +1,7 @@
 #include "../include/RutherfordArgument.hh"
 
 #include "../include/RutherfordDefaults.h"
+#include "../include/RutherfordGeant4Shorthand.h"
 #include "../include/RutherfordCommands.h"
 
 RutherfordArgument::RutherfordArgument(G4String longFlag, G4String shortFlag, G4String command, G4String type, G4String description)

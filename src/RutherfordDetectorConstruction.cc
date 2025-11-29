@@ -79,13 +79,13 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	auto* worldSolid = new G4Box(WORLD_NAME, fDetectorRadius, fDetectorRadius, fWorldRadius);
 	auto* worldLogic = new G4LogicalVolume(worldSolid, fWorldMaterial, WORLD_NAME);
 	auto* world      = new G4PVPlacement(
-			nullptr,					// rotation ?
-			G4ThreeVector(),				// placement position
-			worldLogic,					// placed logical volume
-			WORLD_NAME,					// name of volume
-			nullptr,					// parent volume
-			false,						// boolean opertion ?
-			0						// number of copies
+		nullptr,					// rotation ?
+		G4ThreeVector(),				// placement position
+		worldLogic,					// placed logical volume
+		WORLD_NAME,					// name of volume
+		nullptr,					// parent volume
+		false,						// boolean opertion ?
+		0						// number of copies
 	);
 
 	auto* detectorSensitiveLayerSolid = new G4Tubs(
@@ -96,13 +96,13 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	);
 	auto* detectorSensitiveLayerLogic = new G4LogicalVolume(detectorSensitiveLayerSolid, fDetectorMaterial, DETECTOR_SENSITIVE_LAYER_NAME);
 	new   G4PVPlacement(
-			nullptr,					// rotation ?
-			G4ThreeVector(0.0, 0.0, +fDetectorDeadLayer/2),	// placement position
-			detectorSensitiveLayerLogic,			// placed logical volume
-			DETECTOR_SENSITIVE_LAYER_NAME,			// name of volume
-			worldLogic,					// parent volume
-			false,						// boolean opertion ?
-			0						// number of copies
+		nullptr,					// rotation ?
+		G4ThreeVector(0.0, 0.0, +fDetectorDeadLayer/2),	// placement position
+		detectorSensitiveLayerLogic,			// placed logical volume
+		DETECTOR_SENSITIVE_LAYER_NAME,			// name of volume
+		worldLogic,					// parent volume
+		false,						// boolean opertion ?
+		0						// number of copies
 	);
 
 	if (fDetectorDeadLayer <= 0.0)
@@ -116,13 +116,13 @@ G4VPhysicalVolume* RutherfordDetectorConstruction::Construct()
 	);
 	auto* detectorDeadLayerLogic = new G4LogicalVolume(detectorDeadLayerSolid, fDetectorMaterial, DETECTOR_SENSITIVE_LAYER_NAME);
 	new   G4PVPlacement(
-			nullptr,					// rotation ?
-			G4ThreeVector(0.0, 0.0, -sensitiveLayer/2),	// placement position
-			detectorDeadLayerLogic,				// placed logical volume
-			DETECTOR_DEAD_LAYER_NAME,			// name of volume
-			worldLogic,					// parent volume
-			false,						// boolean opertion ?
-			0						// number of copies
+		nullptr,					// rotation ?
+		G4ThreeVector(0.0, 0.0, -sensitiveLayer/2),	// placement position
+		detectorDeadLayerLogic,				// placed logical volume
+		DETECTOR_DEAD_LAYER_NAME,			// name of volume
+		worldLogic,					// parent volume
+		false,						// boolean opertion ?
+		0						// number of copies
 	);
 	
 	return world;

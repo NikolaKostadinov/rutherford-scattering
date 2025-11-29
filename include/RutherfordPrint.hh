@@ -5,6 +5,7 @@
 
 #include "RutherfordArgument.hh"
 #include "RutherfordDefaults.h"
+#include "RutherfordGeant4Shorthand.h"
 
 #define DASH		'-'
 #define WHITE_SPACE	' '

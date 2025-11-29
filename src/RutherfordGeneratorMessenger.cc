@@ -12,13 +12,16 @@ RutherfordGeneratorMessenger::RutherfordGeneratorMessenger(RutherfordGeneratorAc
 
 	fPrimaryEnergyCmd->SetGuidance("Set primary particle inital energy.");
 	fPrimaryEnergyCmd->SetUnitCategory("Energy");
-	fPrimaryEnergyCmd->SetDefaultValue(DEFAULT_PRIMARY_ENERGY / DEFAULT_HIGH_ENERGY_UNIT);
-	fPrimaryEnergyCmd->SetDefaultUnit(DEFAULT_HIGH_ENERGY_UNIT_STRING);
+	fPrimaryEnergyCmd->SetDefaultValue(DEFAULT_PRIMARY_ENERGY / HIGH_ENERGY_UNIT_VAL);
+	fPrimaryEnergyCmd->SetDefaultUnit(HIGH_ENERGY_UNIT_STR);
 
         fPrimaryDistanceCmd->SetGuidance("Set primary particle initial distance from target center.");
         fPrimaryDistanceCmd->SetUnitCategory("Length");
-        fPrimaryDistanceCmd->SetDefaultValue(DEFAULT_PRIMARY_DISTANCE / DEFAULT_LONG_LENGTH_UNIT);
-        fPrimaryDistanceCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
+        fPrimaryDistanceCmd->SetDefaultValue(DEFAULT_PRIMARY_DISTANCE / LONG_LENGTH_UNIT_VAL);
+        fPrimaryDistanceCmd->SetDefaultUnit(LONG_LENGTH_UNIT_STR);
+
+	fPrimaryGeneratorTypeCmd->SetGuidance("Set primary generator type.");
+	fPrimaryGeneratorTypeCmd->SetDefaultValue("");
 }
 
 RutherfordGeneratorMessenger::~RutherfordGeneratorMessenger()
@@ -27,6 +30,7 @@ RutherfordGeneratorMessenger::~RutherfordGeneratorMessenger()
 	delete fPrimaryParticleDefinitionCmd;
 	delete fPrimaryEnergyCmd;
 	delete fPrimaryDistanceCmd;
+	delete fPrimaryGeneratorTypeCmd;
 }
 
 void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
@@ -34,6 +38,16 @@ void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 	if      (cmd == fPrimaryParticleDefinitionCmd)
 	{
 		fGenerator->SetPrimaryParticleDefinition(value);
+	}
+	else if (cmd == fPrimaryIonAtomicNumberCmd)
+	{
+		auto evalue = fPrimaryIonAtomicNumberCmd->GetNewIntValue(value);
+		fGenerator->SetPrimaryIonAtomicNumber(evalue);
+	}
+	else if (cmd == fPrimaryIonMassNumberCmd)
+	{
+		auto evalue = fPrimaryIonMassNumberCmd->GetNewIntValue(value);
+		fGenerator->SetPrimaryIonMassNumber(evalue);
 	}
 	else if (cmd == fPrimaryEnergyCmd)
 	{
@@ -44,5 +58,9 @@ void RutherfordGeneratorMessenger::SetNewValue(G4UIcommand* cmd, G4String value)
 	{
 		auto evalue = fPrimaryDistanceCmd->GetNewDoubleValue(value);
 		fGenerator->SetPrimaryDistance(evalue);
+	}
+	else if (cmd == fPrimaryGeneratorTypeCmd)
+	{
+		fGenerator->SetPrimaryGeneratorType(value);
 	}
 }

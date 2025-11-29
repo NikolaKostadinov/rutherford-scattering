@@ -9,36 +9,36 @@ RutherfordConstructionMessenger::RutherfordConstructionMessenger(RutherfordDetec
 
 	fWorldRadiusCmd->SetGuidance("Set radius of the world.");
 	fWorldRadiusCmd->SetUnitCategory("Length");
-	fWorldRadiusCmd->SetDefaultValue(DEFAULT_WORLD_RADIUS / DEFAULT_LONG_LENGTH_UNIT);
-	fWorldRadiusCmd->SetDefaultUnit(DEFAULT_LONG_LENGTH_UNIT_STRING);
+	fWorldRadiusCmd->SetDefaultValue(DEFAULT_WORLD_RADIUS / LONG_LENGTH_UNIT_VAL);
+	fWorldRadiusCmd->SetDefaultUnit(LONG_LENGTH_UNIT_STR);
 	
 	fDetectorAtomicNumberCmd->SetGuidance("Set atomic number of the detector material.");
 	fDetectorAtomicNumberCmd->SetDefaultValue(DEFAULT_DETECTOR_ATOMIC_NUMBER);
 
 	fDetectorNumberDensityCmd->SetGuidance("Set atomic number density of the detector material.");
 	fDetectorNumberDensityCmd->SetUnitCategory("NumberDensity");
-	fDetectorNumberDensityCmd->SetDefaultValue(DEFAULT_DETECTOR_NUMBER_DENSITY / DEFAULT_NUMBER_DENSITY_UNIT);
-	fDetectorNumberDensityCmd->SetDefaultUnit(DEFAULT_NUMBER_DENSITY_UNIT_STRING);
+	fDetectorNumberDensityCmd->SetDefaultValue(DEFAULT_DETECTOR_NUMBER_DENSITY / NUMBER_DENSITY_UNIT_VAL);
+	fDetectorNumberDensityCmd->SetDefaultUnit(NUMBER_DENSITY_UNIT_STR);
 
 	fDetectorTemperatureCmd->SetGuidance("Set temperature of the detector.");
 	fDetectorTemperatureCmd->SetUnitCategory("Temperature");
-	fDetectorTemperatureCmd->SetDefaultValue(DEFAULT_DETECTOR_TEMPERATURE / DEFAULT_TEMPERATURE_UNIT);
-	fDetectorTemperatureCmd->SetDefaultUnit(DEFAULT_TEMPERATURE_UNIT_STRING);
+	fDetectorTemperatureCmd->SetDefaultValue(DEFAULT_DETECTOR_TEMPERATURE / TEMPERATURE_UNIT_VAL);
+	fDetectorTemperatureCmd->SetDefaultUnit(TEMPERATURE_UNIT_STR);
 
 	fDetectorRadiusCmd->SetGuidance("Set radius of the detector.");
 	fDetectorRadiusCmd->SetUnitCategory("Length");
-	fDetectorRadiusCmd->SetDefaultValue(DEFAULT_DETECTOR_RADIUS / DEFAULT_MID_LENGTH_UNIT);
-	fDetectorRadiusCmd->SetDefaultUnit(DEFAULT_MID_LENGTH_UNIT_STRING);
+	fDetectorRadiusCmd->SetDefaultValue(DEFAULT_DETECTOR_RADIUS / MID_LENGTH_UNIT_VAL);
+	fDetectorRadiusCmd->SetDefaultUnit(MID_LENGTH_UNIT_STR);
 	
 	fDetectorThicknessCmd->SetGuidance("Set thickness of the detector.");
 	fDetectorThicknessCmd->SetUnitCategory("Length");
-	fDetectorThicknessCmd->SetDefaultValue(DEFAULT_DETECTOR_THICKNESS / DEFAULT_SHORT_LENGTH_UNIT);
-	fDetectorThicknessCmd->SetDefaultUnit(DEFAULT_SHORT_LENGTH_UNIT_STRING);
+	fDetectorThicknessCmd->SetDefaultValue(DEFAULT_DETECTOR_THICKNESS / SHORT_LENGTH_UNIT_VAL);
+	fDetectorThicknessCmd->SetDefaultUnit(SHORT_LENGTH_UNIT_STR);
 
 	fDetectorDeadLayerCmd->SetGuidance("Set dead layer thickness of the detector.");
 	fDetectorDeadLayerCmd->SetUnitCategory("Length");
-	fDetectorDeadLayerCmd->SetDefaultValue(DEFAULT_DETECTOR_DEAD_LAYER / DEFAULT_SHORT_LENGTH_UNIT);
-	fDetectorDeadLayerCmd->SetDefaultUnit(DEFAULT_SHORT_LENGTH_UNIT_STRING);
+	fDetectorDeadLayerCmd->SetDefaultValue(DEFAULT_DETECTOR_DEAD_LAYER / SHORT_LENGTH_UNIT_VAL);
+	fDetectorDeadLayerCmd->SetDefaultUnit(SHORT_LENGTH_UNIT_STR);
 }
 
 RutherfordConstructionMessenger::~RutherfordConstructionMessenger()
